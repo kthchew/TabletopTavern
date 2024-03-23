@@ -1,0 +1,9 @@
+* text=auto
+
+*.html text eol=lf
+*.php text eol=lf
+
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
