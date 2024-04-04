@@ -19,7 +19,6 @@
         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
         <li class="nav-item"><a class="nav-link" href="filter.html">Filter Search</a></li>
-        <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
         <li class="nav-item"><a class="nav-link" href="creators.html">Creators</a></li>
     </ul>
 </nav>
