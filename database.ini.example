@@ -1,0 +1,9 @@
+[db_general]
+driver = "mysql"
+user = "USERNAME"
+password = "PASSWORD"
+
+[db_data_source_name]
+host = "localhost"
+port = 3306
+dbname = "DATABASE_NAME"
