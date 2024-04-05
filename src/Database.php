@@ -4,9 +4,9 @@ namespace Tabletop;
 
 class Database extends \mysqli
 {
-    private static $instance = null;
+    private static ?Database $instance = null;
 
-    public static function getInstance()
+    public static function getInstance(): ?Database
     {
         // read from database.ini
         $config = parse_ini_file('../database.ini');

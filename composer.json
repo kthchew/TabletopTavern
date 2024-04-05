@@ -1,0 +1,16 @@
+{
+  "require": {
+    "php": ">=7.4",
+    "ext-mysqli": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tabletop\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tabletop\\Test\\": "tests/"
+    }
+  }
+}
