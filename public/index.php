@@ -16,21 +16,23 @@
 </header>
 <nav class="navbar navbar-expand-lg bg-dark bg-opacity-75 navbar-dark py-3 justify-content-center">
     <ul class="navbar-nav justify-content-around w-75">
-        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="filter.html">Filter Search</a></li>
-        <li class="nav-item"><a class="nav-link" href="creators.html">Creators</a></li>
+        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="filter.php">Filter Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="creators.php">Creators</a></li>
     </ul>
 </nav>
 
-<div class="w-100 d-flex justify-content-center">
-    <div class="input-group my-2 w-50">
-        <input type="search" class="form-control" placeholder="Search Games..." />
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+<form action="search.php" method="post">
+    <div class="w-100 d-flex justify-content-center">
+        <div class="input-group my-2 w-50">
+            <input type="search" name="searchTerm" class="form-control" placeholder="Search Games..."/>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 <div class="border-black bg-black w-75 mx-auto"><hr class="border-3"></div>
 
