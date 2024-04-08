@@ -1,4 +1,7 @@
 #!/usr/local/bin/php
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +23,11 @@
         <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
         <li class="nav-item"><a class="nav-link" href="filter.php">Filter Search</a></li>
         <li class="nav-item"><a class="nav-link" href="creators.php">Creators</a></li>
+        <?php if (isset($_SESSION['user'])): ?>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout <?php echo $_SESSION['username'] ?></a></li>
+        <?php else: ?>
+            <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+        <?php endif; ?>
     </ul>
 </nav>
 

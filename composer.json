@@ -1,7 +1,8 @@
 {
   "require": {
     "php": ">=7.4",
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "ext-ctype": "*"
   },
   "autoload": {
     "psr-4": {
