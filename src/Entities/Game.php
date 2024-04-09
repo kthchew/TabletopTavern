@@ -61,6 +61,30 @@ class Game
         return $games;
     }
 
+    static function getGameById($id) {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM Games WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $game = new Game();
+            $game->id = $row['id'];
+            $game->name = $row['name'];
+            $game->minPlayers = $row['min_players'];
+            $game->maxPlayers = $row['max_players'];
+            $game->playTime = $row['play_time'];
+            $game->minAge = $row['min_age'];
+            $game->ratingCount = $row['rating_count'];
+            $game->ratingAverage = $row['rating_average'];
+            $game->yearPublished = $row['year_published'];
+            return $game;
+        } else {
+            return null;
+        }
+    }
+
     public function getId() {
         return $this->id;
     }

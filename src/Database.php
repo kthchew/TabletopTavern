@@ -8,8 +8,8 @@ class Database extends \mysqli
 
     public static function getInstance(): ?Database
     {
-        // read from database.ini
-        $config = parse_ini_file('../database.ini');
+        $database_config_file = __DIR__ . '/../database.ini';
+        $config = parse_ini_file($database_config_file);
         if ($config == false) {
             throw new \Exception('Error: cannot parse database.ini!');
         }
