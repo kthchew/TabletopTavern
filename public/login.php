@@ -32,22 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-<header class="container-fluid bg-dark text-white m-0">
-    <h1 class="text-center py-5 mb-0">Tabletop Tavern</h1>
-</header>
-<nav class="navbar navbar-expand-lg bg-dark bg-opacity-75 navbar-dark py-3 justify-content-center">
-    <ul class="navbar-nav justify-content-around w-75">
-        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="filter.php">Filter Search</a></li>
-        <li class="nav-item"><a class="nav-link" href="creators.php">Creators</a></li>
-        <?php if (isset($_SESSION['user'])): ?>
-            <li class="nav-item"><a class="nav-link" href="logout.php">Logout <?php echo $_SESSION['username'] ?></a></li>
-        <?php else: ?>
-            <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-        <?php endif; ?>
-    </ul>
-</nav>
+<?php include 'header.php';?>
 
 <form action="login.php" method="post" class="w-50 mx-auto mt-5">
     <h2 class="text-center">Login</h2>

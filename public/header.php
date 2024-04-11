@@ -35,8 +35,7 @@
     <ul class="navbar-nav justify-content-around w-50">
         <li class="nav-item h4"><a class="nav-link active" href="index.php" style = "color: #1C5E33"> Home</a></li>
         <li class="nav-item h4"><a class="nav-link" href="about.php" style = "color: #1C5E33"> About</a></li>
-        <li class="nav-item h4"><a class="nav-link" href="filter.php" style = "color: #1C5E33"> Search</a></li>
-        <li class="nav-item h4"><a class="nav-link" href="creators.php" style = "color: #1C5E33"> Creators</a></li>
+        <li class="nav-item h4"><a class="nav-link" href="filter.php" style = "color: #1C5E33"> Browse</a></li>
         <?php if (isset($_SESSION['user'])): ?>
             <li class="nav-item h4 " ><a class="nav-link rounded" href="logout.php" style = "color: #1C5E33; border: 2px solid #1C5E33;  display: inline-block;"> Logout <?php echo $_SESSION['username'] ?></a></li>
         <?php else: ?>
