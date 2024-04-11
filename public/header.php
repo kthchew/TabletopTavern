@@ -23,8 +23,8 @@
 <nav class="navbar navbar-expand-lg bg-opacity-75 py-3 justify-content-center" style="background-color: #DEEDC8 ">
 
     <div class="navbar-brand" style="display: flex; align-items: center;margin-left: 200px; margin-right: 200px">
-        <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:110px;height:110px;">
-        <h1 class="text-right mb-0" style="padding-top: 0; padding-bottom: 0;">Tabletop Tavern</h1>
+        <a href="index.php" style="text-decoration: none;"><img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:110px;height:110px;"></a>
+        <a href="index.php" style="text-decoration: none;"><h1 class="text-right mb-0" style="padding-top: 0; padding-bottom: 0;">Tabletop Tavern</h1></a>
     </div>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

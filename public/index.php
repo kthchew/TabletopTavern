@@ -11,6 +11,7 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -23,10 +24,10 @@ session_start();
 <br>
 
 <div class="row mx-5">
-    <div class="col-md m-2 text-center justify-content-center">
+    <div class="col-md m-2 text-center justify-content-center rounded">
         <div class="justify-content-center py-5" style="background-color: #cee4ac">
             <div>
-                <h2>Roll the Dice</h2>
+                <h2>✴ Roll the Dice ✴</h2>
                 <br>
                 <!-- maybe make dice spin on hover? like "rolling"? -->
                 <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:200px;height:200px;">
@@ -36,10 +37,10 @@ session_start();
             </div>
         </div>
     </div>
-    <div class="col-md m-2 text-center justify-content-center">
+    <div class="col-md m-2 text-center justify-content-center rounded">
         <div class="justify-content-center py-5" style="background-color: #cee4ac">
             <div>
-                <h2>Filter Search</h2>
+                <h2>✴ Filter Search ✴</h2>
                 <br>
                 <!-- maybe make dice spin on hover? like "rolling"? -->
                 <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:200px;height:200px;">
