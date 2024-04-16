@@ -15,7 +15,7 @@ if (!isset($game_id)) {
         $error = "Game information not found.";
     }
     $imageURL = simplexml_load_string($apiResponse)->item->image;
-    $description = simplexml_load_string($apiResponse)->item->description;
+    $description = str_replace("&#10;", "<br>", simplexml_load_string($apiResponse)->item->description);
 }
 ?>
 <!DOCTYPE html>
