@@ -139,3 +139,4 @@ database.ini
 venv/
 *.csv
 vendor/
+*.phar
