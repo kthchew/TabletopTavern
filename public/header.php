@@ -4,6 +4,10 @@
         color: #1C5E33;
     }
 
+    h1 {
+        font-weight: bold;
+    }
+
     .nav-link{
         font-family: K2D;
     }
