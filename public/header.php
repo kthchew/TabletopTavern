@@ -50,7 +50,7 @@
                     <?php echo $_SESSION['username'] ?>'s Account
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" style = "color: #1C5E33" href="#">Dashboard</a></li>
+                    <li><a class="dropdown-item" style = "color: #1C5E33" href="dashboard.php">Dashboard</a></li>
                     <li><a class="dropdown-item" style = "color: #1C5E33" href="logout.php">LogOut</a></li>
                 </ul>
             </div>
