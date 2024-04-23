@@ -20,6 +20,10 @@
         background-color: #FBFFF4;
     }
 
+    .btn{
+    }
+
+
 </style>
 
 
@@ -41,9 +45,17 @@
         <li class="nav-item h4"><a class="nav-link" href="about.php" style = "color: #1C5E33"> About</a></li>
         <li class="nav-item h4"><a class="nav-link" href="filter.php" style = "color: #1C5E33"> Browse</a></li>
         <?php if (isset($_SESSION['user'])): ?>
-            <li class="nav-item h4 " ><a class="nav-link rounded" href="logout.php" style = "color: #1C5E33; border: 2px solid #1C5E33;  display: inline-block;"> Logout <?php echo $_SESSION['username'] ?></a></li>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" style = "color: #1C5E33; border: 2px solid #1C5E33;  display: inline-block; background-color: #cee4ac; font-size: 15pt" aria-expanded="false">
+                    <?php echo $_SESSION['username'] ?>'s Account
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" style = "color: #1C5E33" href="#">Dashboard</a></li>
+                    <li><a class="dropdown-item" style = "color: #1C5E33" href="logout.php">LogOut</a></li>
+                </ul>
+            </div>
         <?php else: ?>
-            <li class="nav-item h4 " ><a class="nav-link rounded" href="login.php" style = "color: #1C5E33; border: 2px solid #1C5E33;  display: inline-block; background-color: #cee4ac""> Login</a></li>
+            <li class="nav-item h4 " ><a class="nav-link rounded" href="login.php" style = "color: #1C5E33; border: 2px solid #1C5E33;  display: inline-block; background-color: #cee4ac"> Login</a></li>
         <?php endif; ?>
     </ul>
     </div>
