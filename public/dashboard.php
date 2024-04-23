@@ -17,4 +17,11 @@ session_start();
 <body>
 <?php include 'header.php';?>
 
-<h1 class="text-center py-4">Start your journey...</h1>
+<br>
+<h1 class = "text-center"><?php echo $_SESSION['username'] ?>'s Dashboard</h1>
+
+
+
+<?php include 'footer.php';?>
+
+<h1 class="text-center py-4"></h1>
