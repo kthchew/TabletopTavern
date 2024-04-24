@@ -10,12 +10,6 @@ if (!isset($game_id)) {
     if (!$game) {
         $error = "Game not found.";
     }
-    $apiResponse = file_get_contents("https://boardgamegeek.com/xmlapi2/thing?id=$game_id");
-    if (!$apiResponse) {
-        $error = "Game information not found.";
-    }
-    $imageURL = simplexml_load_string($apiResponse)->item->image;
-    $description = str_replace("&#10;", "<br>", simplexml_load_string($apiResponse)->item->description);
 }
 ?>
 <!DOCTYPE html>
@@ -50,8 +44,8 @@ if (!isset($game_id)) {
     <p>Minimum Age: <?= $game->getMinAge() ?></p>
     <p>Rating: <?= $game->getRatingAverage() ?> (<?= $game->getRatingCount() ?> votes)</p>
     <p>Year Published: <?= $game->getYearPublished() ?></p>
-    <img src="<?= $imageURL ?>" alt="<?= $game->getName() ?>" class="img-fluid">
-    <p><?= $description ?></p>
+    <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-fluid">
+    <p><?= $game->getDescription() ?></p>
 <?php endif; ?>
 </div>
 

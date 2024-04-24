@@ -15,8 +15,13 @@ class Game
     private $ratingCount;
     private $ratingAverage;
     private $yearPublished;
+    private $description;
+    private $imageURL;
+    private $thumbnailURL;
+    private $apiResponse = null;
 
-    static function getGamesFromDatabase() {
+    static function getGamesFromDatabase(): array
+    {
         $db = Database::getInstance();
         $sql = "SELECT * FROM Games";
         $result = $db->query($sql);
@@ -32,12 +37,16 @@ class Game
             $game->ratingCount = $row['rating_count'];
             $game->ratingAverage = $row['rating_average'];
             $game->yearPublished = $row['year_published'];
+            $game->description = $row['description'];
+            $game->imageURL = $row['image_url'];
+            $game->thumbnailURL = $row['thumbnail_url'];
             $games[] = $game;
         }
         return $games;
     }
 
-    static function searchGamesByName($name) {
+    static function searchGamesByName($name): array
+    {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM Games WHERE name LIKE ?");
         $str = "%" . $name . "%";
@@ -56,6 +65,9 @@ class Game
             $game->ratingCount = $row['rating_count'];
             $game->ratingAverage = $row['rating_average'];
             $game->yearPublished = $row['year_published'];
+            $game->description = $row['description'];
+            $game->imageURL = $row['image_url'];
+            $game->thumbnailURL = $row['thumbnail_url'];
             $games[] = $game;
         }
         return $games;
@@ -79,6 +91,9 @@ class Game
             $game->ratingCount = $row['rating_count'];
             $game->ratingAverage = $row['rating_average'];
             $game->yearPublished = $row['year_published'];
+            $game->description = $row['description'];
+            $game->imageURL = $row['image_url'];
+            $game->thumbnailURL = $row['thumbnail_url'];
             return $game;
         } else {
             return null;
@@ -150,5 +165,43 @@ class Game
     public function getYearPublished()
     {
         return $this->yearPublished;
+    }
+
+    private function getAPIResponse() {
+        $this->apiResponse = file_get_contents("https://boardgamegeek.com/xmlapi2/thing?id=$this->id");
+
+        $this->description = str_replace("&#10;", "<br>", simplexml_load_string($this->apiResponse)->item->description);
+        $this->imageURL = simplexml_load_string($this->apiResponse)->item->image;
+        // store them in db
+        $db = Database::getInstance();
+        $stmt = $db->prepare("UPDATE Games SET description = ?, image_url = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $this->description, $this->imageURL, $this->id);
+        $stmt->execute();
+    }
+
+    public function getDescription() {
+        if ($this->description == null) {
+            $this->getAPIResponse();
+        }
+        return $this->description;
+    }
+
+    public function getImageURL() {
+        if ($this->imageURL == null) {
+            $this->getAPIResponse();
+        }
+        return $this->imageURL;
+    }
+
+    public function cardView()
+    {
+        $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
+        return "<div class='card my-2'>
+            <div class='card-body'>
+                <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                <p class='card-text'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                <p class='card-text'>{$truncatedDescription}</p>
+            </div>
+        </div>";
     }
 }
