@@ -12,47 +12,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #FBFFF4;
-        }
-
-        .container {
-            padding: 40px 0;
-        }
-
-        .hex-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .hexagon {
-            position: relative;
-            width: 120px;
-            height: 150px;
-            margin: 50px;
-            background-color: #1C5E33;
-            margin: 20px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            border: 5px solid #1C5E33;
-            transition: background-color 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #1C5E33;
-            font-weight: bold;
-            font-size: 16px;
-            background-color: transparent;
-        }
-
-        .hexagon:hover {
-            background-color: #5abc7c;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>

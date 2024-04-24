@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+body {
+    font-family: 'K2D', Arial, sans-serif;
+    background-color: #FBFFF4;
+}
+
+.container {
+    padding: 40px 0;
+}
+
+.hex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hexagon {
+    position: relative;
+    width: 120px;
+    height: 150px;
+    margin: 50px;
+    background-color: #1C5E33;
+    margin: 20px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 5px solid #1C5E33;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1C5E33;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.hexagon:hover {
+    background-color: #5abc7c;
+}
