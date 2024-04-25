@@ -6,54 +6,22 @@ use Tabletop\Database;
 
 class Game
 {
-    private $id;
-    private $name;
-    private $minPlayers;
-    private $maxPlayers;
-    private $playTime;
-    private $minAge;
-    private $ratingCount;
-
-    /**
-     * @return mixed
-     */
-    public function getMechanics()
-    {
-        return $this->mechanics;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSubgenres()
-    {
-        return $this->subgenres;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRatings()
-    {
-        return $this->ratings;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getThumbnailURL()
-    {
-        return $this->thumbnailURL;
-    }
-    private $ratingAverage;
-    private $yearPublished;
-    private $mechanics;
-    private $subgenres;
-    private $ratings;
-    private $description;
-    private $imageURL;
-    private $thumbnailURL;
-    private $apiResponse = null;
+    private int $id;
+    private string $name;
+    private int $minPlayers;
+    private int $maxPlayers;
+    private int $playTime;
+    private int $minAge;
+    private int $ratingCount;
+    private float $ratingAverage;
+    private int $yearPublished;
+    private array $mechanics;
+    private array $subgenres;
+    private array $ratings;
+    private ?string $description;
+    private ?string $imageURL;
+    private ?string $thumbnailURL;
+    private ?string $apiResponse = null;
 
     private static function makeGameFromDBRow($row)
     {
@@ -78,7 +46,7 @@ class Game
         $result = $stmt->get_result();
         $game->mechanics = array_merge(...$result->fetch_all());
 
-        $stmt = $db->prepare("SELECT subgenre FROM tabletop_tavern.Subgenre JOIN tabletop_tavern.GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
+        $stmt = $db->prepare("SELECT subgenre FROM Subgenre JOIN GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -123,7 +91,8 @@ class Game
         return $games;
     }
 
-    static function getGameById($id) {
+    static function getGameById($id): ?Game
+    {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM Games WHERE id = ?");
         $stmt->bind_param("i", $id);
@@ -137,74 +106,54 @@ class Game
         }
     }
 
-    public function getId() {
+    public function getId(): int {
         return $this->id;
     }
-    /**
-     * @return mixed
-     */
-    public function getName()
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMinPlayers()
+    public function getMinPlayers(): int
     {
         return $this->minPlayers;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMaxPlayers()
+    public function getMaxPlayers(): int
     {
         return $this->maxPlayers;
     }
 
     /**
-     * @return mixed
+     * @return int Play time in minutes.
      */
-    public function getPlayTime()
+    public function getPlayTime(): int
     {
         return $this->playTime;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMinAge()
+    public function getMinAge(): int
     {
         return $this->minAge;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRatingCount()
+    public function getRatingCount(): int
     {
         return $this->ratingCount;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRatingAverage()
+    public function getRatingAverage(): float
     {
         return $this->ratingAverage;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getYearPublished()
+    public function getYearPublished(): int
     {
         return $this->yearPublished;
     }
 
-    private function getAPIResponse() {
+    private function getAPIResponse(): void {
         $this->apiResponse = file_get_contents("https://boardgamegeek.com/xmlapi2/thing?id=$this->id");
 
         $this->description = str_replace("&#10;", "<br>", simplexml_load_string($this->apiResponse)->item->description);
@@ -216,21 +165,41 @@ class Game
         $stmt->execute();
     }
 
-    public function getDescription() {
+    public function getDescription(): string {
         if ($this->description == null) {
             $this->getAPIResponse();
         }
         return $this->description;
     }
 
-    public function getImageURL() {
+    public function getImageURL(): string {
         if ($this->imageURL == null) {
             $this->getAPIResponse();
         }
         return $this->imageURL;
     }
 
-    public function cardView()
+    public function getMechanics(): array
+    {
+        return $this->mechanics;
+    }
+
+    public function getSubgenres(): array
+    {
+        return $this->subgenres;
+    }
+
+    public function getRatings(): array
+    {
+        return $this->ratings;
+    }
+
+    public function getThumbnailURL(): string
+    {
+        return $this->thumbnailURL;
+    }
+
+    public function cardView(): string
     {
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $this->mechanics);

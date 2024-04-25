@@ -6,11 +6,11 @@ class Database extends \mysqli
 {
     private static ?Database $instance = null;
 
-    public static function getInstance(): ?Database
+    public static function getInstance(): Database
     {
         $database_config_file = __DIR__ . '/../database.ini';
         $config = parse_ini_file($database_config_file);
-        if ($config == false) {
+        if (!$config) {
             throw new \Exception('Error: cannot parse database.ini!');
         }
         $hostname = $config['host'];
