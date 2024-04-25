@@ -18,9 +18,9 @@ class Game
     private array $mechanics;
     private array $subgenres;
     private array $ratings;
-    private string $description;
-    private string $imageURL;
-    private string $thumbnailURL;
+    private ?string $description;
+    private ?string $imageURL;
+    private ?string $thumbnailURL;
     private ?string $apiResponse = null;
 
     private static function makeGameFromDBRow($row)
