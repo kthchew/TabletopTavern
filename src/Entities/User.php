@@ -6,11 +6,15 @@ use Tabletop\Database;
 
 class User
 {
-    public $id;
-    public $email;
-    public $username;
+    public int $id;
+    public string $email;
+    public string $username;
 
-    static function createUser($email, $username, $password) {
+    /**
+     * @return int The ID of the newly created user
+     * @throws \Exception
+     */
+    static function createUser($email, $username, $password): int {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \Exception("Invalid email address");
         }
@@ -34,7 +38,8 @@ class User
         return $stmt->insert_id;
     }
 
-    static function getUserById($id) {
+    static function getUserById($id): User
+    {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM Users WHERE id = ?");
         $stmt->bind_param("i", $id);
@@ -51,7 +56,11 @@ class User
         return $user;
     }
 
-    static function getUserByNamePassword($username, $password) {
+    /**
+     * @throws \Exception if database has an error, user not found, or password is incorrect
+     */
+    static function getUserByNamePassword($username, $password): User
+    {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM Users WHERE username = ?");
         $stmt->bind_param("s", $username);
