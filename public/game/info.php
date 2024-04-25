@@ -11,6 +11,7 @@ if (!isset($game_id)) {
         $error = "Game not found.";
     }
 }
+define('__HEADER_FOOTER_PHP__', true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

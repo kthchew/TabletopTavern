@@ -1,6 +1,7 @@
 #!/usr/local/bin/php
 <?php
 session_start();
+define('__HEADER_FOOTER_PHP__', true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

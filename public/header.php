@@ -1,31 +1,11 @@
-<style>
-    h1, h2,h3,h4,h5, p{
-        font-family: K2D;
-        color: #1C5E33;
-    }
-
-    h1 {
-        font-weight: bold;
-    }
-
-    .nav-link{
-        font-family: K2D;
-    }
-
-    .nav-link:hover{
-        color: #5abc7c !important;
-    }
-
-    body{
-        background-color: #FBFFF4;
-    }
-
-    .btn{
-    }
-
-
-</style>
-
+<?php
+// Check if the constant __HEADER_FOOTER_PHP__ is not defined
+if (!defined('__HEADER_FOOTER_PHP__')) {
+    // Redirect the user to a different page
+    header('Location: index.php');
+    exit(); // Stop further execution of the script
+}
+?>
 
 <div>
 <nav class="navbar navbar-expand-lg bg-opacity-75 py-3 justify-content-center" style="background-color: #DEEDC8 ">

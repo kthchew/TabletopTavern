@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = $e->getMessage();
     }
 }
+define('__HEADER_FOOTER_PHP__', true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

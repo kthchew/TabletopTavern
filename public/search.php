@@ -6,6 +6,7 @@ session_start();
 $searchTerm = $_GET['searchTerm'];
 $page = $_GET['page'] ?? 1;
 use Tabletop\Entities\Game;
+define('__HEADER_FOOTER_PHP__', true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

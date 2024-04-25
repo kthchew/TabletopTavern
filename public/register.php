@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+define('__HEADER_FOOTER_PHP__', true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
