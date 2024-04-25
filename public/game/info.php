@@ -46,6 +46,18 @@ define('__HEADER_FOOTER_PHP__', true);
         <p>Play Time: <?= $game->getPlayTime() ?> min</p>
         <p>Minimum Age: <?= $game->getMinAge() ?></p>
         <p>Year Published: <?= $game->getYearPublished() ?></p>
+        <p>Subgenres:</p>
+        <ul>
+            <?php foreach ($game->getSubgenres() as $subgenre): ?>
+                <li><?= $subgenre ?></li>
+            <?php endforeach; ?>
+        </ul>
+        <p>Mechanics:</p>
+        <ul>
+            <?php foreach ($game->getMechanics() as $mechanic): ?>
+                <li><?= $mechanic ?></li>
+            <?php endforeach; ?>
+        </ul>
         <hr>
         <h3>Description</h3>
         <p><?= $game->getDescription() ?></p>

@@ -29,16 +29,14 @@ define('__HEADER_FOOTER_PHP__', true);
     <p class="text-center">Page: <b><?php echo $page; ?></b></p>
     <br>
     <br>
-    <div class="row row-cols-4">
+    <div class="row row-cols-4 mb-4">
 
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByName($searchTerm, 10, $page);
             $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
-                echo "<a class=\"col\" href=\"game/info.php?game_id={$game->getId()}\">";
                 echo $game->cardView();
-                echo '</a>';
             }
             ?>
 

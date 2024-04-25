@@ -13,12 +13,85 @@ class Game
     private $playTime;
     private $minAge;
     private $ratingCount;
+
+    /**
+     * @return mixed
+     */
+    public function getMechanics()
+    {
+        return $this->mechanics;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubgenres()
+    {
+        return $this->subgenres;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRatings()
+    {
+        return $this->ratings;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnailURL()
+    {
+        return $this->thumbnailURL;
+    }
     private $ratingAverage;
     private $yearPublished;
+    private $mechanics;
+    private $subgenres;
+    private $ratings;
     private $description;
     private $imageURL;
     private $thumbnailURL;
     private $apiResponse = null;
+
+    private static function makeGameFromDBRow($row)
+    {
+        $db = Database::getInstance();
+        $game = new Game();
+        $game->id = $row['id'];
+        $game->name = $row['name'];
+        $game->minPlayers = $row['min_players'];
+        $game->maxPlayers = $row['max_players'];
+        $game->playTime = $row['play_time'];
+        $game->minAge = $row['min_age'];
+        $game->ratingCount = $row['rating_count'];
+        $game->ratingAverage = $row['rating_average'];
+        $game->yearPublished = $row['year_published'];
+        $game->description = $row['description'];
+        $game->imageURL = $row['image_url'];
+        $game->thumbnailURL = $row['thumbnail_url'];
+        // lookup mechanics as a many-to-many relationship from the SQL db, and store them in the game object
+        $stmt = $db->prepare("SELECT mechanic FROM Mechanics JOIN GameMechanicConnection ON Mechanics.id = GameMechanicConnection.mechanic_id WHERE GameMechanicConnection.game_id = ?");
+        $stmt->bind_param("i", $row['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $game->mechanics = array_merge(...$result->fetch_all());
+
+        $stmt = $db->prepare("SELECT subgenre FROM tabletop_tavern.Subgenre JOIN tabletop_tavern.GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
+        $stmt->bind_param("i", $row['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $game->subgenres = array_merge(...$result->fetch_all());
+
+        $stmt = $db->prepare("SELECT * FROM Ratings WHERE game_id = ?");
+        $stmt->bind_param("i", $row['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $game->ratings = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $game;
+    }
 
     static function getGamesFromDatabase(): array
     {
@@ -27,20 +100,7 @@ class Game
         $result = $db->query($sql);
         $games = [];
         while ($row = $result->fetch_assoc()) {
-            $game = new Game();
-            $game->id = $row['id'];
-            $game->name = $row['name'];
-            $game->minPlayers = $row['min_players'];
-            $game->maxPlayers = $row['max_players'];
-            $game->playTime = $row['play_time'];
-            $game->minAge = $row['min_age'];
-            $game->ratingCount = $row['rating_count'];
-            $game->ratingAverage = $row['rating_average'];
-            $game->yearPublished = $row['year_published'];
-            $game->description = $row['description'];
-            $game->imageURL = $row['image_url'];
-            $game->thumbnailURL = $row['thumbnail_url'];
-            $games[] = $game;
+            $games[] = self::makeGameFromDBRow($row);
         }
         return $games;
     }
@@ -58,20 +118,7 @@ class Game
         $result = $stmt->get_result();
         $games = [];
         while ($row = $result->fetch_assoc()) {
-            $game = new Game();
-            $game->id = $row['id'];
-            $game->name = $row['name'];
-            $game->minPlayers = $row['min_players'];
-            $game->maxPlayers = $row['max_players'];
-            $game->playTime = $row['play_time'];
-            $game->minAge = $row['min_age'];
-            $game->ratingCount = $row['rating_count'];
-            $game->ratingAverage = $row['rating_average'];
-            $game->yearPublished = $row['year_published'];
-            $game->description = $row['description'];
-            $game->imageURL = $row['image_url'];
-            $game->thumbnailURL = $row['thumbnail_url'];
-            $games[] = $game;
+            $games[] = self::makeGameFromDBRow($row);
         }
         return $games;
     }
@@ -84,20 +131,7 @@ class Game
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         if ($row) {
-            $game = new Game();
-            $game->id = $row['id'];
-            $game->name = $row['name'];
-            $game->minPlayers = $row['min_players'];
-            $game->maxPlayers = $row['max_players'];
-            $game->playTime = $row['play_time'];
-            $game->minAge = $row['min_age'];
-            $game->ratingCount = $row['rating_count'];
-            $game->ratingAverage = $row['rating_average'];
-            $game->yearPublished = $row['year_published'];
-            $game->description = $row['description'];
-            $game->imageURL = $row['image_url'];
-            $game->thumbnailURL = $row['thumbnail_url'];
-            return $game;
+            return self::makeGameFromDBRow($row);
         } else {
             return null;
         }
@@ -199,12 +233,19 @@ class Game
     public function cardView()
     {
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
-        return "<div class='card my-2'>
-            <div class='card-body'>
-                <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
-                <p class='card-text'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
-                <p class='card-text'>{$truncatedDescription}</p>
+        $mechanics = implode(", ", $this->mechanics);
+        $subgenres = implode(", ", $this->subgenres);
+        return "<a class='col text-decoration-none' href='game/info.php?game_id={$this->getId()}'>
+            <div class='card my-2'>
+                <div class='card-body'>
+                    <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                    <p class='card-text m-0'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <small class='card-text fst-italic'>{$mechanics}</small>
+                    <br>
+                    <small class='card-text fst-italic'>{$subgenres}</small>
+                    <p class='card-text'>{$truncatedDescription}</p>
+                </div>
             </div>
-        </div>";
+        </a>";
     }
 }
