@@ -235,7 +235,8 @@ class Game
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
-        return "<a class='col text-decoration-none' href='game/info.php?game_id={$this->getId()}'>
+        return "
+        <a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>
             <div class='card my-2'>
                 <div class='card-body'>
                     <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>

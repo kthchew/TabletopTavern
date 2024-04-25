@@ -36,7 +36,9 @@ define('__HEADER_FOOTER_PHP__', true);
             $games = Game::searchGamesByName($searchTerm, 10, $page);
             $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
+                echo "<div class='col'>";
                 echo $game->cardView();
+                echo "</div>";
             }
             ?>
 
