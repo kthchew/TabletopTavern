@@ -61,7 +61,7 @@ define('__HEADER_FOOTER_PHP__', true);
         <label for="password" class="form-label">Password</label>
         <input type="password" name="password" id="password" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary mb-3">Register</button>
+    <button type="submit" class="btn mb-3">Register</button>
     <p>Already a user? <a href="login.php">Login here.</a></p>
 </form>
 
