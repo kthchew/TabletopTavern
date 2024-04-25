@@ -1,9 +1,7 @@
 <?php
-// Check if the constant __HEADER_FOOTER_PHP__ is not defined
 if (!defined('__HEADER_FOOTER_PHP__')) {
-    // Redirect the user to a different page
     header('Location: index.php');
-    exit(); // Stop further execution of the script
+    exit();
 }
 ?>
 
