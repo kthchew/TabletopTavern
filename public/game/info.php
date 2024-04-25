@@ -33,17 +33,25 @@ if (!isset($game_id)) {
     <div class="alert alert-danger"><?= $error ?></div>
 <?php else: ?>
     <h1><?= $game->getName() ?></h1>
-    <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
-        <p>Players: <?= $game->getMinPlayers() ?></p>
-    <?php else: ?>
-        <p>Players: <?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
-    <?php endif; ?>
-    <p>Play Time: <?= $game->getPlayTime() ?> min</p>
-    <p>Minimum Age: <?= $game->getMinAge() ?></p>
-    <p>Rating: <?= $game->getRatingAverage() ?> (<?= $game->getRatingCount() ?> votes)</p>
-    <p>Year Published: <?= $game->getYearPublished() ?></p>
-    <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-fluid">
-    <p><?= $game->getDescription() ?></p>
+    <div>
+        <div class="w-25 float-end">
+            <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
+        </div>
+        <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
+            <p>Players: <?= $game->getMinPlayers() ?></p>
+        <?php else: ?>
+            <p>Players: <?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
+        <?php endif; ?>
+        <p>Play Time: <?= $game->getPlayTime() ?> min</p>
+        <p>Minimum Age: <?= $game->getMinAge() ?></p>
+        <p>Year Published: <?= $game->getYearPublished() ?></p>
+        <hr>
+        <h3>Description</h3>
+        <p><?= $game->getDescription() ?></p>
+    </div>
+
+    <hr>
+<!-- comments, etc can go here -->
 <?php endif; ?>
 </div>
 
