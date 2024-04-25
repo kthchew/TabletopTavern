@@ -3,7 +3,8 @@
 require '../vendor/autoload.php';
 session_start();
 // get the search term from the form
-$searchTerm = $_POST['searchTerm'];
+$searchTerm = $_GET['searchTerm'];
+$page = $_GET['page'] ?? 1;
 use Tabletop\Entities\Game;
 ?>
 <!DOCTYPE html>
@@ -24,14 +25,14 @@ use Tabletop\Entities\Game;
 <main class="container">
 <h1 class="text-center py-4">Search Results</h1>
     <p class="text-center">Results for: <b><?php echo $searchTerm; ?></b></p>
+    <p class="text-center">Page: <b><?php echo $page; ?></b></p>
     <br>
     <br>
     <div class="row row-cols-4">
 
             <?php
             // get the games that match the search term
-            $games = Game::searchGamesByName($searchTerm);
-            // first 10 games
+            $games = Game::searchGamesByName($searchTerm, 10, $page);
             $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<a class=\"col\" href=\"game/info.php?game_id={$game->getId()}\">";
@@ -40,6 +41,22 @@ use Tabletop\Entities\Game;
             }
             ?>
 
+    </div>
+    <div class="d-flex justify-content-center">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item <?php if ($page == 1) echo 'disabled'; ?>">
+                    <a class="page-link" href="search.php?searchTerm=<?php echo $searchTerm; ?>&page=<?php echo $page - 1; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item <?php if (count($games) < 10) echo 'disabled'; ?>">
+                    <a class="page-link" href="search.php?searchTerm=<?php echo $searchTerm; ?>&page=<?php echo $page + 1; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </main>
 <?php include 'footer.php';?>

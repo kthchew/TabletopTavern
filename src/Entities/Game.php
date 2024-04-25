@@ -45,12 +45,15 @@ class Game
         return $games;
     }
 
-    static function searchGamesByName($name): array
+    // currentPage
+    static function searchGamesByName($name, $pageSize, $currentPage): array
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Games WHERE name LIKE ?");
+        // search games by name and order by relevance
+        $stmt = $db->prepare("SELECT * FROM Games WHERE name LIKE ? ORDER BY name LIMIT ? OFFSET ?");
         $str = "%" . $name . "%";
-        $stmt->bind_param("s", $str);
+        $offset = ($currentPage - 1) * $pageSize;
+        $stmt->bind_param("sii", $str, $pageSize, $offset);
         $stmt->execute();
         $result = $stmt->get_result();
         $games = [];

@@ -61,7 +61,7 @@
     </div>
 </nav>
 <br>
-    <form action="search.php" method="post">
+    <form action="search.php" method="get">
         <div class="w-100 d-flex justify-content-center">
             <div class="input-group my-2 w-50" >
                 <input type="search" name="searchTerm" class="form-control" style="border: 1px solid #1C5E33" placeholder="Search Games..."/>
