@@ -46,7 +46,7 @@ class Game
         $result = $stmt->get_result();
         $game->mechanics = array_merge(...$result->fetch_all());
 
-        $stmt = $db->prepare("SELECT subgenre FROM tabletop_tavern.Subgenre JOIN tabletop_tavern.GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
+        $stmt = $db->prepare("SELECT subgenre FROM Subgenre JOIN GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $result = $stmt->get_result();
