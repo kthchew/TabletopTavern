@@ -33,29 +33,11 @@ jobs:
     # - name: Run test suite
     #   run: composer run-script test
 
-      - name: Deploy to CISE server (public)
-        uses: SamKirkland/web-deploy@v1
+      - name: Deploy to CISE Server
+        uses: burnett01/rsync-deployments@7.0.1
         with:
-          target-server: ${{ secrets.DEPLOY_SERVER }}
-          remote-user: ${{ secrets.DEPLOY_USER }}
-          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          source-path: ./public/
-          destination-path: ~/public_html/cis4930/group/public/
-
-      - name: Deploy to CISE server (vendor)
-        uses: SamKirkland/web-deploy@v1
-        with:
-          target-server: ${{ secrets.DEPLOY_SERVER }}
-          remote-user: ${{ secrets.DEPLOY_USER }}
-          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          source-path: ./vendor/
-          destination-path: ~/public_html/cis4930/group/vendor/
-
-      - name: Deploy to CISE server (src)
-        uses: SamKirkland/web-deploy@v1
-        with:
-          target-server: ${{ secrets.DEPLOY_SERVER }}
-          remote-user: ${{ secrets.DEPLOY_USER }}
-          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          source-path: ./src/
-          destination-path: ~/public_html/cis4930/group/src/
+          switches: -avzr --delete --include="src/***" --include="public/***" --include="vendor/***" --exclude="*"
+          remote_path: ~/public_html/cis4930/group/
+          remote_host: ${{ secrets.DEPLOY_SERVER }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
