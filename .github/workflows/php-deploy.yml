@@ -1,0 +1,64 @@
+name: Build and Deploy PHP
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: "${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    # - name: Run test suite
+    #   run: composer run-script test
+
+      - name: Deploy to CISE server (public)
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.DEPLOY_SERVER }}
+          remote-user: ${{ secrets.DEPLOY_USER }}
+          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          source-path: ./public/
+          destination-path: ~/public_html/cis4930/group/public/
+
+      - name: Deploy to CISE server (vendor)
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.DEPLOY_SERVER }}
+          remote-user: ${{ secrets.DEPLOY_USER }}
+          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          source-path: ./vendor/
+          destination-path: ~/public_html/cis4930/group/vendor/
+
+      - name: Deploy to CISE server (src)
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.DEPLOY_SERVER }}
+          remote-user: ${{ secrets.DEPLOY_USER }}
+          private-ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          source-path: ./src/
+          destination-path: ~/public_html/cis4930/group/src/
