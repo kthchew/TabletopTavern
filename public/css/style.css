@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-body {
+body, h1, h2, h3, h4, h5, p {
     font-family: 'K2D', Arial, sans-serif;
+    color: #1C5E33;
+}
+
+body {
     background-color: #FBFFF4;
+}
+
+h1 {
+    font-weight: bold;
 }
 
 .container {
@@ -37,4 +45,12 @@ body {
 
 .hexagon:hover {
     background-color: #5abc7c;
+}
+
+.nav-link{
+    font-family: K2D;
+}
+
+.nav-link:hover{
+    color: #5abc7c !important;
 }
