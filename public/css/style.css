@@ -5,6 +5,10 @@ body {
     background-color: #FBFFF4;
 }
 
+h1,h2,h3,h4,h5.p{
+    color: #1C5E33;
+}
+
 .container {
     padding: 40px 0;
 }

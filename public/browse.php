@@ -21,7 +21,27 @@ define('__HEADER_FOOTER_PHP__', true);
     <style>
         .scroll-container {
             overflow: auto;
+            background-color: #DEEDC8;
+            border-radius: 10px;
+            overflow-x: scroll;
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #cee1b1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a2d15c;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #629716;
+        }
+
         .row {
             flex-wrap: nowrap;
         }
@@ -40,7 +60,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h3><b><?php echo "Strategy Games:"; ?></b></h3>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-4 g-0" >
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Strategy Games");
