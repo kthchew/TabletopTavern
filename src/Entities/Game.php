@@ -188,10 +188,11 @@ class Game
 
         $this->description = str_replace("&#10;", "<br>", simplexml_load_string($this->apiResponse)->item->description);
         $this->imageURL = simplexml_load_string($this->apiResponse)->item->image;
+        $this->thumbnailURL = simplexml_load_string($this->apiResponse)->item->image;
         // store them in db
         $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE Games SET description = ?, image_url = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $this->description, $this->imageURL, $this->id);
+        $stmt = $db->prepare("UPDATE Games SET description = ?, image_url = ?, thumbnail_url = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $this->description, $this->imageURL, $this->thumbnailURL, $this->id);
         $stmt->execute();
     }
 
