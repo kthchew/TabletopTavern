@@ -91,6 +91,22 @@ class Game
         return $games;
     }
 
+    static function searchGamesByGenre($subgenre): array
+    {
+        $db = Database::getInstance();
+        // search games by genre
+        $str = "%" . $subgenre . "%";
+        $stmt = $db->prepare("SELECT * FROM Games JOIN GameSubgenreConnection ON Games.id = GameSubgenreConnection.game_id JOIN Subgenre ON GameSubgenreConnection.subgenre_id = Subgenre.id WHERE subgenre LIKE ?");
+        $stmt->bind_param("s", $str);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $games = [];
+        while ($row = $result->fetch_assoc()) {
+            $games[] = self::makeGameFromDBRow($row);
+        }
+        return $games;
+    }
+
     static function getGameById($id): ?Game
     {
         $db = Database::getInstance();
@@ -102,6 +118,20 @@ class Game
         if ($row) {
             return self::makeGameFromDBRow($row);
         } else {
+            return null;
+        }
+    }
+
+    static function getIDfromName($name): ?string{
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT id FROM Games WHERE name = ?");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        if ($row) {
+            return $row['id'];
+        }else {
             return null;
         }
     }
@@ -218,4 +248,25 @@ class Game
             </div>
         </a>";
     }
+
+    public function browseCard($game): string
+    {
+        $truncatedDescription = substr($game->getDescription(), 0, 100) . "...";
+        $mechanics = implode(", ", $game->mechanics);
+        $subgenres = implode(", ", $game->subgenres);
+        return "
+        <a class='text-decoration-none' href='game/info.php?game_id={$game->getIDfromName($game->name)}'>
+            <div class='card my-2'>
+                <div class='card-body'>
+                    <h5 class='card-title'>{$game->name} ({$game->yearPublished})</h5>
+                    <p class='card-text m-0'>{$game->minPlayers} - {$game->maxPlayers} players, {$game->playTime} minutes, {$game->minAge}+</p>
+                    <small class='card-text fst-italic'>{$mechanics}</small>
+                    <br>
+                    <small class='card-text fst-italic'>{$subgenres}</small>
+                    <p class='card-text'>{$truncatedDescription}</p>
+                </div>
+            </div>
+        </a>";
+    }
+
 }

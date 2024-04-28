@@ -1,0 +1,179 @@
+#!/usr/local/bin/php
+<?php
+require '../vendor/autoload.php';
+session_start();
+$page = $_GET['page'] ?? 1;
+use Tabletop\Entities\Game;
+define('__HEADER_FOOTER_PHP__', true);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabletop Tavern</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .scroll-container {
+            overflow: auto;
+        }
+        .row {
+            flex-wrap: nowrap;
+        }
+        .col {
+            flex: 1 0 auto;
+        }
+
+    </style>
+</head>
+
+<body>
+<?php include 'header.php';?>
+<main class="container">
+    <h1 class="text-center">Browse By Genre</h1>
+
+    <br>
+    <h3><b><?php echo "Strategy Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Strategy Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Party Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Party Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Family Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Family Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Customizable Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Customizable Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Thematic Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Thematic Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Abstract Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Abstract Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Wargames:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Wargames");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <br>
+    <h3><b><?php echo "Children's Games:"; ?></b></h3>
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0">
+            <?php
+            // get the games that match the search term
+            $games = Game::searchGamesByGenre("Children's Games");
+            $games = array_slice($games, 0, 10);
+            foreach ($games as $game) {
+                echo "<div class='col' style='padding: 10px'>";
+                echo $game->browseCard($game);
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+</main>
+<?php include 'footer.php';?>
+</body>
+</html>

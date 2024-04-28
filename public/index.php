@@ -48,7 +48,7 @@ define('__HEADER_FOOTER_PHP__', true);
                 <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:200px;height:200px;">
                 <br>
                 <br>
-                <a style="font-size: 18pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-3 mx-2 rounded" href="filter.php" role="button">Browse Games</a>
+                <a style="font-size: 18pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-3 mx-2 rounded" href="browse.php" role="button">Browse Games</a>
             </div>
         </div>
     </div>
