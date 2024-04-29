@@ -65,7 +65,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Strategy Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -82,7 +82,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Party Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -99,7 +99,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Family Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -116,7 +116,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Customizable Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -133,7 +133,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Thematic Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -150,7 +150,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Abstract Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -167,7 +167,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Wargames", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
@@ -184,7 +184,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Children's Games", 10, $page);
-            $games = array_slice($games, 0, 5);
+            $games = array_slice($games, 0, 10);
             foreach ($games as $game) {
                 echo "<div class='col' style='padding: 10px'>";
                 echo $game->cardView();
