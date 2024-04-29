@@ -2,6 +2,24 @@
 <?php
 session_start();
 define('__HEADER_FOOTER_PHP__', true);
+
+require '../vendor/autoload.php';
+
+use Tabletop\Entities\Game;
+$randomGame = Game::getRandomGame();
+if ($randomGame === null) {
+    die("No games found");
+} else {
+    $config = parse_ini_file(__DIR__ . '/../config.ini');
+    if (!$config) {
+        $rootPath = '/TabletopTavern/public/';
+    } else {
+        $rootPath = $config['root_path'];
+    }
+    $location = $rootPath . "game/info.php?game_id={$randomGame->getId()}";
+
+    header("Location: " . $location);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +36,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
-
+<p>You are being redirected to a random game... If you are not redirected, <a href="<?php echo $location; ?>">click here</a>.</p>
 <?php include 'footer.php';?>
 </body>
 </html>

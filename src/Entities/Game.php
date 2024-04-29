@@ -200,6 +200,19 @@ class Game
         }
     }
 
+    static function getRandomGame(): ?Game
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM Games ORDER BY RAND() LIMIT 1";
+        $result = $db->query($sql);
+        $row = $result->fetch_assoc();
+        if ($row) {
+            return self::makeGameFromDBRow($row);
+        } else {
+            return null;
+        }
+    }
+
     public function getId(): int {
         return $this->id;
     }
