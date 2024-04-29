@@ -6,8 +6,20 @@ use Tabletop\Database;
 
 class Collection
 {
+    private static array $instances = array();
+    private static bool $hasFavorites = false;
+
     private int $id;
     private string $name;
+
+    public function __construct($id, $name) {
+        $this->id = $id;
+        $this->name = $name;
+        self::$instances[$id] = $this;
+        if ($name === "Favorites") {
+            $hasFavorites = true;
+        }
+    }
 
     public function getId(): int {
         return $this->id;
@@ -18,29 +30,56 @@ class Collection
     }
 
     private static function makeCollectionFromDBRow($row) {
-        $db = Database::getInstance();
-        $collection = new Collection();
-        $collection->id = $row['id'];
-        $collection->name = $row['name'];
+        if (isset(self::$instances[$row['id']])) {
+            return self::$instances[$row['id']];
+        } else {
+            return new Collection($row['id'], $row['name']);
+        }
 
-        return $collection;
     }
 
-    static function getUserCollections() {
+    static function doesUserCollectionExistById($collectionId): bool {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM Collections WHERE id = ? 
+            AND id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+        $stmt->bind_param("ii", $collectionId, $_SESSION['user']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 0) {
+            return False;
+        }
+        return True;
+    }
+
+    static function doesUserCollectionExistByName($collectionName): bool {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM Collections WHERE name = ? 
+            AND id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+        $stmt->bind_param("si", $collectionName, $_SESSION['user']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 0) {
+            return False;
+        }
+        return True;
+    }
+
+    static function getUserCollections(): array {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM Collections 
-         WHERE id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+         WHERE id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?) 
+           AND name <> 'Favorites'");
         $stmt->bind_param("i", $_SESSION['user']);
         $stmt->execute();
         $result = $stmt->get_result();
-        $collections = [];
+        $resultArr = [];
         while ($row = $result->fetch_assoc()) {
-            $collections[] = self::makeCollectionFromDBRow($row);
+            $resultArr[] = self::makeCollectionFromDBRow($row);
         }
-        return $collections;
+        return $resultArr;
     }
 
-    static function createCollection($name) {
+    static function createCollection($name): int {
         $db = Database::getInstance();
 
         $normalized_name = strtolower($name);
@@ -63,9 +102,7 @@ class Collection
             throw new \Exception("Failed to create collection");
         }
 
-        $collection = new Collection();
-        $collection->id = $stmt->insert_id;
-        $collection->name = $name;
+        $collection = new Collection($stmt->insert_id, $name);
 
         // connect collection to user
         $stmt = $db->prepare("INSERT INTO UserCollectionConnection (user_id, collection_id) VALUES (?, ?)");
