@@ -2,7 +2,7 @@
 <?php
 require '../../vendor/autoload.php';
 session_start();
-$game_id = $_GET['game_id'];
+$game_id = isset($_GET['game_id']) ? $_GET['game_id'] : null;
 if (!isset($game_id)) {
     $error = "Game not found.";
 } else {
