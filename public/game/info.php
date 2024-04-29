@@ -59,6 +59,15 @@ define('__HEADER_FOOTER_PHP__', true);
                         }
                     });
                     document.getElementById('rating_value').value = rating;
+                    const gameId = document.querySelector('input[name="game_id"]').value;
+                    const userId = document.querySelector('input[name="user_id"]').value;
+                    fetch('submit_rating.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `rating=${rating}&game_id=${gameId}&user_id=${userId}`,
+                    });
                 });
             });
         });
