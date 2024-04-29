@@ -247,12 +247,22 @@ class Game
 
     public function getRatingCount(): int
     {
-        return $this->ratingCount;
+        return count($this->ratings);
     }
 
     public function getRatingAverage(): float
     {
         return $this->ratingAverage;
+    }
+
+    public function getAverageRating(): float
+    {
+        $totalRating = 0;
+        $ratingCount = count($this->ratings);
+        foreach ($this->ratings as $rating) {
+            $totalRating += $rating['rating_number'];
+        }
+        return $ratingCount > 0 ? round($totalRating / $ratingCount, 1) : 0;
     }
 
     public function getYearPublished(): int

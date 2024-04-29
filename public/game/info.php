@@ -28,11 +28,14 @@ define('__HEADER_FOOTER_PHP__', true);
         .heart {
             font-size: 24px;
             cursor: pointer;
+            width: 24px;
+            display: inline-block;
+            text-align: center;
         }
 
         .heart:hover,
         .heart.active {
-            color: red;
+            color: #1c5e33;
         }
 
         .comment-actions {
@@ -48,14 +51,39 @@ define('__HEADER_FOOTER_PHP__', true);
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
+            hearts.forEach((heart, index) => {
+                heart.addEventListener('mouseover', function() {
+                    hearts.forEach((h, i) => {
+                        if (i <= index && !h.classList.contains('selected')) {
+                            h.innerHTML = '&#x2764;';
+                            h.classList.add('active');
+                        } else if (!h.classList.contains('selected')) {
+                            h.innerHTML = '&#x2661;';
+                            h.classList.remove('active');
+                        }
+                    });
+                });
+
+                heart.addEventListener('mouseout', function() {
+                    hearts.forEach(h => {
+                        if (!h.classList.contains('selected')) {
+                            h.innerHTML = '&#x2661;';
+                            h.classList.remove('active');
+                        }
+                    });
+                });
+
                 heart.addEventListener('click', function() {
                     const rating = parseInt(heart.getAttribute('data-value'));
-                    hearts.forEach((h, index) => {
-                        if (index < rating) {
+                    hearts.forEach((h, i) => {
+                        if (i < rating) {
+                            h.innerHTML = '&#x2764;';
                             h.classList.add('active');
+                            h.classList.add('selected');
                         } else {
+                            h.innerHTML = '&#x2661;';
                             h.classList.remove('active');
+                            h.classList.remove('selected');
                         }
                     });
                     document.getElementById('rating_value').value = rating;
@@ -100,16 +128,22 @@ define('__HEADER_FOOTER_PHP__', true);
         </ul>
         <hr>
         <div id="rating">
-            <span class="heart" data-value="1">&#x2661;</span>
-            <span class="heart" data-value="2">&#x2661;</span>
-            <span class="heart" data-value="3">&#x2661;</span>
-            <span class="heart" data-value="4">&#x2661;</span>
-            <span class="heart" data-value="5">&#x2661;</span>
+            <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating() : "No ratings yet" ?></span>
+            <?php if (isset($_SESSION['user'])): ?>
+                <span class="heart" data-value="1">&#x2661;</span>
+                <span class="heart" data-value="2">&#x2661;</span>
+                <span class="heart" data-value="3">&#x2661;</span>
+                <span class="heart" data-value="4">&#x2661;</span>
+                <span class="heart" data-value="5">&#x2661;</span>
+                <span>(<?= $game->getRatingCount() ?>)</span>
+                <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
+                    <input type="hidden" id="rating_value" name="rating_value" value="">
+                    <button type="submit">Submit Rating</button>
+                </form>
+            <?php else: ?>
+                <a href="../login.php">Log in to rate</a>
+            <?php endif; ?>
         </div>
-        <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post">
-            <input type="hidden" id="rating_value" name="rating_value" value="">
-            <button type="submit">Submit Rating</button>
-        </form>
         <h3>Description</h3>
         <p><?= $game->getDescription() ?></p>
     </div>
