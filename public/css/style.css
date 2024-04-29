@@ -5,8 +5,22 @@ body {
     background-color: #FBFFF4;
 }
 
-h1,h2,h3,h4,h5.p{
+h1,h2,h3,h4,h5,p,a {
     color: #1C5E33;
+}
+
+a:hover, .nav-link:hover{
+    color: #5abc7c !important;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #cee4ac;
+}
+
+.btn:hover {
+    color: #5abc7c;
+    background-color: #cee4ac;
 }
 
 .container {
@@ -41,4 +55,11 @@ h1,h2,h3,h4,h5.p{
 
 .hexagon:hover {
     background-color: #5abc7c;
+}
+
+.square-btn {
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
 }
