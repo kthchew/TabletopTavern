@@ -161,6 +161,9 @@ class Game
         $result = $stmt->get_result();
         $games = [];
         while ($row = $result->fetch_assoc()) {
+            //ensures the id corresponds with the game id and not the subgenre id
+            //fixes issue of repeated descriptions and missing info in browse cards
+            $row['id'] = $row['game_id'];
             $games[] = self::makeGameFromDBRow($row);
         }
         return $games;
@@ -309,6 +312,7 @@ class Game
         </a>";
     }
 
+    //not used anymore!
     public function browseCard($game): string
     {
         $truncatedDescription = substr($game->getDescription(), 0, 100) . "...";
