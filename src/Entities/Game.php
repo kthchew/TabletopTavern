@@ -91,6 +91,26 @@ class Game
         return $games;
     }
 
+    static function searchGamesByGenre($subgenre, $pageSize, $currentPage): array
+    {
+        $db = Database::getInstance();
+        // search games by genre
+        $str = "%" . $subgenre . "%";
+        $stmt = $db->prepare("SELECT * FROM Games JOIN GameSubgenreConnection ON Games.id = GameSubgenreConnection.game_id JOIN Subgenre ON GameSubgenreConnection.subgenre_id = Subgenre.id WHERE subgenre LIKE ? LIMIT ? OFFSET ?");
+        $offset = ($currentPage - 1) * $pageSize;
+        $stmt->bind_param("sii", $str, $pageSize, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $games = [];
+        while ($row = $result->fetch_assoc()) {
+            //ensures the id corresponds with the game id and not the subgenre id
+            //fixes issue of repeated descriptions and missing info in browse cards
+            $row['id'] = $row['game_id'];
+            $games[] = self::makeGameFromDBRow($row);
+        }
+        return $games;
+    }
+
     static function searchGameByMultipleParameters($name, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage): array
     {
         $db = Database::getInstance();
@@ -150,24 +170,6 @@ class Game
         return $games;
     }
 
-    static function searchGamesByGenre($subgenre): array
-    {
-        $db = Database::getInstance();
-        // search games by genre
-        $str = "%" . $subgenre . "%";
-        $stmt = $db->prepare("SELECT * FROM Games JOIN GameSubgenreConnection ON Games.id = GameSubgenreConnection.game_id JOIN Subgenre ON GameSubgenreConnection.subgenre_id = Subgenre.id WHERE subgenre LIKE ?");
-        $stmt->bind_param("s", $str);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $games = [];
-        while ($row = $result->fetch_assoc()) {
-            //ensures the id corresponds with the game id and not the subgenre id
-            //fixes issue of repeated descriptions and missing info in browse cards
-            $row['id'] = $row['game_id'];
-            $games[] = self::makeGameFromDBRow($row);
-        }
-        return $games;
-    }
 
     static function getGameById($id): ?Game
     {
