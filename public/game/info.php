@@ -24,6 +24,37 @@ define('__HEADER_FOOTER_PHP__', true);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .heart {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .heart:hover,
+        .heart.active {
+            color: red;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                heart.addEventListener('click', function() {
+                    const rating = parseInt(heart.getAttribute('data-value'));
+                    hearts.forEach((h, index) => {
+                        if (index < rating) {
+                            h.classList.add('active');
+                        } else {
+                            h.classList.remove('active');
+                        }
+                    });
+                    document.getElementById('rating_value').value = rating;
+                });
+            });
+        });
+
+    </script>
 </head>
 
 <body>
@@ -59,6 +90,17 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php endforeach; ?>
         </ul>
         <hr>
+        <div id="rating">
+            <span class="heart" data-value="1">&#x2661;</span>
+            <span class="heart" data-value="2">&#x2661;</span>
+            <span class="heart" data-value="3">&#x2661;</span>
+            <span class="heart" data-value="4">&#x2661;</span>
+            <span class="heart" data-value="5">&#x2661;</span>
+        </div>
+        <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post">
+            <input type="hidden" id="rating_value" name="rating_value" value="">
+            <button type="submit">Submit Rating</button>
+        </form>
         <h3>Description</h3>
         <p><?= $game->getDescription() ?></p>
     </div>
