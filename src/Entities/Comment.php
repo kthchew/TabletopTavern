@@ -22,7 +22,7 @@ class Comment
 
     static function getCommentsByGameId($gameId): array {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT comments.*, Users.username FROM comments JOIN Users ON comments.user_id = Users.id WHERE game_id = ? ORDER BY created_at DESC");
+        $stmt = $db->prepare("SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE game_id = ? ORDER BY created_at DESC");
         $stmt->bind_param("i", $gameId);
         $stmt->execute();
         $result = $stmt->get_result();

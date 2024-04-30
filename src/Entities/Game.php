@@ -40,19 +40,19 @@ class Game
         $game->imageURL = $row['image_url'];
         $game->thumbnailURL = $row['thumbnail_url'];
         // lookup mechanics as a many-to-many relationship from the SQL db, and store them in the game object
-        $stmt = $db->prepare("SELECT mechanic FROM Mechanics JOIN GameMechanicConnection ON Mechanics.id = GameMechanicConnection.mechanic_id WHERE GameMechanicConnection.game_id = ?");
+        $stmt = $db->prepare("SELECT mechanic FROM mechanics JOIN gamemechanicconnection ON mechanics.id = gamemechanicconnection.mechanic_id WHERE gamemechanicconnection.game_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $result = $stmt->get_result();
         $game->mechanics = array_merge(...$result->fetch_all());
 
-        $stmt = $db->prepare("SELECT subgenre FROM Subgenre JOIN GameSubgenreConnection ON Subgenre.id = GameSubgenreConnection.subgenre_id WHERE GameSubgenreConnection.game_id = ?");
+        $stmt = $db->prepare("SELECT subgenre FROM subgenre JOIN gamesubgenreconnection ON subgenre.id = gamesubgenreconnection.subgenre_id WHERE gamesubgenreconnection.game_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $result = $stmt->get_result();
         $game->subgenres = array_merge(...$result->fetch_all());
 
-        $stmt = $db->prepare("SELECT * FROM Ratings WHERE game_id = ?");
+        $stmt = $db->prepare("SELECT * FROM ratings WHERE game_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -64,7 +64,7 @@ class Game
     static function getGamesFromDatabase(): array
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM Games";
+        $sql = "SELECT * FROM games";
         $result = $db->query($sql);
         $games = [];
         while ($row = $result->fetch_assoc()) {
@@ -78,7 +78,7 @@ class Game
     {
         $db = Database::getInstance();
         // search games by name and order by relevance
-        $stmt = $db->prepare("SELECT * FROM Games WHERE name LIKE ? ORDER BY name LIMIT ? OFFSET ?");
+        $stmt = $db->prepare("SELECT * FROM games WHERE name LIKE ? ORDER BY name LIMIT ? OFFSET ?");
         $str = "%" . $name . "%";
         $offset = ($currentPage - 1) * $pageSize;
         $stmt->bind_param("sii", $str, $pageSize, $offset);
@@ -96,7 +96,7 @@ class Game
         $db = Database::getInstance();
         // search games by genre
         $str = "%" . $subgenre . "%";
-        $stmt = $db->prepare("SELECT * FROM Games JOIN GameSubgenreConnection ON Games.id = GameSubgenreConnection.game_id JOIN Subgenre ON GameSubgenreConnection.subgenre_id = Subgenre.id WHERE subgenre LIKE ? LIMIT ? OFFSET ?");
+        $stmt = $db->prepare("SELECT * FROM games JOIN gamesubgenreconnection ON games.id = gamesubgenreconnection.game_id JOIN subgenre ON gamesubgenreconnection.subgenre_id = subgenre.id WHERE subgenre LIKE ? LIMIT ? OFFSET ?");
         $offset = ($currentPage - 1) * $pageSize;
         $stmt->bind_param("sii", $str, $pageSize, $offset);
         $stmt->execute();
@@ -116,7 +116,7 @@ class Game
         $db = Database::getInstance();
 
         // Initialize the query and the parameters array
-        $query = "SELECT * FROM Games WHERE ";
+        $query = "SELECT * FROM games WHERE ";
         $params = [];
         $types = "";
 
@@ -174,7 +174,7 @@ class Game
     static function getGameById($id): ?Game
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Games WHERE id = ?");
+        $stmt = $db->prepare("SELECT * FROM games WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -188,7 +188,7 @@ class Game
 
     static function getIDfromName($name): ?string{
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT id FROM Games WHERE name = ?");
+        $stmt = $db->prepare("SELECT id FROM games WHERE name = ?");
         $stmt->bind_param("s", $name);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -203,7 +203,7 @@ class Game
     static function getRandomGame(): ?Game
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM Games ORDER BY RAND() LIMIT 1";
+        $sql = "SELECT * FROM games ORDER BY RAND() LIMIT 1";
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
         if ($row) {
@@ -278,7 +278,7 @@ class Game
         $this->thumbnailURL = simplexml_load_string($this->apiResponse)->item->image;
         // store them in db
         $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE Games SET description = ?, image_url = ?, thumbnail_url = ? WHERE id = ?");
+        $stmt = $db->prepare("UPDATE games SET description = ?, image_url = ?, thumbnail_url = ? WHERE id = ?");
         $stmt->bind_param("sssi", $this->description, $this->imageURL, $this->thumbnailURL, $this->id);
         $stmt->execute();
     }

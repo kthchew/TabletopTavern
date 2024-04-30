@@ -40,8 +40,8 @@ class Collection
 
     static function doesUserCollectionExistById($collectionId): bool {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Collections WHERE id = ? 
-            AND id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+        $stmt = $db->prepare("SELECT * FROM collections WHERE id = ? 
+            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
         $stmt->bind_param("ii", $collectionId, $_SESSION['user']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -53,8 +53,8 @@ class Collection
 
     static function doesUserCollectionExistByName($collectionName): bool {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Collections WHERE name = ? 
-            AND id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+        $stmt = $db->prepare("SELECT * FROM collections WHERE name = ? 
+            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
         $stmt->bind_param("si", $collectionName, $_SESSION['user']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -66,8 +66,8 @@ class Collection
 
     static function getUserCollections(): array {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Collections 
-         WHERE id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?) 
+        $stmt = $db->prepare("SELECT * FROM collections 
+         WHERE id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?) 
            AND name <> 'Favorites'");
         $stmt->bind_param("i", $_SESSION['user']);
         $stmt->execute();
@@ -85,8 +85,8 @@ class Collection
         $normalized_name = strtolower($name);
 
         // check if user has collection with same name already
-        $stmt = $db->prepare("SELECT * FROM Collections WHERE LOWER(name) = ? 
-                            AND id IN (SELECT collection_id FROM UserCollectionConnection WHERE user_id = ?)");
+        $stmt = $db->prepare("SELECT * FROM collections WHERE LOWER(name) = ? 
+                            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
         $stmt->bind_param("si", $normalized_name, $_SESSION['user']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -95,7 +95,7 @@ class Collection
         }
 
         // add to collections
-        $stmt = $db->prepare("INSERT INTO Collections (name) VALUES (?)");
+        $stmt = $db->prepare("INSERT INTO collections (name) VALUES (?)");
         $stmt->bind_param("s", $name);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
@@ -105,7 +105,7 @@ class Collection
         $collection = new Collection($stmt->insert_id, $name);
 
         // connect collection to user
-        $stmt = $db->prepare("INSERT INTO UserCollectionConnection (user_id, collection_id) VALUES (?, ?)");
+        $stmt = $db->prepare("INSERT INTO usercollectionconnection (user_id, collection_id) VALUES (?, ?)");
         $stmt->bind_param("ii",$_SESSION['user'], $collection->id);
         $stmt->execute();
 
@@ -114,25 +114,25 @@ class Collection
 
     public function deleteCollection() {
         $db = Database::getInstance();
-        $stmt = $db->prepare("DELETE FROM Collections WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM collections WHERE id = ?");
         $stmt->bind_param("i", $this->id);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to delete collection");
         }
 
-        $stmt = $db->prepare("DELETE FROM UserCollectionConnection WHERE user_id = ? AND collection_id = ?");
+        $stmt = $db->prepare("DELETE FROM usercollectionconnection WHERE user_id = ? AND collection_id = ?");
         $stmt->bind_param("ii",$_SESSION['user'], $this->id);
         $stmt->execute();
 
-        $stmt = $db->prepare("DELETE FROM CollectionGameConnection WHERE collection_id = ?");
+        $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ?");
         $stmt->bind_param("i", $this->id);
         $stmt->execute();
     }
 
     public function editCollectionName($name) {
         $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE Collections SET name = ? WHERE id = ?");
+        $stmt = $db->prepare("UPDATE collections SET name = ? WHERE id = ?");
         $stmt->bind_param("si", $name, $this->id);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
@@ -143,7 +143,7 @@ class Collection
     public function addGameToCollection($gameId) {
         $db = Database::getInstance();
         // connect game to collection
-        $stmt = $db->prepare("INSERT INTO CollectionGameConnection (collection_id, game_id) VALUES (?, ?)");
+        $stmt = $db->prepare("INSERT INTO collectiongameconnection (collection_id, game_id) VALUES (?, ?)");
         $stmt->bind_param("ii",$this->id, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
@@ -154,7 +154,7 @@ class Collection
     public function removeGameFromCollection($gameId) {
         $db = Database::getInstance();
 
-        $stmt = $db->prepare("DELETE FROM CollectionGameConnection WHERE collection_id = ? AND game_id = ?");
+        $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ? AND game_id = ?");
         $stmt->bind_param("ii",$this->id, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
@@ -165,7 +165,7 @@ class Collection
     static function getCollectionById($id): ?Collection
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Collections WHERE id = ?");
+        $stmt = $db->prepare("SELECT * FROM collections WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();

@@ -3,8 +3,8 @@ from getpass import getpass
 import sshtunnel
 import pymysql
 
-DATASET_FILE = "test.csv"
-DATABASE_NAME = "tabletop_test"
+DATASET_FILE = "bgg_dataset.csv"
+DATABASE_NAME = "tabletop_tavern"
 DATABASE_HOST = "localhost"
 NEEDS_SSH_TUNNEL = False
 SSH_HOST = "storm.cise.ufl.edu"
@@ -26,7 +26,7 @@ def init_db(sqlDb):
                 continue
             try:
                 cursor.execute("""
-                        INSERT INTO Games (id, name, year_published, min_players, max_players, play_time, min_age, rating_count, rating_average)
+                        INSERT INTO games (id, name, year_published, min_players, max_players, play_time, min_age, rating_count, rating_average)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """, (
                     row['ID'], row['Name'], row['Year Published'], row['Min Players'], row['Max Players'],
@@ -37,26 +37,26 @@ def init_db(sqlDb):
 
             for mechanic in row['Mechanics'].split(', '):
                 cursor.execute("""
-                        INSERT INTO Mechanics (mechanic) VALUES (%s) ON DUPLICATE KEY UPDATE mechanic = mechanic
+                        INSERT INTO mechanics (mechanic) VALUES (%s) ON DUPLICATE KEY UPDATE mechanic = mechanic
                     """, (mechanic,))
                 cursor.execute("""
-                        SELECT id FROM Mechanics WHERE mechanic = %s
+                        SELECT id FROM mechanics WHERE mechanic = %s
                     """, (mechanic,))
                 mechanic_id = cursor.fetchone()[0]
                 cursor.execute("""
-                        INSERT INTO GameMechanicConnection (game_id, mechanic_id) VALUES (%s, %s)
+                        INSERT INTO gamemechanicconnection (game_id, mechanic_id) VALUES (%s, %s)
                     """, (row['ID'], mechanic_id))
 
             for domain in row['Domains'].split(', '):
                 cursor.execute("""
-                        INSERT INTO Subgenre (subgenre) VALUES (%s) ON DUPLICATE KEY UPDATE subgenre = subgenre
+                        INSERT INTO subgenre (subgenre) VALUES (%s) ON DUPLICATE KEY UPDATE subgenre = subgenre
                     """, (domain,))
                 cursor.execute("""
-                        SELECT id FROM Subgenre WHERE subgenre = %s
+                        SELECT id FROM subgenre WHERE subgenre = %s
                     """, (domain,))
                 domain_id = cursor.fetchone()[0]
                 cursor.execute("""
-                        INSERT INTO GameSubgenreConnection (game_id, subgenre_id) VALUES (%s, %s)
+                        INSERT INTO gamesubgenreconnection (game_id, subgenre_id) VALUES (%s, %s)
                     """, (row['ID'], domain_id))
 
     # Commit the changes and close the connection

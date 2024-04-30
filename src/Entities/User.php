@@ -29,7 +29,7 @@ class User
         $db = Database::getInstance();
 
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $db->prepare("INSERT INTO Users (email, username, password) VALUES (?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $email, $username, $password);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
@@ -41,7 +41,7 @@ class User
     static function getUserById($id): User
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Users WHERE id = ?");
+        $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -62,7 +62,7 @@ class User
     static function getUserByNamePassword($username, $password): User
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM Users WHERE username = ?");
+        $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
