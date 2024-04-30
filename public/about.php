@@ -45,12 +45,38 @@ define('__HEADER_FOOTER_PHP__', true);
             <hr class="bold-divider">
             <h1 style="margin-bottom: 0;">Created By...</h1>
             <div class="hex-container">
-                <div class="hexagon">Person 1</div>
-                <div class="hexagon">Person 2</div>
-                <div class="hexagon">Person 3</div>
-                <div class="hexagon">Person 4</div>
-                <div class="hexagon">Person 5</div>
+                <div>
+                    <div class="hexagon">
+                        <img src="images/kenneth_img.png" alt="Kenneth's GitHub Profile Picture" style="width:150px;height:150px;">
+                    </div>
+                    <h5>Kenneth Chew</h5>
+                </div>
+                <div>
+                    <div class="hexagon">
+                        <img src="images/annika_img.png" alt="Annika's GitHub Profile Picture" style="width:150px;height:150px;">
+                    </div>
+                    <h5>Annika Cruz</h5>
+                </div>
+                <div>
+                    <div class="hexagon">
+                        <img src="images/joanna_img.png" alt="Joanna's GitHub Profile Picture" style="width:150px;height:150px;">
+                    </div>
+                    <h5>Joanna Mijares</h5>
+                </div>
+                <div>
+                    <div class="hexagon">
+                        <img src="images/ansh_img.png" alt="Ansh's GitHub Profile Picture" style="width:150px;height:150px;">
+                    </div>
+                    <h5>Ansh Kalariya</h5>
+                </div>
+                <div>
+                    <div class="hexagon">
+                        <img src="images/cameron_img.png" alt="Cameron's GitHub Profile Picture" style="width:150px;height:150px;">
+                    </div>
+                    <h5>Cameron Vallin</h5>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
