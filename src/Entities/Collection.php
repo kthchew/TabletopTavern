@@ -6,19 +6,12 @@ use Tabletop\Database;
 
 class Collection
 {
-    private static array $instances = array();
-    private static bool $hasFavorites = false;
-
     private int $id;
     private string $name;
 
     public function __construct($id, $name) {
         $this->id = $id;
         $this->name = $name;
-        self::$instances[$id] = $this;
-        if ($name === "Favorites") {
-            $hasFavorites = true;
-        }
     }
 
     public function getId(): int {
@@ -30,38 +23,23 @@ class Collection
     }
 
     private static function makeCollectionFromDBRow($row) {
-        if (isset(self::$instances[$row['id']])) {
-            return self::$instances[$row['id']];
-        } else {
-            return new Collection($row['id'], $row['name']);
-        }
-
+        return new Collection($row['id'], $row['name']);
     }
 
-    static function doesUserCollectionExistById($collectionId): bool {
+    // checks if collection exists and if user owns it
+    static function getUserCollection($collectionId): ?Collection {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM collections WHERE id = ? 
             AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
         $stmt->bind_param("ii", $collectionId, $_SESSION['user']);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows == 0) {
-            return False;
+        $row = $result->fetch_assoc();
+        if ($row) {
+            return self::makeCollectionFromDBRow($row);
+        } else {
+            return null;
         }
-        return True;
-    }
-
-    static function doesUserCollectionExistByName($collectionName): bool {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM collections WHERE name = ? 
-            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
-        $stmt->bind_param("si", $collectionName, $_SESSION['user']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows == 0) {
-            return False;
-        }
-        return True;
     }
 
     static function getUserCollections(): array {
@@ -112,32 +90,65 @@ class Collection
         return $collection->id;
     }
 
-    public function deleteCollection() {
+    static function deleteCollection($collectionId): bool {
         $db = Database::getInstance();
-        $stmt = $db->prepare("DELETE FROM collections WHERE id = ?");
-        $stmt->bind_param("i", $this->id);
-        $stmt->execute();
-        if ($stmt->affected_rows != 1) {
-            throw new \Exception("Failed to delete collection");
-        }
+        $db->begin_transaction();
 
         $stmt = $db->prepare("DELETE FROM usercollectionconnection WHERE user_id = ? AND collection_id = ?");
-        $stmt->bind_param("ii",$_SESSION['user'], $this->id);
+        $stmt->bind_param("ii",$_SESSION['user'], $collectionId);
         $stmt->execute();
+        if (!$stmt->execute()) {
+            $db->rollback();
+            return false;
+        }
 
         $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ?");
-        $stmt->bind_param("i", $this->id);
+        $stmt->bind_param("i", $collectionId);
         $stmt->execute();
+        if (!$stmt->execute()) {
+            $db->rollback();
+            return false;
+        }
+
+        $stmt = $db->prepare("DELETE FROM collections WHERE id = ?");
+        $stmt->bind_param("i", $collectionId);
+        $stmt->execute();
+        if (!$stmt->execute()) {
+            $db->rollback();
+            return false;
+        }
+
+        $db->commit();
+
+        return true;
     }
 
-    public function editCollectionName($name) {
+    static function editCollectionName($collectionId, $newName): bool
+    {
         $db = Database::getInstance();
+        $normalized_new_name = strtolower($newName);
+
+        // 1. Find if collection has same name
+        // 2. Exclude collections with different capitalization of old name, so user can change
+        // current collection's capitalization
+        $stmt = $db->prepare("SELECT * FROM collections WHERE LOWER(name) = ? 
+                            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)
+                            AND id <> ?");
+        $stmt->bind_param("sii", $normalized_new_name, $_SESSION['user'], $collectionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            throw new \Exception("Collection already exists");
+        }
+
         $stmt = $db->prepare("UPDATE collections SET name = ? WHERE id = ?");
-        $stmt->bind_param("si", $name, $this->id);
+        $stmt->bind_param("si", $newName, $collectionId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to edit collection name");
         }
+
+        return true;
     }
 
     public function addGameToCollection($gameId) {
@@ -159,21 +170,6 @@ class Collection
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to remove game from connection");
-        }
-    }
-
-    static function getCollectionById($id): ?Collection
-    {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM collections WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        if ($row) {
-            return self::makeCollectionFromDBRow($row);
-        } else {
-            return null;
         }
     }
 
