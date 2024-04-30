@@ -45,13 +45,15 @@ define('__HEADER_FOOTER_PHP__', true);
                 $("#create-btn").prop("disabled", false);
             }
         });
-    });
-
 </script>
 
 <body>
 <?php include 'header.php';?>
 <main class="container">
+    <?php if (isset($_SESSION['success'])): ?>
+        <div id="success-dashboard-alert" class="alert alert-success"><?= $_SESSION['success'] ?></div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
     <h1 class = "text-center"><?php echo $_SESSION['username'] ?>'s Dashboard</h1>
     <h2>Favorites</h2>
 
@@ -62,7 +64,6 @@ define('__HEADER_FOOTER_PHP__', true);
     <div class="row row-cols-4 mb-4">
 
         <?php
-        // get the games that match the search term
         $collections = Collection::getUserCollections();
         foreach ($collections as $collection) {
             echo "<div class='col'>";
@@ -72,35 +73,39 @@ define('__HEADER_FOOTER_PHP__', true);
         ?>
 
     </div>
+</main>
 
-    <div class="modal" id="collection-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Create a new collection</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form action="dashboard.php" method="post">
-                    <?php if (isset($error)): ?>
-                        <div class="alert alert-danger"><?= $error ?></div>
-                        <script>
-                            $(document).ready(function(){
-                                $('#collection-modal').modal('show'); // Show the modal if there's an error
-                            });
-                        </script>
-                    <?php endif; ?>
-                    <div class="modal-body">
-                        <input type="text" name="collection-name" id="collection-name" class="form-control" placeholder="Name your collection">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn" id="create-btn" disabled>Create</button>
-                    </div>
-                </form>
+<div class="modal" id="collection-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create a new collection</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <form action="dashboard.php" method="post">
+                <?php if (isset($error)): ?>
+                    <div class="alert alert-danger"><?= $error ?></div>
+                    <script>
+                        $(document).ready(function(){
+                            $('#collection-modal').modal('show'); // Show the modal if there's an error
+                        });
+                    </script>
+                <?php endif; ?>
+                <div class="modal-body">
+                    <input type="text" name="collection-name" id="collection-name" class="form-control" placeholder="Name your collection">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn" id="create-btn" disabled>Create</button>
+                </div>
+            </form>
         </div>
     </div>
-</main>
+</div>
 <?php include 'footer.php';?>
+
+<script>
+    $("#success-dashboard-alert").delay(3000).fadeOut();
+</script>
 </body>
 
 </html>
