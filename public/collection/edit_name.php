@@ -23,8 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: index.php?collection_id=" . $collectionId);
         exit;
     } catch (\Exception $e) {
-        $error2 = $e->getMessage();
-        $_SESSION['error2'] = $e->getMessage();
+        if ($e->getMessage() == "Collection already exists") {
+            $_SESSION['error2'] = $e->getMessage();
+        } else {
+            $_SESSION['error2'] = "Failed to edit collection name";
+        }
         header("Location: index.php?collection_id=" . $collectionId);
         exit;
     }

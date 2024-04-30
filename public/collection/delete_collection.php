@@ -22,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../dashboard.php");
         exit;
     } catch (\Exception $e) {
-        $error2 = $e->getMessage();
-        $_SESSION['error2'] = $e->getMessage();
+        $_SESSION['error2'] = "Failed to delete collection";
         header("Location: index.php?collection_id=" . $collectionId);
         exit;
     }
