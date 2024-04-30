@@ -31,8 +31,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <div>
                 <h2>✴ Roll the Dice ✴</h2>
                 <br>
-                <!-- maybe make dice spin on hover? like "rolling"? -->
-                <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:200px;height:200px;">
+                <img src="images/rollDice.png" alt="A 20 sided dice with a '?' on one face" style="width:200px;height:200px;">
                 <br>
                 <br>
                 <a style="font-size: 18pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-3 mx-2 rounded" href="random.php" role="button">Take a chance!</a>
@@ -44,8 +43,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <div>
                 <h2>✴ Filter Search ✴</h2>
                 <br>
-                <!-- maybe make dice spin on hover? like "rolling"? -->
-                <img src="images/tempLogo.png" alt="A 20 sided dice with the letters 'TT'" style="width:200px;height:200px;">
+                <img src="images/filter.png" alt="A shattered magnifying glass" style="width:200px;height:200px;">
                 <br>
                 <br>
                 <a style="font-size: 18pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-3 mx-2 rounded" href="browse.php" role="button">Browse Games</a>
