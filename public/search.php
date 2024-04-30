@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 session_start();
 // get the search term from the form
-$searchTerm = $_GET['searchTerm'];
+$searchTerm = isset($_GET['searchTerm']) ? $_GET['searchTerm'] : null;
 $page = $_GET['page'] ?? 1;
 use Tabletop\Entities\Game;
 define('__HEADER_FOOTER_PHP__', true);
