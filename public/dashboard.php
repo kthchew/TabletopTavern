@@ -14,7 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: collection/index.php?collection_id=" . $collection);
         exit;
     } catch (Exception $e) {
-        $error = $e->getMessage();
+        if ($e->getMessage() == "Collection already exists") {
+            $error = $e->getMessage();
+        }
+        else {
+            $error = "Failed to create collection";
+        }
     }
 }
 
