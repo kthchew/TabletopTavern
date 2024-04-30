@@ -8,13 +8,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="edit_name.php?collection_id=<?= $collection->getId(); ?>" method="post">
-                <?php if (isset($error)): ?>
-                        <script>
-                            $(document).ready(function(){
-                                $('#edit-modal').modal('show');
-                            });
-                        </script>
-                    <?php endif; ?>
                     <div class="modal-body">
                         <input type="text" name="new-name" id="new-name" class="form-control" value=<?= $collection->getName() ?>>
                     </div>
