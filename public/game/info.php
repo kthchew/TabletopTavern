@@ -28,14 +28,11 @@ define('__HEADER_FOOTER_PHP__', true);
         .heart {
             font-size: 24px;
             cursor: pointer;
-            width: 24px;
-            display: inline-block;
-            text-align: center;
         }
 
         .heart:hover,
         .heart.active {
-            color: #1c5e33;
+            color: red;
         }
 
         .comment-actions {
@@ -51,39 +48,14 @@ define('__HEADER_FOOTER_PHP__', true);
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hearts = document.querySelectorAll('.heart');
-            hearts.forEach((heart, index) => {
-                heart.addEventListener('mouseover', function() {
-                    hearts.forEach((h, i) => {
-                        if (i <= index && !h.classList.contains('selected')) {
-                            h.innerHTML = '&#x2764;';
-                            h.classList.add('active');
-                        } else if (!h.classList.contains('selected')) {
-                            h.innerHTML = '&#x2661;';
-                            h.classList.remove('active');
-                        }
-                    });
-                });
-
-                heart.addEventListener('mouseout', function() {
-                    hearts.forEach(h => {
-                        if (!h.classList.contains('selected')) {
-                            h.innerHTML = '&#x2661;';
-                            h.classList.remove('active');
-                        }
-                    });
-                });
-
+            hearts.forEach(heart => {
                 heart.addEventListener('click', function() {
                     const rating = parseInt(heart.getAttribute('data-value'));
-                    hearts.forEach((h, i) => {
-                        if (i < rating) {
-                            h.innerHTML = '&#x2764;';
+                    hearts.forEach((h, index) => {
+                        if (index < rating) {
                             h.classList.add('active');
-                            h.classList.add('selected');
                         } else {
-                            h.innerHTML = '&#x2661;';
                             h.classList.remove('active');
-                            h.classList.remove('selected');
                         }
                     });
                     document.getElementById('rating_value').value = rating;
@@ -107,43 +79,40 @@ define('__HEADER_FOOTER_PHP__', true);
             <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
         </div>
         <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
-            <p>Players: <?= $game->getMinPlayers() ?></p>
+            <p><b>Players:</b> <?= $game->getMinPlayers() ?></p>
         <?php else: ?>
-            <p>Players: <?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
+            <p><b>Players:</b> <?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
         <?php endif; ?>
-        <p>Play Time: <?= $game->getPlayTime() ?> min</p>
-        <p>Minimum Age: <?= $game->getMinAge() ?></p>
-        <p>Year Published: <?= $game->getYearPublished() ?></p>
-        <p>Subgenres:</p>
+        <p><b>Play Time: </b><?= $game->getPlayTime() ?> min</p>
+        <p><b>Minimum Age: </b><?= $game->getMinAge() ?></p>
+        <p><b>Year Published:</b> <?= $game->getYearPublished() ?></p>
+        <p><b>Subgenres:</b></p>
         <ul>
             <?php foreach ($game->getSubgenres() as $subgenre): ?>
                 <li><?= $subgenre ?></li>
             <?php endforeach; ?>
         </ul>
-        <p>Mechanics:</p>
+        <p><b>Mechanics:</b></p>
         <ul>
             <?php foreach ($game->getMechanics() as $mechanic): ?>
                 <li><?= $mechanic ?></li>
             <?php endforeach; ?>
         </ul>
+
         <hr>
+
         <div id="rating">
-            <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating() : "No ratings yet" ?></span>
-            <?php if (isset($_SESSION['user'])): ?>
-                <span class="heart" data-value="1">&#x2661;</span>
-                <span class="heart" data-value="2">&#x2661;</span>
-                <span class="heart" data-value="3">&#x2661;</span>
-                <span class="heart" data-value="4">&#x2661;</span>
-                <span class="heart" data-value="5">&#x2661;</span>
-                <span>(<?= $game->getRatingCount() ?>)</span>
-                <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
-                    <input type="hidden" id="rating_value" name="rating_value" value="">
-                    <button type="submit">Submit Rating</button>
-                </form>
-            <?php else: ?>
-                <a href="../login.php">Log in to rate</a>
-            <?php endif; ?>
+            <span class="heart" data-value="1">&#x2661;</span>
+            <span class="heart" data-value="2">&#x2661;</span>
+            <span class="heart" data-value="3">&#x2661;</span>
+            <span class="heart" data-value="4">&#x2661;</span>
+            <span class="heart" data-value="5">&#x2661;</span>
         </div>
+        <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post">
+            <input type="hidden" id="rating_value" name="rating_value" value="">
+            <button type="submit">Submit Rating</button>
+        </form>
+        <br>
         <h3>Description</h3>
         <p><?= $game->getDescription() ?></p>
     </div>

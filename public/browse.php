@@ -56,7 +56,6 @@ define('__HEADER_FOOTER_PHP__', true);
 <?php include 'header.php';?>
 <main class="container">
     <h1 class="text-center">Browse By Genre</h1>
-    <p class="text-center">Page: <b><?php echo $page; ?></b></p>
 
     <br>
     <h3><b><?php echo "Strategy Games:"; ?></b></h3>
