@@ -20,7 +20,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <?php include 'header.php';?>
 <div class="container">
     <div class="row align-items-center">
-        <div class="col text-end">
+        <div class="col text-end" >
             <img src="images/tempLogo.png" alt="Left Logo" style="max-width: 50px; height: auto;">
         </div>
         <div class="col text-center">
@@ -46,32 +46,42 @@ define('__HEADER_FOOTER_PHP__', true);
             <h1 style="margin-bottom: 0;">Created By...</h1>
             <div class="hex-container">
                 <div>
-                    <div class="hexagon">
-                        <img src="images/kenneth_img.png" alt="Kenneth's GitHub Profile Picture" style="width:150px;height:150px;">
+                    <div class="hexagon" >
+                        <a href="https://github.com/kthchew">
+                        <img src="images/kenneth_img.png" alt="Kenneth's GitHub Profile Picture" class= "image">
+                        </a>
                     </div>
                     <h5>Kenneth Chew</h5>
                 </div>
                 <div>
                     <div class="hexagon">
-                        <img src="images/annika_img.png" alt="Annika's GitHub Profile Picture" style="width:150px;height:150px;">
+                        <a href="https://github.com/annikajc">
+                        <img src="images/annika_img.png" class= "image" alt="Annika's GitHub Profile Picture">
+                        </a>
                     </div>
                     <h5>Annika Cruz</h5>
                 </div>
                 <div>
                     <div class="hexagon">
-                        <img src="images/joanna_img.png" alt="Joanna's GitHub Profile Picture" style="width:150px;height:150px;">
+                        <a href="https://github.com/jonana-split">
+                        <img src="images/joanna_img.png" alt="Joanna's GitHub Profile Picture" class= "image">
+                        </a>
                     </div>
                     <h5>Joanna Mijares</h5>
                 </div>
                 <div>
                     <div class="hexagon">
-                        <img src="images/ansh_img.png" alt="Ansh's GitHub Profile Picture" style="width:150px;height:150px;">
+                        <a href="https://github.com/ansh-kalariya">
+                        <img src="images/ansh_img.png" alt="Ansh's GitHub Profile Picture" class= "image">
+                        </a>
                     </div>
                     <h5>Ansh Kalariya</h5>
                 </div>
                 <div>
                     <div class="hexagon">
-                        <img src="images/cameron_img.png" alt="Cameron's GitHub Profile Picture" style="width:150px;height:150px;">
+                        <a href="https://github.com/VallinEMCSQ">
+                        <img src="images/cameron_img.png" alt="Cameron's GitHub Profile Picture" class= "image">
+                        </a>
                     </div>
                     <h5>Cameron Vallin</h5>
                 </div>

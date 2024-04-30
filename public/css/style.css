@@ -89,7 +89,14 @@ a:hover, .dropdown-item:hover, .nav-link:hover{
 }
 
 .hexagon:hover {
-    background-color: #5abc7c;
+    background-color: #1C5E33;
+    opacity: 0.5;
+}
+
+.image{
+    opacity: 1;
+    width:150px;
+    height:150px;
 }
 
 .square-btn {
