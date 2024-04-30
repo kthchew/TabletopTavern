@@ -59,6 +59,7 @@ class Collection
 
     static function createCollection($name): int {
         $db = Database::getInstance();
+        $db->begin_transaction();
 
         $normalized_name = strtolower($name);
 
@@ -76,8 +77,9 @@ class Collection
         $stmt = $db->prepare("INSERT INTO collections (name) VALUES (?)");
         $stmt->bind_param("s", $name);
         $stmt->execute();
-        if ($stmt->affected_rows != 1) {
-            throw new \Exception("Failed to create collection");
+        if (!$stmt->execute()) {
+            $db->rollback();
+            throw new \Exception();
         }
 
         $collection = new Collection($stmt->insert_id, $name);
@@ -86,6 +88,12 @@ class Collection
         $stmt = $db->prepare("INSERT INTO usercollectionconnection (user_id, collection_id) VALUES (?, ?)");
         $stmt->bind_param("ii",$_SESSION['user'], $collection->id);
         $stmt->execute();
+        if (!$stmt->execute()) {
+            $db->rollback();
+            throw new \Exception();
+        }
+
+        $db->commit();
 
         return $collection->id;
     }
@@ -99,7 +107,7 @@ class Collection
         $stmt->execute();
         if (!$stmt->execute()) {
             $db->rollback();
-            return false;
+            throw new \Exception();
         }
 
         $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ?");
@@ -107,7 +115,7 @@ class Collection
         $stmt->execute();
         if (!$stmt->execute()) {
             $db->rollback();
-            return false;
+            throw new \Exception();
         }
 
         $stmt = $db->prepare("DELETE FROM collections WHERE id = ?");
@@ -115,7 +123,7 @@ class Collection
         $stmt->execute();
         if (!$stmt->execute()) {
             $db->rollback();
-            return false;
+            throw new \Exception();
         }
 
         $db->commit();
@@ -145,28 +153,28 @@ class Collection
         $stmt->bind_param("si", $newName, $collectionId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
-            throw new \Exception("Failed to edit collection name");
+            throw new \Exception();
         }
 
         return true;
     }
 
-    public function addGameToCollection($gameId) {
+    static function addGameToCollection($collectionId, $gameId) {
         $db = Database::getInstance();
         // connect game to collection
         $stmt = $db->prepare("INSERT INTO collectiongameconnection (collection_id, game_id) VALUES (?, ?)");
-        $stmt->bind_param("ii",$this->id, $gameId);
+        $stmt->bind_param("ii",$collectionId, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to add game to collection");
         }
     }
 
-    public function removeGameFromCollection($gameId) {
+    static function removeGameFromCollection($collectionId, $gameId) {
         $db = Database::getInstance();
 
         $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ? AND game_id = ?");
-        $stmt->bind_param("ii",$this->id, $gameId);
+        $stmt->bind_param("ii",$collectionId, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to remove game from connection");
