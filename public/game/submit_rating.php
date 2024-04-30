@@ -18,16 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (Game::getGameById($gameId) && User::getUserById($userId) && $rating >= 1 && $rating <= 5) {
             $db = Database::getInstance();
-            $stmt = $db->prepare("SELECT * FROM Ratings WHERE user_id = ? AND game_id = ?");
+            $stmt = $db->prepare("SELECT * FROM ratings WHERE user_id = ? AND game_id = ?");
             $stmt->bind_param("ii", $userId, $gameId);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
-                $stmt = $db->prepare("UPDATE Ratings SET rating_number = ? WHERE user_id = ? AND game_id = ?");
+                $stmt = $db->prepare("UPDATE ratings SET rating_number = ? WHERE user_id = ? AND game_id = ?");
                 $stmt->bind_param("iii", $rating, $userId, $gameId);
                 $stmt->execute();
             } else {
-                $stmt = $db->prepare("INSERT INTO Ratings (user_id, game_id, rating_number) VALUES (?, ?, ?)");
+                $stmt = $db->prepare("INSERT INTO ratings (user_id, game_id, rating_number) VALUES (?, ?, ?)");
                 $stmt->bind_param("iii", $userId, $gameId, $rating);
                 $stmt->execute();
             }
