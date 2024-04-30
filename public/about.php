@@ -45,9 +45,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <hr class="bold-divider">
             <h1 style="margin-bottom: 0;">Created By...</h1>
             <div class="hex-container">
-                <div class="hexagon">
-                    <img src="images/joanna.jpg" alt="A photo of Joanna Mijares" style="width:200px;height:200px;">
-                </div>
+                <div class="hexagon">Person 1</div>
                 <div class="hexagon">Person 2</div>
                 <div class="hexagon">Person 3</div>
                 <div class="hexagon">Person 4</div>
