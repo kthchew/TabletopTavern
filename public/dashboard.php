@@ -45,6 +45,7 @@ define('__HEADER_FOOTER_PHP__', true);
                 $("#create-btn").prop("disabled", false);
             }
         });
+    });
 </script>
 
 <body>
@@ -84,7 +85,7 @@ define('__HEADER_FOOTER_PHP__', true);
             </div>
             <form action="dashboard.php" method="post">
                 <?php if (isset($error)): ?>
-                    <div class="alert alert-danger"><?= $error ?></div>
+                    <div class="alert alert-danger mx-3 mt-3"><?= $error ?></div>
                     <script>
                         $(document).ready(function(){
                             $('#collection-modal').modal('show'); // Show the modal if there's an error
