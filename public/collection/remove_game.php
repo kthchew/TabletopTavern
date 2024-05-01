@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gameId = isset($_POST['game-id']) ? htmlspecialchars($_POST['game-id']) : null;
     $collectionId = isset($_POST['collection-id']) ? htmlspecialchars($_POST['collection-id']) : null;
     if ($collectionId == Tabletop\Entities\Collection::getFavoritesId()) {
-        $destination = "Location: /TabletopTavern/public/dashboard.php";
+        $destination = "Location: ../dashboard.php";
     } else {
         $destination = "Location: index.php?collection_id=" . $collectionId;
     }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['error'] = "Failed to add game to collection";
     $collectionId = isset($_POST['collection-id']) ? htmlspecialchars($_POST['collection-id']) : null;
     if ($collectionId == Tabletop\Entities\Collection::getFavoritesId()) {
-        $destination = "Location: /TabletopTavern/public/dashboard.php";
+        $destination = "Location: ../dashboard.php";
     } else {
         $destination = "Location: index.php?collection_id=" . $collectionId;
     }
