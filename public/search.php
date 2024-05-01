@@ -33,8 +33,8 @@ define('__HEADER_FOOTER_PHP__', true);
 
             <?php
             // get the games that match the search term
-            $games = Game::searchGamesByName($searchTerm, 10, $page);
-            $games = array_slice($games, 0, 10);
+            $games = Game::searchGamesByName($searchTerm, 12, $page);
+            $games = array_slice($games, 0, 12);
             foreach ($games as $game) {
                 echo "<div class='col'>";
                 echo $game->cardView();
@@ -51,7 +51,7 @@ define('__HEADER_FOOTER_PHP__', true);
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item <?php if (count($games) < 10) echo 'disabled'; ?>">
+                <li class="page-item <?php if (count($games) < 12) echo 'disabled'; ?>">
                     <a class="page-link" href="search.php?searchTerm=<?php echo $searchTerm; ?>&page=<?php echo $page + 1; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
