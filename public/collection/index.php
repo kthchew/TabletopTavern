@@ -48,7 +48,6 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
     <div style="display: flex; justify-content: center;">
-        <a style="font-size: 14pt; background-color: #b4cd8c; color:#1C5E33;margin-left: 80px" class="btn py-1 rounded" href="../dashboard.php" role="button"> <- To Dashboard</a>
         <input type="hidden" name="original-name" value="<?= htmlspecialchars($collection->getName()) ?>">
         <h1 style="margin-right: 10px;"><?= $collection->getName() ?></h1>
         <div class="dropdown" style="display: inline-block; vertical-align: middle;">
