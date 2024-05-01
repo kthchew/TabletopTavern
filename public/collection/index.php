@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-$collection_id = $_GET['collection_id'] ?? null;
+$collection_id = htmlspecialchars($_GET['collection_id']) ?? null;
 if (!isset($collection_id)) {
     $error = "Collection not found.";
 } else {
@@ -40,9 +40,9 @@ define('__HEADER_FOOTER_PHP__', true);
     <?php if (!isset($collection) || !$collection): ?>
         <div class="alert alert-danger"><?= $error ?></div>
     <?php else: ?>
-        <?php if (isset($_SESSION['error2'])): ?>
-            <div id="error-alert" class="alert alert-danger"><?= $_SESSION['error2'] ?></div>
-            <?php unset($_SESSION['error2']); ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div id="error-collection-alert" class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+            <?php unset($_SESSION['error']); ?>
         <?php elseif (isset($_SESSION['success'])): ?>
             <div id="success-collection-alert" class="alert alert-success"><?= $_SESSION['success'] ?></div>
             <?php unset($_SESSION['success']); ?>
@@ -68,7 +68,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <script>
     // Fade out error and success alerts after 3 seconds
     $(document).ready(function(){
-        $("#error-alert").delay(3000).fadeOut();
+        $("#error-collection-alert").delay(3000).fadeOut();
         $("#success-collection-alert").delay(3000).fadeOut();
     });
 </script>

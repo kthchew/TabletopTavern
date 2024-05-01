@@ -9,10 +9,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $collectionId = $_GET['collection_id'] ?? null;
+    $collectionId = htmlspecialchars($_GET['collection_id']) ?? null;
 
     if (!isset($collectionId) || $collectionId === '') {
-        $error2 = "Collection not found";
         header("Location: index.php");
     }
 
@@ -22,11 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../dashboard.php");
         exit;
     } catch (\Exception $e) {
-        $_SESSION['error2'] = "Failed to delete collection";
+        $_SESSION['error'] = "Failed to delete collection";
         header("Location: index.php?collection_id=" . $collectionId);
         exit;
     }
 } else {
-    $error2 = "Collection not found";
     header("Location: index.php");
 }
