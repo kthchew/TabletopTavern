@@ -54,12 +54,10 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
-<main class="container">
+<main class="container" style = "padding-left: 80px; padding-right: 80px; ">
     <h1 class="text-center">Browse By Genre</h1>
-    <p class="text-center">Page: <b><?php echo $page; ?></b></p>
-
     <br>
-    <h3><b><?php echo "Strategy Games:"; ?></b></h3>
+    <h2><b><?php echo "Strategy Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0" >
             <?php
@@ -76,7 +74,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Party Games:"; ?></b></h3>
+    <h2><b><?php echo "Party Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -93,7 +91,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Family Games:"; ?></b></h3>
+    <h2><b><?php echo "Family Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -110,7 +108,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Customizable Games:"; ?></b></h3>
+    <h2><b><?php echo "Customizable Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -127,7 +125,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Thematic Games:"; ?></b></h3>
+    <h2><b><?php echo "Thematic Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -144,7 +142,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Abstract Games:"; ?></b></h3>
+    <h2><b><?php echo "Abstract Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -161,7 +159,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Wargames:"; ?></b></h3>
+    <h2><b><?php echo "Wargames:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php
@@ -178,7 +176,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <br>
-    <h3><b><?php echo "Children's Games:"; ?></b></h3>
+    <h2><b><?php echo "Children's Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0">
             <?php

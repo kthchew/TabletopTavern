@@ -47,6 +47,15 @@ define('__HEADER_FOOTER_PHP__', true);
             font-size: 0.8em;
             display: block;
         }
+
+        .flex-container{
+            display: flex;
+        }
+
+        p, ul{
+            color: #033a16;
+        }
+
     </style>
 
     <script>
@@ -134,51 +143,86 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
     <div>
         <div class="w-25 float-end">
-            <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
-        </div>
-        <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
-            <p>Players: <?= $game->getMinPlayers() ?></p>
-        <?php else: ?>
-            <p>Players: <?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
-        <?php endif; ?>
-        <p>Play Time: <?= $game->getPlayTime() ?> min</p>
-        <p>Minimum Age: <?= $game->getMinAge() ?></p>
-        <p>Year Published: <?= $game->getYearPublished() ?></p>
-        <p>Subgenres:</p>
-        <ul>
-            <?php foreach ($game->getSubgenres() as $subgenre): ?>
-                <li><?= $subgenre ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <p>Mechanics:</p>
-        <ul>
-            <?php foreach ($game->getMechanics() as $mechanic): ?>
-                <li><?= $mechanic ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <hr>
-        <div id="rating">
-            <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating() : "No ratings yet" ?></span>
-            <?php if (isset($_SESSION['user'])): ?>
-                <span class="heart" data-value="1">&#x2661;</span>
-                <span class="heart" data-value="2">&#x2661;</span>
-                <span class="heart" data-value="3">&#x2661;</span>
-                <span class="heart" data-value="4">&#x2661;</span>
-                <span class="heart" data-value="5">&#x2661;</span>
-                <span>(<?= $game->getRatingCount() ?>)</span>
-                <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
-                    <input type="hidden" id="rating_value" name="rating_value" value="">
-                    <button type="submit">Submit Rating</button>
-                </form>
-            <?php else: ?>
-                <a href="../login.php">Log in to rate</a>
-            <?php endif; ?>
-        </div>
-        <h3>Description</h3>
-        <p><?= $game->getDescription() ?></p>
-    </div>
+<div class="mt-3" style="padding-left: 40px;padding-right: 40px;padding-top: 40px;padding-bottom: 20px;">
+    <?php if (!isset($game)): ?>
+        <div class="alert alert-danger"><?= $error ?></div>
+    <?php else: ?>
+    <h1 style = "padding-left: 100px"><?= $game->getName() ?></h1>
 
     <hr>
+        <div class="flex-container" style = "padding-left: 100px; padding-right: 100px;">
+
+        <div style="width: 350px" >
+            <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
+        </div>
+
+        <div class = "w-25" style = "padding-left: 100px">
+            <br>
+            <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
+                <h5>Players: <?= $game->getMinPlayers() ?></h5>
+            <?php else: ?>
+                <h5>Players:</h5>
+                <p><?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
+            <?php endif; ?>
+            <h5>Play Time:</h5>
+            <p><?= $game->getPlayTime() ?> min</p>
+            <h5>Minimum Age:</h5>
+            <p><?= $game->getMinAge() ?></p>
+            <h5>Year Published: </h5>
+            <p><?= $game->getYearPublished() ?></p>
+        </div>
+
+            <div class = "w-25" style = "margin-left: 85px">
+                <br>
+
+                <h5>Subgenres:</h5>
+                <ul>
+                    <?php foreach ($game->getSubgenres() as $subgenre): ?>
+                        <li><?= $subgenre ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <h5>Mechanics:</h5>
+                <ul>
+                    <?php foreach ($game->getMechanics() as $mechanic): ?>
+                        <li><?= $mechanic ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+        </div>
+
+    <hr>
+
+        <div style = "padding-left: 100px; padding-right: 100px;">
+            <h3 >Description</h3>
+            <p><?= $game->getDescription() ?></p>
+        </div>
+
+    <hr>
+</div>
+
+<div style = "padding-left: 140px; padding-right: 140px;">
+    <h2>Ratings</h2>
+    <div id="rating">
+        <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating() : "No ratings yet" ?></span>
+        <?php if (isset($_SESSION['user'])): ?>
+            <span class="heart" data-value="1">&#x2661;</span>
+            <span class="heart" data-value="2">&#x2661;</span>
+            <span class="heart" data-value="3">&#x2661;</span>
+            <span class="heart" data-value="4">&#x2661;</span>
+            <span class="heart" data-value="5">&#x2661;</span>
+            <span>(<?= $game->getRatingCount() ?>)</span>
+            <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
+                <input type="hidden" id="rating_value" name="rating_value" value="">
+                <button type="submit">Submit Rating</button>
+            </form>
+        <?php else: ?>
+            <a href="../login.php">Log in to rate</a>
+        <?php endif; ?>
+    </div>
+
+    <br>
+
     <h2>Comments</h2>
     <?php if (isset($_SESSION['user'])): ?>
         <form action="submit_comment.php" method="post">
@@ -269,6 +313,7 @@ define('__HEADER_FOOTER_PHP__', true);
         $("#success-game-alert").delay(3000).fadeOut();
     });
 </script>
+<br>
 <?php include '../footer.php';?>
 </body>
 

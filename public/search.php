@@ -23,18 +23,18 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
-<main class="container">
+<main style = "padding-left: 40px; padding-right: 40px; padding-bottom: 40px;">
 <h1 class="text-center py-4">Search Results</h1>
-    <p class="text-center">Results for: <b><?php echo $searchTerm; ?></b></p>
-    <p class="text-center">Page: <b><?php echo $page; ?></b></p>
+    <p class="text-center"><b>Results for: </b><?php echo $searchTerm; ?></p>
+    <p class="text-center"><b>Page: </b><?php echo $page; ?></p>
     <br>
-    <br>
+
     <div class="row row-cols-4 mb-4">
 
             <?php
             // get the games that match the search term
-            $games = Game::searchGamesByName($searchTerm, 10, $page);
-            $games = array_slice($games, 0, 10);
+            $games = Game::searchGamesByName($searchTerm, 12, $page);
+            $games = array_slice($games, 0, 12);
             foreach ($games as $game) {
                 echo "<div class='col'>";
                 echo $game->cardView();
@@ -51,7 +51,7 @@ define('__HEADER_FOOTER_PHP__', true);
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item <?php if (count($games) < 10) echo 'disabled'; ?>">
+                <li class="page-item <?php if (count($games) < 12) echo 'disabled'; ?>">
                     <a class="page-link" href="search.php?searchTerm=<?php echo $searchTerm; ?>&page=<?php echo $page + 1; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
