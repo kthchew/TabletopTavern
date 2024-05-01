@@ -107,10 +107,10 @@ define('__HEADER_FOOTER_PHP__', true);
 <body>
 <?php include '../header.php';?>
 
-<div class="container mt-3">
-<?php if (!isset($game)): ?>
-    <div class="alert alert-danger"><?= $error ?></div>
-<?php else: ?>
+<div class="mt-3" style="padding-left: 40px;padding-right: 40px;padding-top: 40px;padding-bottom: 20px;">
+    <?php if (!isset($game)): ?>
+        <div class="alert alert-danger"><?= $error ?></div>
+    <?php else: ?>
     <?php if (isset($_SESSION['user'])): ?>
         <!--        result of adding game-->
         <?php if (isset($_SESSION['error'])): ?>
@@ -122,35 +122,35 @@ define('__HEADER_FOOTER_PHP__', true);
         <?php endif; ?>
     <?php endif; ?>
     <div style="display: flex;">
-        <h1 style="margin-right: 10px;"><?= $game->getName() ?></h1>
+        <h1 style = "padding-left: 100px; margin-right: 10px;"><?= $game->getName() ?></h1>
         <?php if (isset($_SESSION['user'])): ?>
-        <div class="dropdown" style="display: inline-block; vertical-align: middle;">
-            <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn square-btn" aria-expanded="false">&plus;</button>
-            <ul class="dropdown-menu" aria-labelledby="game-options">
-                <?php
-                $collections = Tabletop\Entities\Collection::getUserCollections();
-                foreach ($collections as $collection) { ?>
-                <form action='add_game.php?game_id=<?= $game_id; ?>&collection_id=<?= $collection->getId(); ?>' method='post'>
-                <?php
-                    echo "<li><button class='dropdown-item' type='submit' style = 'color: #1C5E33'>";
-                    echo $collection->getName();
-                    echo "</button></li>";
-                }
-                ?>
-            </ul>
-        </div>
+            <div class="dropdown" style="display: inline-block; vertical-align: middle;">
+                <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn square-btn" aria-expanded="false">&plus;</button>
+                <ul class="dropdown-menu" aria-labelledby="game-options">
+                    <?php
+                    $collections = Tabletop\Entities\Collection::getUserCollections();
+                    foreach ($collections as $collection) {
+                        ?>
+                        <li>
+                            <form action='add_game.php' method='post'>
+                                <input type="hidden" name="game-id" value="<?= $game_id; ?>">
+                                <input type="hidden" name="collection-id" value="<?= $collection->getId(); ?>">
+                                <button class='dropdown-item' type='submit' style='color: #1C5E33'>
+                                    <?= $collection->getName(); ?>
+                                </button>
+                            </form>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+
+            </div>
         <?php endif; ?>
     </div>
-    <div>
-        <div class="w-25 float-end">
-<div class="mt-3" style="padding-left: 40px;padding-right: 40px;padding-top: 40px;padding-bottom: 20px;">
-    <?php if (!isset($game)): ?>
-        <div class="alert alert-danger"><?= $error ?></div>
-    <?php else: ?>
-    <h1 style = "padding-left: 100px"><?= $game->getName() ?></h1>
 
     <hr>
-        <div class="flex-container" style = "padding-left: 100px; padding-right: 100px;">
+    <div class="flex-container" style = "padding-left: 100px; padding-right: 100px;">
 
         <div style="width: 350px" >
             <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
@@ -172,31 +172,31 @@ define('__HEADER_FOOTER_PHP__', true);
             <p><?= $game->getYearPublished() ?></p>
         </div>
 
-            <div class = "w-25" style = "margin-left: 85px">
-                <br>
+        <div class = "w-25" style = "margin-left: 85px">
+            <br>
 
-                <h5>Subgenres:</h5>
-                <ul>
-                    <?php foreach ($game->getSubgenres() as $subgenre): ?>
-                        <li><?= $subgenre ?></li>
-                    <?php endforeach; ?>
-                </ul>
-                <h5>Mechanics:</h5>
-                <ul>
-                    <?php foreach ($game->getMechanics() as $mechanic): ?>
-                        <li><?= $mechanic ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
+            <h5>Subgenres:</h5>
+            <ul>
+                <?php foreach ($game->getSubgenres() as $subgenre): ?>
+                    <li><?= $subgenre ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <h5>Mechanics:</h5>
+            <ul>
+                <?php foreach ($game->getMechanics() as $mechanic): ?>
+                    <li><?= $mechanic ?></li>
+                <?php endforeach; ?>
+            </ul>
         </div>
+
+    </div>
 
     <hr>
 
-        <div style = "padding-left: 100px; padding-right: 100px;">
-            <h3 >Description</h3>
-            <p><?= $game->getDescription() ?></p>
-        </div>
+    <div style = "padding-left: 100px; padding-right: 100px;">
+        <h3 >Description</h3>
+        <p><?= $game->getDescription() ?></p>
+    </div>
 
     <hr>
 </div>
@@ -277,7 +277,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <?php endif; ?>
 
 
-<?php endif; ?>
+    <?php endif; ?>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
