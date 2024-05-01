@@ -1,6 +1,8 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 if (!defined('__HEADER_FOOTER_PHP__')) {
-    header('Location: index.php');
+    $rootPath = Tabletop\Config::getRootPath();
+    header("Location: $rootPath/index.php");
     exit();
 }
 ?>

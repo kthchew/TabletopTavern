@@ -33,5 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    header("Location: info.php?game_id=$game_id");
+    $rootPath = Tabletop\Config::getRootPath();
+    header("Location: $rootPath/game/info.php?game_id=$game_id");
 }

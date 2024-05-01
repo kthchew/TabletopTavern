@@ -8,12 +8,14 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+$rootPath = Tabletop\Config::getRootPath();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gameId = isset($_POST['game-id']) ? htmlspecialchars($_POST['game-id']) : null;
     $collectionName = isset($_POST['collection-name']) ? htmlspecialchars($_POST['collection-name']) : null;
 
     if (!isset($gameId) || $gameId === '') {
-        header("Location: info.php");
+        header("Location: $rootPath/game/info.php");
     }
 
     try {
@@ -24,24 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $_SESSION['error'] = "Failed to create collection";
         }
-        header("Location: info.php?game_id=" . $gameId);
+        header("Location: $rootPath/game/info.php?game_id=" . $gameId);
         exit;
     }
 
     try {
         $result = Tabletop\Entities\Collection::addGameToCollection($collectionId, $gameId);
         $_SESSION['success'] = "Game added successfully";
-        header("Location: info.php?game_id=" . $gameId);
+        header("Location: $rootPath/game/info.php?game_id=" . $gameId);
         exit;
     } catch (Exception $e) {
         $_SESSION['error'] = "Failed to add game to collection";
-        header("Location: info.php?game_id=" . $gameId);
+        header("Location: $rootPath/game/info.php?game_id=" . $gameId);
         exit;
     }
 
 } else {
     $_SESSION['error'] = "Failed to create collection";
     $gameId = $_GET['game_id'] ?? null;
-    header("Location: info.php?game_id=" . $gameId);
+    header("Location: $rootPath/game/info.php?game_id=" . $gameId);
     exit;
 }

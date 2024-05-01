@@ -9,8 +9,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $rootPath = Tabletop\Config::getRootPath();
     $comment_text = $_POST['comment_text'];
     Tabletop\Entities\Comment::updateComment($_POST['comment_id'], $comment_text);
-    header("Location: info.php?game_id=" . $_POST['game_id'] . "#bottom");
+    header("Location: $rootPath/game/info.php?game_id=" . $_POST['game_id'] . "#bottom");
     exit;
 }

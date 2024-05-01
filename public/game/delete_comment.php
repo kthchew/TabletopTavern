@@ -9,7 +9,8 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $rootPath = Tabletop\Config::getRootPath();
     Tabletop\Entities\Comment::deleteComment($_POST['comment_id']);
-    header("Location: info.php?game_id=" . $_POST['game_id'] . "#bottom");
+    header("Location: $rootPath/game/info.php?game_id=" . $_POST['game_id'] . "#bottom");
     exit;
 }

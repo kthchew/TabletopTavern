@@ -8,18 +8,20 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+$rootPath = Tabletop\Config::getRootPath();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $collectionId = htmlspecialchars($_GET['collection_id']) ?? null;
 
     if (!isset($collectionId) || $collectionId === '') {
-        header("Location: index.php");
+        header("Location: $rootPath/collection/index.php");
     }
 
     try {
         $newName = htmlspecialchars($_POST['new-name']);
         $result = Tabletop\Entities\Collection::editCollectionName($collectionId, $newName);
         $_SESSION['success'] = "Collection name edited successfully";
-        header("Location: index.php?collection_id=" . $collectionId);
+        header("Location: $rootPath/collection/index.php?collection_id=" . $collectionId);
         exit;
     } catch (\Exception $e) {
         if ($e->getMessage() == "Collection already exists") {
@@ -27,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $_SESSION['error'] = "Failed to edit collection name";
         }
-        header("Location: index.php?collection_id=" . $collectionId);
+        header("Location: $rootPath/collection/index.php?collection_id=" . $collectionId);
         exit;
     }
 } else {
-    header("Location: index.php");
+    header("Location: $rootPath/collection/index.php");
  }

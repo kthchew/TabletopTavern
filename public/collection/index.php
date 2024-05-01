@@ -3,8 +3,9 @@
 require '../../vendor/autoload.php';
 session_start();
 
+$rootPath = Tabletop\Config::getRootPath();
 if (!isset($_SESSION['user'])) {
-    header('Location: ../login.php');
+    header("Location: $rootPath/login.php");
     exit;
 }
 

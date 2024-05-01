@@ -3,7 +3,8 @@
     "php": ">=7.4",
     "ext-mysqli": "*",
     "ext-ctype": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

@@ -8,12 +8,14 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+$rootPath = Tabletop\Config::getRootPath();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $collectionName = isset($_POST['collection-name']) ? htmlspecialchars($_POST['collection-name']) : null;
 
     try {
         $collection = Tabletop\Entities\Collection::createCollection($collectionName);
-        header("Location: index.php?collection_id=" . $collection);
+        header("Location: $rootPath/collection/index.php?collection_id=" . $collection);
         exit;
     } catch (Exception $e) {
         if ($e->getMessage() == "Collection already exists") {
@@ -22,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             $_SESSION['error'] = "Failed to create collection";
         }
-        header("Location: ../dashboard.php");
+        header("Location: $rootPath/dashboard.php");
         exit;
     }
 }

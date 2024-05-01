@@ -10,13 +10,8 @@ $randomGame = Game::getRandomGame();
 if ($randomGame === null) {
     die("No games found");
 } else {
-    $config = parse_ini_file(__DIR__ . '/../config.ini');
-    if (!$config) {
-        $rootPath = '/TabletopTavern/public/';
-    } else {
-        $rootPath = $config['root_path'];
-    }
-    $location = $rootPath . "game/info.php?game_id={$randomGame->getId()}";
+    $rootPath = Tabletop\Config::getRootPath();
+    $location = "$rootPath/game/info.php?game_id={$randomGame->getId()}";
 
     header("Location: " . $location);
 }
