@@ -16,6 +16,7 @@ class Comment
         $db = Database::getInstance();
         $stmt = $db->prepare("INSERT INTO comments (user_id, game_id, comment_text, created_at) VALUES (?, ?, ?, NOW())");
         $stmt->bind_param("iis", $userId, $gameId, $comment_text);
+
         $stmt->execute();
         return $stmt->insert_id;
     }

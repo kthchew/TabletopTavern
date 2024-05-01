@@ -238,9 +238,10 @@ define('__HEADER_FOOTER_PHP__', true);
 
     <?php
     $comments = Tabletop\Entities\Comment::getCommentsByGameId($game_id);
+
     foreach ($comments as $comment) {
         $comment_text = preg_replace(
-            '/(https?:\/\/[\w\-\.!~?&+\*\'"(),\/:@]+)/',
+            '/(https?:\/\/[\w\-\.!~?&+\*\'"(),\/:@=]+)/',
             '<a href="$1">$1</a>',
             $comment->comment_text
         );
