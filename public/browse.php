@@ -54,7 +54,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
-<main class="container">
+<main class="container" style = "padding-left: 80px; padding-right: 80px; ">
     <h1 class="text-center">Browse By Genre</h1>
     <br>
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
