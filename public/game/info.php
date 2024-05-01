@@ -214,7 +214,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <span>(<?= $game->getRatingCount() ?>)</span>
             <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
                 <input type="hidden" id="rating_value" name="rating_value" value="">
-                <button type="submit">Submit Rating</button>
+                <button class="btn mt-1" type="submit">Submit Rating</button>
             </form>
         <?php else: ?>
             <a href="../login.php">Log in to rate</a>
@@ -231,7 +231,7 @@ define('__HEADER_FOOTER_PHP__', true);
                 <textarea name="comment_text" required></textarea>
             </div>
             <div>
-                <button type="submit">Submit Comment</button>
+                <button class="btn mt-1" type="submit">Submit Comment</button>
             </div>
         </form>
     <?php endif; ?>
