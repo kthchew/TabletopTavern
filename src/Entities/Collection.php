@@ -161,12 +161,20 @@ class Collection
 
     static function addGameToCollection($collectionId, $gameId): bool {
         $db = Database::getInstance();
+
+        $stmt = $db->prepare("SELECT * FROM collectiongameconnection WHERE collection_id = ? AND game_id = ?");
+        $stmt->bind_param("ii",$collectionId, $gameId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            throw new \Exception("Game already exists in collection");
+        }
         // connect game to collection
         $stmt = $db->prepare("INSERT INTO collectiongameconnection (collection_id, game_id) VALUES (?, ?)");
         $stmt->bind_param("ii",$collectionId, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
-            throw new \Exception("Failed to add game to collection");
+            throw new \Exception();
         }
 
         return true;
