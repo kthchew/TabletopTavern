@@ -136,11 +136,24 @@ define('__HEADER_FOOTER_PHP__', true);
                 <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn btn-square" aria-expanded="false">&plus;</button>
                 <ul class="dropdown-menu" aria-labelledby="game-options">
                     <li>
-                        <input type="hidden" name="game-id" value="<?= $game_id; ?>">
-                        <button class='dropdown-item' type='button'  data-bs-toggle="modal" data-bs-target="#collection-modal" style='color: #1C5E33; border-bottom: 1px solid lightgray;'>
+                        <button class='dropdown-item' type='button'  data-bs-toggle="modal" data-bs-target="#game-collection-modal" style='color: #1C5E33; border-bottom: 1px solid lightgray;'>
                             &plus; New collection
                         </button>
                     </li>
+                    <?php
+                    $favoritesId = Tabletop\Entities\Collection::getFavoritesId();
+                    $favCollection = Tabletop\Entities\Collection::getUserCollection($favoritesId);
+                    ?>
+                    <li>
+                        <form action='add_game.php' method='post'>
+                            <input type="hidden" name="game-id" value="<?= $game_id; ?>">
+                            <input type="hidden" name="collection-id" value="<?= $favoritesId ?>">
+                            <button class='dropdown-item' type='submit' style='color: #1C5E33'>
+                                Favorites
+                            </button>
+                        </form>
+                    </li>
+
                     <?php
                     $collections = Tabletop\Entities\Collection::getUserCollections();
                     foreach ($collections as $collection) {
@@ -162,35 +175,7 @@ define('__HEADER_FOOTER_PHP__', true);
             </div>
         <?php endif; ?>
     </div>
-
-<!--    CREATE NEW COLLECTION MODAL -->
-    <div class="modal" id="collection-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Create a new collection</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form action="add_to_new_collection.php" method="post">
-                    <input type="hidden" name="game-id" value="<?= $game_id; ?>">
-                    <?php if (isset($_SESSION['duplicate-error'])): ?>
-                        <div class="alert alert-danger mx-3 mt-3"><?= $_SESSION['duplicate-error'] ?></div>
-                        <script>
-                            $(document).ready(function(){
-                                $('#collection-modal').modal('show'); // Show the modal if there's an error
-                            });
-                        </script>
-                    <?php endif; ?>
-                    <div class="modal-body">
-                        <input type="text" name="collection-name" id="collection-name" class="form-control" placeholder="Name your collection">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn" id="create-btn" disabled>Create</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <?php include 'add_game_modal.php'?>
 
     <hr>
     <div class="flex-container" style = "padding-left: 100px; padding-right: 100px;">
@@ -355,6 +340,7 @@ define('__HEADER_FOOTER_PHP__', true);
     $(document).ready(function(){
         $("#error-game-alert").delay(3000).fadeOut();
         $("#success-game-alert").delay(3000).fadeOut();
+        $("#duplicate-alert").delay(3000).fadeOut();
     });
 </script>
 <br>

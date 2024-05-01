@@ -42,6 +42,29 @@ class Collection
         }
     }
 
+    static function getFavoritesId(): int {
+        $db = Database::getInstance();
+        $name = 'Favorites';
+        $stmt = $db->prepare("SELECT id FROM collections WHERE name = ?
+            AND id IN (SELECT collection_id FROM usercollectionconnection WHERE user_id = ?)");
+        $stmt->bind_param("si", $name, $_SESSION['user']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $favoritesId = $row['id'];
+        } else {
+            $favoritesId = self::createCollection("Favorites");
+        }
+
+        return $favoritesId;
+    }
+
+    static function getFavoritesGames(): array {
+        $favoritesId = self::getFavoritesId();
+        return Game::getCollectionGames($favoritesId);
+    }
+
     static function getUserCollections(): array {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM collections 

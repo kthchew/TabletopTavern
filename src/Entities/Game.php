@@ -357,9 +357,14 @@ class Game
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
-        return "
-        <a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>
-            <div class='card my-2'>
+        $str = "";
+        if ($collectionId == Collection::getFavoritesId()) {
+            $str .= "<a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>";
+        } else {
+            $str .= "<a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>";
+        }
+        $str .= "
+           <div class='card my-2'>
                 <div class='card-body'>
                     <div style='display: flex; justify-content: space-between;'>
                         <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
@@ -377,6 +382,8 @@ class Game
                 </div>
             </div>
         </a>";
+
+        return $str;
     }
 
     //not used anymore!

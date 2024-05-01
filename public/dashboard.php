@@ -7,22 +7,6 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $collectionName = htmlspecialchars($_POST["collection-name"]);
-    try {
-        $collection = Tabletop\Entities\Collection::createCollection($collectionName);
-        header("Location: collection/index.php?collection_id=" . $collection);
-        exit;
-    } catch (Exception $e) {
-        if ($e->getMessage() == "Collection already exists") {
-            $error = $e->getMessage();
-        }
-        else {
-            $error = "Failed to create collection";
-        }
-    }
-}
-
 use Tabletop\Entities\Collection;
 define('__HEADER_FOOTER_PHP__', true);
 ?>
@@ -38,20 +22,46 @@ define('__HEADER_FOOTER_PHP__', true);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
-</head>
 
-<script>
-    // disable button when there's no input
-    $(document).ready(function(){
-        $("#collection-name").keyup(function(){
-            if ($("#collection-name").val().trim().length === 0) {
-                $("#create-btn").prop("disabled", true);
-            } else {
-                $("#create-btn").prop("disabled", false);
-            }
+    <style>
+        .scroll-container {
+            overflow: auto;
+            background-color: #DEEDC8;
+            border-radius: 10px;
+            overflow-x: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #cee1b1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a2d15c;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #629716;
+        }
+
+    </style>
+
+    <script>
+        // disable button when there's no input
+        $(document).ready(function(){
+            $("#collection-name").keyup(function(){
+                if ($("#collection-name").val().trim().length === 0) {
+                    $("#create-btn").prop("disabled", true);
+                } else {
+                    $("#create-btn").prop("disabled", false);
+                }
+            });
         });
-    });
-</script>
+    </script>
+</head>
 
 <body>
 <?php include 'header.php';?>
@@ -63,9 +73,23 @@ define('__HEADER_FOOTER_PHP__', true);
     <h1 class = "text-center"><?php echo $_SESSION['username'] ?>'s Dashboard</h1>
     <h2>Favorites</h2>
 
+<!--    TODO: WORK ON FAVORITES -->
+    <div class="scroll-container">
+        <div class="row row-cols-4 g-0" style="flex-wrap: nowrap;">
+            <?php
+            $favGames = Collection::getFavoritesGames();
+            foreach ($favGames as $game) {
+                echo "<div class='col' style='padding: 10px; flex: 1 0 auto;'>";
+                echo $game->collectionCardView(Collection::getFavoritesId());
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+    <br>
     <div style="display: flex;">
         <h2 style="margin-right: 10px;">Collections</h2>
-        <button class="btn square-btn" type="button" data-bs-toggle="modal" data-bs-target="#collection-modal">&plus;</button>
+        <button class="btn btn-square" type="button" data-bs-toggle="modal" data-bs-target="#collection-modal">&plus;</button>
     </div>
     <div class="row row-cols-4 mb-4">
 
@@ -88,14 +112,15 @@ define('__HEADER_FOOTER_PHP__', true);
                 <h4 class="modal-title">Create a new collection</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="dashboard.php" method="post">
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-danger mx-3 mt-3"><?= $error ?></div>
+            <form action="collection/create_collection.php" method="post">
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger mx-3 mt-3" id="modal-alert"><?= $_SESSION['error'] ?></div>
                     <script>
                         $(document).ready(function(){
                             $('#collection-modal').modal('show'); // Show the modal if there's an error
                         });
                     </script>
+                    <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
                 <div class="modal-body">
                     <input type="text" name="collection-name" id="collection-name" class="form-control" placeholder="Name your collection">
@@ -111,6 +136,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <script>
     $("#success-dashboard-alert").delay(3000).fadeOut();
+    $("#modal-alert").delay(3000).fadeOut();
 </script>
 </body>
 

@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = Tabletop\Entities\User::createUser($email, $username, $password);
             $_SESSION['user'] = $user;
             $_SESSION['username'] = $username;
+            $Favorites = Tabletop\Entities\Collection::createCollection("Favorites");
             header("Location: index.php");
             exit;
         } catch (Exception $e) {
