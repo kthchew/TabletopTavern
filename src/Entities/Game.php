@@ -317,6 +317,21 @@ class Game
         return $this->thumbnailURL;
     }
 
+    static function getCollectionGames($collectionId): array
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM games 
+         WHERE id IN (SELECT game_id FROM collectiongameconnection WHERE collection_id = ?)");
+        $stmt->bind_param("i", $collectionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $resultArr = [];
+        while ($row = $result->fetch_assoc()) {
+            $resultArr[] = self::makeGameFromDBRow($row);
+        }
+        return $resultArr;
+    }
+
     public function cardView(): string
     {
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
@@ -324,6 +339,26 @@ class Game
         $subgenres = implode(", ", $this->subgenres);
         return "
         <a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>
+            <div class='card my-2'>
+                <div class='card-body'>
+                    <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                    <p class='card-text m-0'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <small class='card-text fst-italic'>{$mechanics}</small>
+                    <br>
+                    <small class='card-text fst-italic'>{$subgenres}</small>
+                    <p class='card-text'>{$truncatedDescription}</p>
+                </div>
+            </div>
+        </a>";
+    }
+
+    public function connectionCardView(): string
+    {
+        $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
+        $mechanics = implode(", ", $this->mechanics);
+        $subgenres = implode(", ", $this->subgenres);
+        return "
+        <a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>
             <div class='card my-2'>
                 <div class='card-body'>
                     <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>

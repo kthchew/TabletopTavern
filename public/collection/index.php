@@ -58,7 +58,25 @@ define('__HEADER_FOOTER_PHP__', true);
             </ul>
         </div>
     </div>
-    <p align="center" style="font-size: 20px">Add a game to your collection by browsing or searching!</p>
+        <?php if (count(Tabletop\Entities\Game::getCollectionGames($collection_id)) == 0): ?>
+            <p align="center" style="font-size: 20px">Add a game to your collection by browsing or searching!</p>
+        <?php else: ?>
+        <br>
+        <div class="row row-cols-4 mb-4">
+
+            <?php
+            // get the games for collection
+            $games = Tabletop\Entities\Game::getCollectionGames($collection_id);
+            $games = array_slice($games, 0, 12);
+            foreach ($games as $game) {
+                echo "<div class='col'>";
+                echo $game->connectionCardView();
+                echo "</div>";
+            }
+            ?>
+
+        </div>
+        <?php endif; ?>
     <?php endif; ?>
 </main>
 
