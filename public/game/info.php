@@ -100,7 +100,15 @@ define('__HEADER_FOOTER_PHP__', true);
                 });
             });
         });
-
+        $(document).ready(function(){
+            $("#collection-name").keyup(function(){
+                if ($("#collection-name").val().trim().length === 0) {
+                    $("#create-btn").prop("disabled", true);
+                } else {
+                    $("#create-btn").prop("disabled", false);
+                }
+            });
+        });
     </script>
 </head>
 
@@ -127,6 +135,12 @@ define('__HEADER_FOOTER_PHP__', true);
             <div class="dropdown" style="display: inline-block; vertical-align: middle;">
                 <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn btn-square" aria-expanded="false">&plus;</button>
                 <ul class="dropdown-menu" aria-labelledby="game-options">
+                    <li>
+                        <input type="hidden" name="game-id" value="<?= $game_id; ?>">
+                        <button class='dropdown-item' type='button'  data-bs-toggle="modal" data-bs-target="#collection-modal" style='color: #1C5E33; border-bottom: 1px solid lightgray;'>
+                            &plus; New collection
+                        </button>
+                    </li>
                     <?php
                     $collections = Tabletop\Entities\Collection::getUserCollections();
                     foreach ($collections as $collection) {
@@ -147,6 +161,35 @@ define('__HEADER_FOOTER_PHP__', true);
 
             </div>
         <?php endif; ?>
+    </div>
+
+<!--    CREATE NEW COLLECTION MODAL -->
+    <div class="modal" id="collection-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create a new collection</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="add_to_new_collection.php" method="post">
+                    <input type="hidden" name="game-id" value="<?= $game_id; ?>">
+                    <?php if (isset($_SESSION['duplicate-error'])): ?>
+                        <div class="alert alert-danger mx-3 mt-3"><?= $_SESSION['duplicate-error'] ?></div>
+                        <script>
+                            $(document).ready(function(){
+                                $('#collection-modal').modal('show'); // Show the modal if there's an error
+                            });
+                        </script>
+                    <?php endif; ?>
+                    <div class="modal-body">
+                        <input type="text" name="collection-name" id="collection-name" class="form-control" placeholder="Name your collection">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn" id="create-btn" disabled>Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <hr>
