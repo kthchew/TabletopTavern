@@ -352,7 +352,7 @@ class Game
         </a>";
     }
 
-    public function connectionCardView(): string
+    public function collectionCardView($collectionId): string
     {
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $this->mechanics);
@@ -361,10 +361,17 @@ class Game
         <a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>
             <div class='card my-2'>
                 <div class='card-body'>
-                    <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                    <div style='display: flex; justify-content: space-between;'>
+                        <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                        <form action='../../public/collection/remove_game.php' method='post'>
+                            <input type='hidden' name='game-id' value='{$this->getId()}'>
+                            <input type='hidden' name='collection-id' value='{$collectionId}'>
+                            <button type='submit' class='btn btn-light' style='font-size: 10px;'>&mdash;</button>
+                        </form>
+                    </div>
                     <p class='card-text m-0'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
                     <small class='card-text fst-italic'>{$mechanics}</small>
-                    <br>
+                    <br>    
                     <small class='card-text fst-italic'>{$subgenres}</small>
                     <p class='card-text'>{$truncatedDescription}</p>
                 </div>

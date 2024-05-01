@@ -180,15 +180,17 @@ class Collection
         return true;
     }
 
-    static function removeGameFromCollection($collectionId, $gameId) {
+    static function removeGameFromCollection($collectionId, $gameId): bool {
         $db = Database::getInstance();
 
         $stmt = $db->prepare("DELETE FROM collectiongameconnection WHERE collection_id = ? AND game_id = ?");
         $stmt->bind_param("ii",$collectionId, $gameId);
         $stmt->execute();
         if ($stmt->affected_rows != 1) {
-            throw new \Exception("Failed to remove game from connection");
+            throw new \Exception();
         }
+
+        return true;
     }
 
     public function cardView() {

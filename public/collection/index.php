@@ -64,16 +64,15 @@ define('__HEADER_FOOTER_PHP__', true);
         <br>
         <div class="row row-cols-4 mb-4">
 
-            <?php
-            // get the games for collection
-            $games = Tabletop\Entities\Game::getCollectionGames($collection_id);
-            $games = array_slice($games, 0, 12);
-            foreach ($games as $game) {
-                echo "<div class='col'>";
-                echo $game->connectionCardView();
-                echo "</div>";
-            }
-            ?>
+                <?php
+                // get the games for collection
+                $games = Tabletop\Entities\Game::getCollectionGames($collection_id);
+                foreach ($games as $game) {
+                    echo "<div class='col'>";
+                    echo $game->collectionCardView($collection_id);
+                    echo "</div>";
+                }
+                ?>
 
         </div>
         <?php endif; ?>
