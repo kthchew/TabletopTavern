@@ -58,6 +58,13 @@ a:hover, .dropdown-item:hover, .nav-link:hover{
     align-items: center;
 }
 
+.btn-square {
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     padding: 40px 0;
 }
@@ -97,13 +104,6 @@ a:hover, .dropdown-item:hover, .nav-link:hover{
     opacity: 1;
     width:150px;
     height:150px;
-}
-
-.square-btn {
-    margin-top: auto;
-    margin-bottom: auto;
-    justify-content: center;
-    align-items: center;
 }
 
 #collection-options::after {

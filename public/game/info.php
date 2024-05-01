@@ -125,7 +125,7 @@ define('__HEADER_FOOTER_PHP__', true);
         <h1 style = "padding-left: 100px; margin-right: 10px;"><?= $game->getName() ?></h1>
         <?php if (isset($_SESSION['user'])): ?>
             <div class="dropdown" style="display: inline-block; vertical-align: middle;">
-                <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn square-btn" aria-expanded="false">&plus;</button>
+                <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn btn-square" aria-expanded="false">&plus;</button>
                 <ul class="dropdown-menu" aria-labelledby="game-options">
                     <?php
                     $collections = Tabletop\Entities\Collection::getUserCollections();
