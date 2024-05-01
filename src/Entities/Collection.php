@@ -159,7 +159,7 @@ class Collection
         return true;
     }
 
-    static function addGameToCollection($collectionId, $gameId) {
+    static function addGameToCollection($collectionId, $gameId): bool {
         $db = Database::getInstance();
         // connect game to collection
         $stmt = $db->prepare("INSERT INTO collectiongameconnection (collection_id, game_id) VALUES (?, ?)");
@@ -168,6 +168,8 @@ class Collection
         if ($stmt->affected_rows != 1) {
             throw new \Exception("Failed to add game to collection");
         }
+
+        return true;
     }
 
     static function removeGameFromCollection($collectionId, $gameId) {

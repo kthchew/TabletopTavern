@@ -22,6 +22,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="../css/style.css">
     <style>
@@ -101,7 +102,36 @@ define('__HEADER_FOOTER_PHP__', true);
 <?php if (!isset($game)): ?>
     <div class="alert alert-danger"><?= $error ?></div>
 <?php else: ?>
-    <h1><?= $game->getName() ?></h1>
+    <?php if (isset($_SESSION['user'])): ?>
+        <!--        result of adding game-->
+        <?php if (isset($_SESSION['error'])): ?>
+            <div id="error-game-alert" class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+            <?php unset($_SESSION['error']); ?>
+        <?php elseif (isset($_SESSION['success'])): ?>
+            <div id="success-game-alert" class="alert alert-success"><?= $_SESSION['success'] ?></div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <div style="display: flex;">
+        <h1 style="margin-right: 10px;"><?= $game->getName() ?></h1>
+        <?php if (isset($_SESSION['user'])): ?>
+        <div class="dropdown" style="display: inline-block; vertical-align: middle;">
+            <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn square-btn" aria-expanded="false">&plus;</button>
+            <ul class="dropdown-menu" aria-labelledby="game-options">
+                <?php
+                $collections = Tabletop\Entities\Collection::getUserCollections();
+                foreach ($collections as $collection) { ?>
+                <form action='add_game.php?game_id=<?= $game_id; ?>&collection_id=<?= $collection->getId(); ?>' method='post'>
+                <?php
+                    echo "<li><button class='dropdown-item' type='submit' style = 'color: #1C5E33'>";
+                    echo $collection->getName();
+                    echo "</button></li>";
+                }
+                ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+    </div>
     <div>
         <div class="w-25 float-end">
             <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
@@ -232,6 +262,11 @@ define('__HEADER_FOOTER_PHP__', true);
                 deleteForm.style.display = 'block';
             });
         });
+    });
+
+    $(document).ready(function(){
+        $("#error-game-alert").delay(3000).fadeOut();
+        $("#success-game-alert").delay(3000).fadeOut();
     });
 </script>
 <?php include '../footer.php';?>

@@ -9,8 +9,8 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $collectionId = $_GET['collection_id'] ?? null;
-    $gameId = $_GET['game_id'] ?? null;
+    $collectionId = htmlspecialchars($_GET['collection_id']) ?? null;
+    $gameId = htmlspecialchars($_GET['game_id']) ?? null;
 
     if (!isset($gameId) || $gameId === '') {
         header("Location: info.php");
@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: info.php?game_id=" . $gameId);
         exit;
     } catch (\Exception $e) {
-        $_SESSION['error'] = $e->getMessage();
-//        $_SESSION['error'] = "Failed to add game to collection";
+        $_SESSION['error'] = "Failed to add game to collection";
         header("Location: info.php?game_id=" . $gameId);
         exit;
     }
