@@ -112,6 +112,56 @@ class Game
         return $games;
     }
 
+    static function getTotalGamesByMultipleParameters($name, $subGenre, $playerCount, $playTime, $minAge): int
+    {
+        $db = Database::getInstance();
+
+        // Initialize the query and the parameters array
+        $query = "SELECT COUNT(*) as total FROM games WHERE ";
+        $params = [];
+        $types = "";
+
+        // Add conditions to the query based on the parameters that are not empty
+        if (!empty($name)) {
+            $query .= "name LIKE ? AND ";
+            $params[] = "%" . $name . "%";
+            $types .= "s";
+        }
+        if (!empty($subGenre)) {
+            $query .= "id IN (SELECT game_id FROM gamesubgenreconnection WHERE subgenre_id IN (SELECT id FROM subgenre WHERE subgenre LIKE ?)) AND ";
+            $params[] = "%" . $subGenre . "%";
+            $types .= "s";
+        }
+        if (!empty($playerCount)) {
+            $query .= "min_players <= ? AND max_players >= ? AND ";
+            $params[] = $playerCount;
+            $params[] = $playerCount;
+            $types .= "ii";
+        }
+        if (!empty($playTime)) {
+            $query .= "play_time <= ? AND ";
+            $params[] = $playTime;
+            $types .= "i";
+        }
+        if (!empty($minAge)) {
+            $query .= "min_age <= ? AND ";
+            $params[] = $minAge;
+            $types .= "i";
+        }
+
+        // Remove the last "AND "
+        $query = substr($query, 0, -4);
+
+        // Prepare and execute the statement
+        $stmt = $db->prepare($query);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    }
+
     static function getAllGenres(): array
     {
         $db = Database::getInstance();

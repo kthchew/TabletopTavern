@@ -7,19 +7,25 @@ define('__HEADER_FOOTER_PHP__', true);
 
 $gameCards = '';
 
+$currentPage = $_GET['page'] ?? 1;
+$paginationLinks = '';
+
 //Receive the form data and call the searchGamesByMultipleParameters function from the Game class
-if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST['minPlayers']) || isset($_POST['maxPlayers']) || isset($_POST['playTime']) || isset($_POST['minAge'])) {
-    $searchName = $_POST['searchName'];
-    $searchGenre = $_POST['searchGenre'];
-    $playerCount = $_POST['playerCount'];
-    $playTime = $_POST['playTime'];
-    $minAge = $_POST['minAge'];
+if (isset($_GET['searchName']) || isset($_GET['searchGenre']) || isset($_GET['playerCount']) || isset($_GET['playTime']) || isset($_GET['minAge'])){
+    $searchName = $_GET['searchName'];
+    $searchGenre = $_GET['searchGenre'];
+    $playerCount = $_GET['playerCount'];
+    $playTime = $_GET['playTime'];
+    $minAge = $_GET['minAge'];
     $pageSize = 10;
-    $currentPage = 1;
+
 
     //var_dump($searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
 
     $games = Game::searchGameByMultipleParameters( $searchName, $searchGenre, $playerCount, $playTime, $minAge, $pageSize, $currentPage);
+
+    $totalGames = Game::getTotalGamesByMultipleParameters($searchName, $searchGenre, $playerCount, $playTime, $minAge, $pageSize, $currentPage);
+    $totalPages = ceil($totalGames / $pageSize);
 
     // If there are no games found, display a message
     if (empty($games)) {
@@ -34,6 +40,17 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     foreach ($games as $game) {
         $gameCards .= $game->cardView();
     }
+
+    $paginationLinks = "<div class='d-flex justify-content-center'>";
+    if($currentPage > 1){
+        $paginationLinks .= "<a href='filter.php?page=".($currentPage - 1)."&searchName=$searchName&searchGenre=$searchGenre&playerCount=$playerCount&playTime=$playTime&minAge=$minAge' class='btn btn-primary'>Previous</a>";
+
+    }
+    if($currentPage < $totalPages){
+        $paginationLinks .= "<a href='filter.php?page=".($currentPage + 1)."&searchName=$searchName&searchGenre=$searchGenre&playerCount=$playerCount&playTime=$playTime&minAge=$minAge' class='btn btn-primary'>Next</a>";
+
+    }
+    $paginationLinks .= "</div>";
 
 }
 
@@ -55,7 +72,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <?php include 'header.php';?>
 <?php $genres = Game::getAllGenres()?>
 <div class="row justify-content-center">
-<form action="" method="post" class="col-md-9">
+<form action="" method="get" class="col-md-9">
     <input type="text" name="searchName" placeholder="Search by Name..." value="<?php echo isset($searchName) ? $searchName : ''?>">
     <input list="genre" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
     <datalist id="genre">
@@ -63,17 +80,6 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
             <option value="<?php echo $genre; ?>">
         <?php endforeach; ?>
     </datalist>
-    <!--<div>
-        <select name="searchGenre" id="searchGenre" class="form-select">
-            <option value="">Search by Genre...</option>
-            <?php foreach ($genres as $genre): ?>
-                <option value="<?php echo $genre; ?>" <?php if (isset($searchGenre) && $searchGenre == $genre) echo 'selected'; ?>><?php echo $genre; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>-->
-
-    <!--<input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
-    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">-->
     <input min="0" type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
     <input min="0" type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
     <input min="0" type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
@@ -84,6 +90,8 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <div class="row row-cols-4 mb-4">
     <?php echo $gameCards; ?>
 </div>
+
+<?php echo $paginationLinks; ?>
 
 <?php include 'footer.php';?>
 </body>
