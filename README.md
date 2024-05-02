@@ -11,8 +11,8 @@ A magical, magnificent place for all your board game needs.
   <img src="https://contrib.rocks/image?repo=kthchew/TabletopTavern" />
 </a>
 
-BoardGamesGeek board games dataset: 
+#### BoardGamesGeek board games dataset: 
 https://www.kaggle.com/datasets/andrewmvd/board-games 
 
-BoardGamesGeek API: 
+#### BoardGamesGeek API: 
 https://boardgamegeek.com/xmlapi2 
