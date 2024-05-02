@@ -145,9 +145,6 @@ define('__HEADER_FOOTER_PHP__', true);
                 if(gameCards.length === 0){
                     document.getElementById("errorMsg1").innerHTML = "No games found";
                     document.getElementById("errorMsg2").innerHTML = "Please change or broaden your specifications";
-                }else {
-                    document.getElementById("errorMsg1").innerHTML = "Meow";
-                    document.getElementById("errorMsg2").innerHTML = "Please change or broaden your specifications";
                 }
 
                 const $prevBtn = $('.prev-btn');
