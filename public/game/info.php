@@ -151,7 +151,6 @@ define('__HEADER_FOOTER_PHP__', true);
                             </button>
                         </form>
                     </li>
-                    <div class="col-md-3 col-sm-12">
                     <?php
                     $collections = Tabletop\Entities\Collection::getUserCollections();
                     foreach ($collections as $collection) {
@@ -168,7 +167,6 @@ define('__HEADER_FOOTER_PHP__', true);
                         <?php
                     }
                     ?>
-                    </div>
                 </ul>
 
             </div>
