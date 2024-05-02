@@ -95,7 +95,7 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
     <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 mb-4 game-card-container">
 
-    <?php
+        <?php
         $collections = Collection::getUserCollections();
         foreach ($collections as $collection) {
             echo "<div class='col'>";
