@@ -35,9 +35,9 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <div class="row mx-5">
     <div class="col-md m-2 text-center justify-content-center rounded">
-        <div class="justify-content-center py-5" style="background-color: #cee4ac">
+        <div class="justify-content-center py-5 rounded" style="background-color: #cee4ac">
             <div>
-                <h2>✴ Roll the Dice ✴</h2>
+                <h1>Roll the Dice</h1>
                 <br>
                 <img src="images/rollDice.png" alt="A 20 sided dice with a '?' on one face" style="width:200px;height:200px;">
                 <br>
@@ -47,9 +47,9 @@ define('__HEADER_FOOTER_PHP__', true);
         </div>
     </div>
     <div class="col-md m-2 text-center justify-content-center rounded">
-        <div class="justify-content-center py-5" style="background-color: #cee4ac">
+        <div class="justify-content-center py-5 rounded" style="background-color: #cee4ac">
             <div>
-                <h2>✴ Filter Search ✴</h2>
+                <h1>Filter Search</h1>
                 <br>
                 <img src="images/filter.png" alt="A shattered magnifying glass" style="width:200px;height:200px;">
                 <br>
