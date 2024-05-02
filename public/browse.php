@@ -59,7 +59,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0" >
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0" >
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Strategy Games", 10, $page);
@@ -76,7 +76,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Party Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Party Games", 10, $page);
@@ -93,7 +93,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Family Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Family Games", 10, $page);
@@ -110,7 +110,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Customizable Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Customizable Games", 10, $page);
@@ -127,7 +127,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Thematic Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Thematic Games", 10, $page);
@@ -144,7 +144,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Abstract Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Abstract Games", 10, $page);
@@ -161,7 +161,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Wargames:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Wargames", 10, $page);
@@ -178,7 +178,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <br>
     <h2><b><?php echo "Children's Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Children's Games", 10, $page);

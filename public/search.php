@@ -29,7 +29,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <p class="text-center"><b>Page: </b><?php echo $page; ?></p>
     <br>
 
-    <div class="row row-cols-4 mb-4">
+    <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 mb-4">
 
             <?php
             // get the games that match the search term
