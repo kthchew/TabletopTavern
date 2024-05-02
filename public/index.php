@@ -19,6 +19,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <body>
 <?php include 'header.php';?>
 
+<div class="m-3">
 <div class="justify-content-center text-center">
 <h1 class="text-center py-4">Start your journey...</h1>
 <p class="text-center" style="font-size: 14pt"><b>Greetings, board game enthusiasts!</b> Have you been looking for your next game to play? </p>
@@ -61,6 +62,7 @@ define('__HEADER_FOOTER_PHP__', true);
 </div>
 <br>
 <br>
+</div>
 <?php include 'footer.php';?>
 </body>
 </html>
