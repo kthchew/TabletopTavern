@@ -71,31 +71,24 @@ define('__HEADER_FOOTER_PHP__', true);
 
     <br>
 
+    <div class="w-100 d-flex justify-content-center d-none loading-indicator">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 mb-4 game-card-container">
-
-        <?php
-        // get the games that match the search term
-        $games = Game::searchGamesByName($searchTerm, 12, $page);
-        $games = array_slice($games, 0, 12);
-        foreach ($games as $game) {
-            echo "<div class='col'>";
-            echo $game->cardView();
-            echo "</div>";
-        }
-        ?>
-
     </div>
     <div class="d-flex justify-content-center">
         <nav>
             <ul class="pagination">
-                <li class="page-item <?php if ($page == 1) echo 'disabled'; ?>">
+                <li class="page-item disabled">
                     <button class="page-link prev-btn"
                             onclick="updatePage(<?php echo $page - 1; ?>)"
                             aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </button>
                 </li>
-                <li class="page-item <?php if (count($games) < 12) echo 'disabled'; ?>">
+                <li class="page-item disabled">
                     <button class="page-link next-btn"
                             onclick="updatePage(<?php echo $page + 1; ?>)"
                             aria-label="Next">
@@ -110,18 +103,13 @@ define('__HEADER_FOOTER_PHP__', true);
     let timeout = null;
     $('.form-control, .form-select').on('input', function() {
         if (timeout) clearTimeout(timeout);
-
-        const searchTerm = $('.filter-term').val();
-        const searchGenre = $('.filter-genre').find(':selected').val();
-        const playerCount = $('.filter-player').val();
-        const playTime = $('.filter-time').val();
-        const minAge = $('.filter-age').val();
-
-        window.history.replaceState(null, null, `?searchTerm=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&currentPage=1`);
-
         timeout = setTimeout(() => {
             updatePage(1);
         }, 2000);
+    });
+
+    $(document).ready(function() {
+        updatePage(<?php echo $page; ?>);
     });
 
     function updatePage(pageNumber) {
@@ -131,6 +119,8 @@ define('__HEADER_FOOTER_PHP__', true);
         const playTime = $('.filter-time').val();
         const minAge = $('.filter-age').val();
 
+        $('.game-card-container').html('');
+        $('.loading-indicator').removeClass('d-none');
         fetch(`filter_json.php?searchName=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&page=${pageNumber}`, {
             method: 'GET'
         })
@@ -138,9 +128,9 @@ define('__HEADER_FOOTER_PHP__', true);
             window.history.replaceState(null, null, `?searchTerm=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&page=${pageNumber}`);
 
             const gameCards = await response.json();
-            document.querySelector('.game-card-container').innerHTML = '';
+            $('.game-card-container').html('');
             gameCards.forEach(gameCard => {
-                document.querySelector('.game-card-container').innerHTML += gameCard;
+                $('.game-card-container').append(gameCard);
             });
 
             const $prevBtn = $('.prev-btn');
@@ -157,6 +147,8 @@ define('__HEADER_FOOTER_PHP__', true);
 
             $('.search-term-info').text(searchTerm);
             $('.page-num-info').text(pageNumber);
+
+            $('.loading-indicator').addClass('d-none');
         });
     }
 </script>
