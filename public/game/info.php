@@ -291,7 +291,7 @@ define('__HEADER_FOOTER_PHP__', true);
             '<a href="$1">$1</a>',
             $comment->comment_text
         );
-        echo "<p><strong>{$comment->username}</strong>:<br> {$comment_text}<br><span class='timestamp'>{$comment->created_at}</span></p>";
+        echo "<p><strong>{$comment->username}</strong>:<br> {$comment_text}<br><span class='timestamp' style='color: #2f884e'>{$comment->created_at}</span></p>";
         if (isset($_SESSION['user']) && $_SESSION['user'] == $comment->userId) {
             echo "<p class='comment-actions'>";
             echo "<a href='#' class='edit-comment' data-comment-id='{$comment->id}' style='margin-right: 10px;'>Edit</a>";
