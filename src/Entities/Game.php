@@ -340,7 +340,7 @@ class Game
     private function getAPIResponse(): void {
         $this->apiResponse = file_get_contents("https://boardgamegeek.com/xmlapi2/thing?id=$this->id");
 
-        $this->description = str_replace("&#10;", "<br>", simplexml_load_string($this->apiResponse)->item->description);
+        $this->description = simplexml_load_string($this->apiResponse)->item->description;
         $this->imageURL = simplexml_load_string($this->apiResponse)->item->image;
         $this->thumbnailURL = simplexml_load_string($this->apiResponse)->item->image;
         // store them in db
@@ -350,11 +350,14 @@ class Game
         $stmt->execute();
     }
 
-    public function getDescription(): string {
+    public function getDescription($numChars = 0): string {
         if ($this->description == null) {
             $this->getAPIResponse();
         }
-        return $this->description;
+        if ($numChars === 0) {
+            return str_replace("&#10;", "<br>", $this->description);
+        }
+        return str_replace("&#10;", "<br>", substr($this->description, 0, $numChars));
     }
 
     public function getImageURL(): string {
@@ -401,7 +404,7 @@ class Game
 
     public function cardView(): string
     {
-        $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
+        $truncatedDescription = $this->getDescription(100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
         $rootPath = Config::getRootPath();
@@ -422,7 +425,7 @@ class Game
 
     public function collectionCardView($collectionId): string
     {
-        $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
+        $truncatedDescription = $this->getDescription(100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
         $str = "";
@@ -458,7 +461,7 @@ class Game
     //not used anymore!
     public function browseCard($game): string
     {
-        $truncatedDescription = substr($game->getDescription(), 0, 100) . "...";
+        $truncatedDescription = $this->getDescription(100) . "...";
         $mechanics = implode(", ", $game->mechanics);
         $subgenres = implode(", ", $game->subgenres);
         $rootPath = Config::getRootPath();
