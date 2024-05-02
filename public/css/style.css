@@ -129,3 +129,21 @@ hr{
 ::-webkit-scrollbar-thumb:hover {
     background: #629716;
 }
+
+.card-title, .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.one-line {
+    -webkit-line-clamp: 1;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

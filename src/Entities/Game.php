@@ -410,25 +410,6 @@ class Game
         $rootPath = Config::getRootPath();
         $cardStyle = "height: 210px;";
         return "
-        <style>
-        .card-title, .card-text {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 0;
-            margin-top: 0;
-        }
-        .one-line {
-            -webkit-line-clamp: 1;
-        }
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        </style>
         <a class='text-decoration-none' href='$rootPath/game/info.php?game_id={$this->getId()}'>
             <div class='card my-2' style='$cardStyle'>
                 <div class='card-body'>
@@ -449,31 +430,10 @@ class Game
         $subgenres = implode(", ", $this->subgenres);
         $rootPath = Config::getRootPath();
         $cardStyle = "height: 210px;";
-        $str = "
-            <style>
-                .card-title, .card-text {
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    margin-bottom: 0;
-                    margin-top: 0;
-                }
-                .one-line {
-                    -webkit-line-clamp: 1;
-                }
-                .card-body {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                }
-            </style>
-        ";
         if ($collectionId == Collection::getFavoritesId()) {
-            $str .= "<a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>";
+            $str = "<a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>";
         } else {
-            $str .= "<a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>";
+            $str = "<a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>";
         }
         $rootPath = Config::getRootPath();
         $str .= "
