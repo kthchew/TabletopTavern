@@ -74,7 +74,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <hr>
     <h2>Favorites</h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
+        <div class="row col-lg-3 col-md-4 col-sm-12 g-0 flex-nowrap">
             <?php
             $favGames = Collection::getFavoritesGames();
             foreach ($favGames as $game) {

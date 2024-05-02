@@ -408,16 +408,35 @@ class Game
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
         $rootPath = Config::getRootPath();
+        $cardStyle = "height: 210px;";
         return "
+        <style>
+        .card-title, .card-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+        .one-line {
+            -webkit-line-clamp: 1;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        </style>
         <a class='text-decoration-none' href='$rootPath/game/info.php?game_id={$this->getId()}'>
-            <div class='card my-2'>
+            <div class='card my-2' style='$cardStyle'>
                 <div class='card-body'>
-                    <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
-                    <p class='card-text m-0'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
-                    <small class='card-text fst-italic'>{$mechanics}</small>
-                    <br>
-                    <small class='card-text fst-italic'>{$subgenres}</small>
-                    <p class='card-text'>{$truncatedDescription}</p>
+                    <h5 class='card-title mb-1' style='font-size: 18px;'>{$this->name} ({$this->yearPublished})</h5>
+                    <p class='card-text' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <small class='card-text fst-italic one-line' style='font-size: 14px;;'>{$mechanics}</small>
+                    <small class='card-text fst-italic one-line' style='font-size: 14px;'>{$subgenres}</small>
+                    <p class='card-text' style='font-size: 15px;'>{$this->description}</p>
                 </div>
             </div>
         </a>";
@@ -428,7 +447,29 @@ class Game
         $truncatedDescription = $this->getDescription(100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
-        $str = "";
+        $rootPath = Config::getRootPath();
+        $cardStyle = "height: 210px;";
+        $str = "
+            <style>
+                .card-title, .card-text {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-bottom: 0;
+                    margin-top: 0;
+                }
+                .one-line {
+                    -webkit-line-clamp: 1;
+                }
+                .card-body {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                }
+            </style>
+        ";
         if ($collectionId == Collection::getFavoritesId()) {
             $str .= "<a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>";
         } else {
@@ -436,21 +477,20 @@ class Game
         }
         $rootPath = Config::getRootPath();
         $str .= "
-           <div class='card my-2'>
+           <div class='card my-2' style='$cardStyle'>
                 <div class='card-body'>
                     <div style='display: flex; justify-content: space-between;'>
-                        <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
+                        <h5 class='card-title mb-1' style='font-size: 18px;'>{$this->name} ({$this->yearPublished})</h5>
                         <form action='$rootPath/collection/remove_game.php' method='post'>
                             <input type='hidden' name='game-id' value='{$this->getId()}'>
                             <input type='hidden' name='collection-id' value='{$collectionId}'>
                             <button type='submit' class='btn btn-light' style='font-size: 10px;'>&mdash;</button>
                         </form>
                     </div>
-                    <p class='card-text m-0'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
-                    <small class='card-text fst-italic'>{$mechanics}</small>
-                    <br>    
-                    <small class='card-text fst-italic'>{$subgenres}</small>
-                    <p class='card-text'>{$truncatedDescription}</p>
+                    <p class='card-text' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <small class='card-text fst-italic one-line' style='font-size: 14px;;'>{$mechanics}</small>
+                    <small class='card-text fst-italic one-line' style='font-size: 14px;'>{$subgenres}</small>
+                    <p class='card-text' style='font-size: 15px;'>{$truncatedDescription}</p>
                 </div>
             </div>
         </a>";
