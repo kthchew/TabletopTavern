@@ -11,8 +11,7 @@ $gameCards = '';
 if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST['minPlayers']) || isset($_POST['maxPlayers']) || isset($_POST['playTime']) || isset($_POST['minAge'])) {
     $searchName = $_POST['searchName'];
     $searchGenre = $_POST['searchGenre'];
-    $minPlayers = $_POST['minPlayers'];
-    $maxPlayers = $_POST['maxPlayers'];
+    $playerCount = $_POST['playerCount'];
     $playTime = $_POST['playTime'];
     $minAge = $_POST['minAge'];
     $pageSize = 10;
@@ -20,7 +19,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     //var_dump($searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
 
-    $games = Game::searchGameByMultipleParameters( $searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
+    $games = Game::searchGameByMultipleParameters( $searchName, $searchGenre, $playerCount, $playTime, $minAge, $pageSize, $currentPage);
 
     // If there are no games found, display a message
     if (empty($games)) {
@@ -49,12 +48,28 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
 <body>
 <?php include 'header.php';?>
+<?php $genres = Game::getAllGenres()?>
 <div class="row justify-content-center">
-<form action="" method="post" class="col-md-11">
+<form action="" method="post" class="col-md-9">
     <input type="text" name="searchName" placeholder="Search by Name..." value="<?php echo isset($searchName) ? $searchName : ''?>">
-    <input type="text" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
-    <input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
-    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">
+    <input list="genre" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
+    <datalist id="genre">
+        <?php foreach ($genres as $genre): ?>
+            <option value="<?php echo $genre; ?>">
+        <?php endforeach; ?>
+    </datalist>
+    <!--<div>
+        <select name="searchGenre" id="searchGenre" class="form-select">
+            <option value="">Search by Genre...</option>
+            <?php foreach ($genres as $genre): ?>
+                <option value="<?php echo $genre; ?>" <?php if (isset($searchGenre) && $searchGenre == $genre) echo 'selected'; ?>><?php echo $genre; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>-->
+
+    <!--<input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
+    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">-->
+    <input type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
     <input type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
     <input type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
     <input type="submit" value="Search">

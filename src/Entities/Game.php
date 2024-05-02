@@ -111,7 +111,19 @@ class Game
         return $games;
     }
 
-    static function searchGameByMultipleParameters($name, $subGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage): array
+    static function getAllGenres(): array
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT DISTINCT subgenre FROM subgenre";
+        $result = $db->query($sql);
+        $genres = [];
+        while ($row = $result->fetch_assoc()) {
+            $genres[] = $row['subgenre'];
+        }
+        return $genres;
+    }
+
+    static function searchGameByMultipleParameters($name, $subGenre, $playerCount, $playTime, $minAge, $pageSize, $currentPage): array
     {
         $db = Database::getInstance();
 
@@ -131,15 +143,11 @@ class Game
             $params[] = "%" . $subGenre . "%";
             $types .= "s";
         }
-        if (!empty($minPlayers)) {
-            $query .= "min_players >= ? AND ";
-            $params[] = $minPlayers;
-            $types .= "i";
-        }
-        if (!empty($maxPlayers)) {
-            $query .= "max_players <= ? AND ";
-            $params[] = $maxPlayers;
-            $types .= "i";
+        if (!empty($playerCount)) {
+            $query .= "min_players <= ? AND max_players >= ? AND ";
+            $params[] = $playerCount;
+            $params[] = $playerCount;
+            $types .= "ii";
         }
         if (!empty($playTime)) {
             $query .= "play_time <= ? AND ";
