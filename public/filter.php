@@ -23,7 +23,12 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     // If there are no games found, display a message
     if (empty($games)) {
-        $gameCards = "<div class=\"d-flex justify-content-center align-items-center\">No games found that meet these specifications. Please try to change or broaden your specifications.</div>";
+        $gameCards = "<div style = 'margin: auto; text-align: center'>
+                      <br>
+                      <br>
+                      <h5><b>No games found</b></h5>
+                      <p>Please change or broaden your specifications</p>
+                      </div>";
     }
 
     foreach ($games as $game) {
