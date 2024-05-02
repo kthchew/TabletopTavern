@@ -2,6 +2,7 @@
 
 namespace Tabletop\Entities;
 
+use Tabletop\Config;
 use Tabletop\Database;
 
 class Game
@@ -350,8 +351,9 @@ class Game
         $truncatedDescription = substr($this->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $this->mechanics);
         $subgenres = implode(", ", $this->subgenres);
+        $rootPath = Config::getRootPath();
         return "
-        <a class='text-decoration-none' href='game/info.php?game_id={$this->getId()}'>
+        <a class='text-decoration-none' href='$rootPath/game/info.php?game_id={$this->getId()}'>
             <div class='card my-2'>
                 <div class='card-body'>
                     <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
@@ -376,12 +378,13 @@ class Game
         } else {
             $str .= "<a class='text-decoration-none' href='../game/info.php?game_id={$this->getId()}'>";
         }
+        $rootPath = Config::getRootPath();
         $str .= "
            <div class='card my-2'>
                 <div class='card-body'>
                     <div style='display: flex; justify-content: space-between;'>
                         <h5 class='card-title'>{$this->name} ({$this->yearPublished})</h5>
-                        <form action='../../public/collection/remove_game.php' method='post'>
+                        <form action='$rootPath/collection/remove_game.php' method='post'>
                             <input type='hidden' name='game-id' value='{$this->getId()}'>
                             <input type='hidden' name='collection-id' value='{$collectionId}'>
                             <button type='submit' class='btn btn-light' style='font-size: 10px;'>&mdash;</button>
@@ -405,8 +408,9 @@ class Game
         $truncatedDescription = substr($game->getDescription(), 0, 100) . "...";
         $mechanics = implode(", ", $game->mechanics);
         $subgenres = implode(", ", $game->subgenres);
+        $rootPath = Config::getRootPath();
         return "
-        <a class='text-decoration-none' href='game/info.php?game_id={$game->getIDfromName($game->name)}'>
+        <a class='text-decoration-none' href='$rootPath/game/info.php?game_id={$game->getIDfromName($game->name)}'>
             <div class='card my-2'>
                 <div class='card-body'>
                     <h5 class='card-title'>{$game->name} ({$game->yearPublished})</h5>
