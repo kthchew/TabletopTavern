@@ -74,9 +74,9 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     <!--<input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
     <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">-->
-    <input type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
-    <input type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
-    <input type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
+    <input min="0" type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
+    <input min="0" type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
+    <input min="0" type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
     <input type="submit" value="Search">
 </form>
 </div>
