@@ -232,7 +232,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <div style = "padding-left: 140px; padding-right: 140px;">
     <h2>Ratings</h2>
     <div id="rating">
-        <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating() : "No ratings yet" ?></span>
+        <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating(). "hearts out of 5" : "No ratings yet" ?></span>
         <?php if (isset($_SESSION['user'])): ?>
             <span class="heart" data-value="1">&#x2661;</span>
             <span class="heart" data-value="2">&#x2661;</span>
