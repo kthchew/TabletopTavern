@@ -87,15 +87,15 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <br>
 
 <?php $genres = Game::getAllGenres()?>
-<div class="row justify-content-center" style="padding-left: 40px; padding-right: 40px; padding-bottom: 40px;">
-    <form class="row row-cols-1 row-cols-md-5 justify-content-center filter-form" action = search.php>
+<div class="row justify-content-center" style="padding-left: 40px; padding-right: 40px;">
+    <form class="row justify-content-center filter-form" action = search.php>
 
-        <div class="col">
+        <div class="col-md-2 col-sm-6">
             <label for="searchTerm" class="form-label">Search by Name</label>
             <input type="text" class="form-control filter-term" name="searchTerm" placeholder="Search by Name..."
                    value="<?php echo $searchTerm ?? '' ?>">
         </div>
-        <div class="col">
+        <div class="col-md-2 col-sm-6">
             <label for="searchGenre" class="form-label">Search by Genre</label>
             <select name="searchGenre" id="searchGenre" class="form-select filter-genre">
                 <option value="">Search by Genre...</option>
@@ -104,37 +104,33 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="col">
+        <div class="col-md-2 col-sm-6">
             <label for="playerCount" class="form-label">Number of Players</label>
             <input type="number" class="form-control filter-player" name="playerCount" placeholder="Number of Players..."
                    value="<?php echo $playerCount ?? '' ?>">
         </div>
-        <div class="col">
+        <div class="col-md-2 col-sm-6">
             <label for="playTime" class="form-label">Max Play Time (Minutes)</label>
             <input type="number" class="form-control filter-time" name="playTime" placeholder="Max Play Time (Minutes)..."
                    value="<?php echo $playTime ?? '' ?>">
         </div>
-        <div class="col">
+        <div class="col-md-2 col-sm-6">
             <label for="minAge" class="form-label">Minimum Age</label>
             <input type="number" class="form-control filter-age" name="minAge" placeholder="Minimum Age..."
                    value="<?php echo $minAge ?? '' ?>">
         </div>
 
-        <div class="col">
-            <input type="submit" value="Search">
+        <div class="col-md-1 col-sm-6">
+            <label for="minAge" class="form-label invisible"> Search</label>
+            <input class="btn" type="submit" value="Search">
         </div>
-
     </form>
 </div>
 
-<div class="row row-cols-4 mb-4">
-    <?php echo $gameCards; ?>
-</div>
-
 <main class="container" style = "padding-left: 80px; padding-right: 80px; ">
-    <h1 class="text-center">Browse By Genre</h1>
-    <br>
+
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
+
     <div class="scroll-container">
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0" >
             <?php
@@ -149,6 +145,8 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
             ?>
         </div>
     </div>
+
+    <br>
 
     <h2><b><?php echo "Party Games:"; ?></b></h2>
     <div class="scroll-container">
