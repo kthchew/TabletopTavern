@@ -89,7 +89,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
         <div class="col-md-2 col-sm-6 col-12">
             <label for="searchTerm" class="form-label">Search by Name</label>
-            <input type="text" class="form-control filter-term" name="searchTerm" placeholder="Search by Name..."
+            <input type="text" class="form-control filter-term" id="searchTerm" name="searchTerm" placeholder="Search by Name..."
                    value="<?php echo $searchTerm ?? '' ?>">
         </div>
         <div class="col-md-2 col-sm-6 col-12">
@@ -103,17 +103,17 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
         </div>
         <div class="col-md-2 col-sm-6 col-12">
             <label for="playerCount" class="form-label">Number of Players</label>
-            <input type="number" class="form-control filter-player" name="playerCount" placeholder="Number of Players..."
+            <input type="number" class="form-control filter-player" id="playerCount" name="playerCount" placeholder="Number of Players..."
                    value="<?php echo $playerCount ?? '' ?>">
         </div>
         <div class="col-md-2 col-sm-6 col-12">
             <label for="playTime" class="form-label">Max Play Time (Minutes)</label>
-            <input type="number" class="form-control filter-time" name="playTime" placeholder="Max Play Time (Minutes)..."
+            <input type="number" class="form-control filter-time" id="playTime" name="playTime" placeholder="Max Play Time (Minutes)..."
                    value="<?php echo $playTime ?? '' ?>">
         </div>
         <div class="col-md-2 col-sm-6 col-12">
             <label for="minAge" class="form-label">Minimum Age</label>
-            <input type="number" class="form-control filter-age" name="minAge" placeholder="Minimum Age..."
+            <input type="number" class="form-control filter-age" id="minAge" name="minAge" placeholder="Minimum Age..."
                    value="<?php echo $minAge ?? '' ?>">
         </div>
 
