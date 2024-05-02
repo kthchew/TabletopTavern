@@ -32,6 +32,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php'; ?>
+
 <main style="padding-left: 40px; padding-right: 40px; padding-bottom: 40px;">
     <h1 class="text-center py-4">Search Results</h1>
     <p class="text-center"><b>Results for: </b><span class="search-term-info"><?php echo $searchTerm; ?></span></p>
@@ -68,8 +69,13 @@ define('__HEADER_FOOTER_PHP__', true);
                    value="<?php echo $minAge ?? '' ?>">
         </div>
     </form>
-
     <br>
+    <br>
+
+    <div style="text-align: center">
+        <h4 id="errorMsg1"></h4>
+        <p id="errorMsg2"></p>
+    </div>
 
     <div class="w-100 d-flex justify-content-center d-none loading-indicator">
         <div class="spinner-border" role="status">
@@ -98,7 +104,9 @@ define('__HEADER_FOOTER_PHP__', true);
             </ul>
         </nav>
     </div>
+
 </main>
+
 <script>
     let timeout = null;
     $('.form-control, .form-select').on('input', function() {
@@ -124,35 +132,46 @@ define('__HEADER_FOOTER_PHP__', true);
         fetch(`filter_json.php?searchName=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&page=${pageNumber}`, {
             method: 'GET'
         })
-        .then(async response => {
-            window.history.replaceState(null, null, `?searchTerm=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&page=${pageNumber}`);
+            .then(async response => {
+                window.history.replaceState(null, null, `?searchTerm=${searchTerm}&searchGenre=${searchGenre}&playerCount=${playerCount}&playTime=${playTime}&minAge=${minAge}&page=${pageNumber}`);
 
-            const gameCards = await response.json();
-            $('.game-card-container').html('');
-            gameCards.forEach(gameCard => {
-                $('.game-card-container').append(gameCard);
+
+                const gameCards = await response.json();
+                $('.game-card-container').html('');
+                gameCards.forEach(gameCard => {
+                    $('.game-card-container').append(gameCard);
+                });
+
+                if(gameCards.length === 0){
+                    document.getElementById("errorMsg1").innerHTML = "No games found";
+                    document.getElementById("errorMsg2").innerHTML = "Please change or broaden your specifications";
+                }else {
+                    document.getElementById("errorMsg1").innerHTML = "Meow";
+                    document.getElementById("errorMsg2").innerHTML = "Please change or broaden your specifications";
+                }
+
+                const $prevBtn = $('.prev-btn');
+                const $nextBtn = $('.next-btn');
+                $prevBtn.attr('onclick', `updatePage(${pageNumber - 1})`);
+                $nextBtn.attr('onclick', `updatePage(${pageNumber + 1})`);
+                $('.page-item').removeClass('disabled');
+                if (pageNumber === 1) {
+                    $prevBtn.parent().addClass('disabled');
+                }
+                if (gameCards.length < 12) {
+                    $nextBtn.parent().addClass('disabled');
+                }
+
+
+                $('.search-term-info').text(searchTerm);
+                $('.page-num-info').text(pageNumber);
+
+                $('.loading-indicator').addClass('d-none');
             });
-
-            const $prevBtn = $('.prev-btn');
-            const $nextBtn = $('.next-btn');
-            $prevBtn.attr('onclick', `updatePage(${pageNumber - 1})`);
-            $nextBtn.attr('onclick', `updatePage(${pageNumber + 1})`);
-            $('.page-item').removeClass('disabled');
-            if (pageNumber === 1) {
-                $prevBtn.parent().addClass('disabled');
-            }
-            if (gameCards.length < 12) {
-                $nextBtn.parent().addClass('disabled');
-            }
-
-            $('.search-term-info').text(searchTerm);
-            $('.page-num-info').text(pageNumber);
-
-            $('.loading-indicator').addClass('d-none');
-        });
     }
 </script>
 <?php include 'footer.php'; ?>
 </body>
+
 
 
