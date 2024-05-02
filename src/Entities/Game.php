@@ -111,7 +111,7 @@ class Game
         return $games;
     }
 
-    static function searchGameByMultipleParameters($name, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage): array
+    static function searchGameByMultipleParameters($name, $subGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage): array
     {
         $db = Database::getInstance();
 
@@ -124,6 +124,11 @@ class Game
         if (!empty($name)) {
             $query .= "name LIKE ? AND ";
             $params[] = "%" . $name . "%";
+            $types .= "s";
+        }
+        if (!empty($subGenre)) {
+            $query .= "id IN (SELECT game_id FROM gamesubgenreconnection WHERE subgenre_id IN (SELECT id FROM subgenre WHERE subgenre LIKE ?)) AND ";
+            $params[] = "%" . $subGenre . "%";
             $types .= "s";
         }
         if (!empty($minPlayers)) {

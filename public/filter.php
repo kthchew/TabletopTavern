@@ -20,7 +20,12 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     //var_dump($searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
 
-    $games = Game::searchGameByMultipleParameters( $searchName, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
+    $games = Game::searchGameByMultipleParameters( $searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
+
+    // If there are no games found, display a message
+    if (empty($games)) {
+        $gameCards = "<div class=\"d-flex justify-content-center align-items-center\">No games found that meet these specifications. Please try to change or broaden your specifications.</div>";
+    }
 
     foreach ($games as $game) {
         $gameCards .= $game->cardView();
@@ -44,16 +49,17 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
 <body>
 <?php include 'header.php';?>
-
-<form action="" method="post">
-    <input type="text" name="searchName" placeholder="Search by Name...">
-    <input type="text" name="searchGenre" placeholder="Search by Genre...">
-    <input type="number" name="minPlayers" placeholder="Minimum Players...">
-    <input type="number" name="maxPlayers" placeholder="Maximum Players...">
-    <input type="number" name="playTime" placeholder="Play Time...">
-    <input type="number" name="minAge" placeholder="Minimum Age...">
+<div class="row justify-content-center">
+<form action="" method="post" class="col-md-11">
+    <input type="text" name="searchName" placeholder="Search by Name..." value="<?php echo isset($searchName) ? $searchName : ''?>">
+    <input type="text" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
+    <input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
+    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">
+    <input type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
+    <input type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
     <input type="submit" value="Search">
 </form>
+</div>
 
 <div class="row row-cols-4 mb-4">
     <?php echo $gameCards; ?>
