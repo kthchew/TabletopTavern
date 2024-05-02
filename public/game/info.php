@@ -60,7 +60,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const hearts = document.querySelectorAll('.heart');
+            const hearts = document.querySelectorAll('.heart.rate');
             hearts.forEach((heart, index) => {
                 heart.addEventListener('mouseover', function() {
                     hearts.forEach((h, i) => {
@@ -130,10 +130,11 @@ define('__HEADER_FOOTER_PHP__', true);
         <?php endif; ?>
     <?php endif; ?>
     <div style="display: flex;">
-        <h1 style = "padding-left: 100px; margin-right: 10px;"><?= $game->getName() ?></h1>
+        <h1 style="padding-left: 100px; margin-right: 10px; vertical-align: bottom;"><?= $game->getName() ?></h1>
+
         <?php if (isset($_SESSION['user'])): ?>
             <div class="dropdown" style="display: inline-block; vertical-align: middle;">
-                <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn btn-square" aria-expanded="false">&plus;</button>
+                <button id="add-game-btn" type="button" data-bs-toggle="dropdown" class="btn btn-square mr-7" aria-expanded="false">&plus;</button>
                 <ul class="dropdown-menu" aria-labelledby="game-options">
                     <li>
                         <button class='dropdown-item' type='button'  data-bs-toggle="modal" data-bs-target="#game-collection-modal" style='color: #1C5E33; border-bottom: 1px solid lightgray;'>
@@ -153,7 +154,7 @@ define('__HEADER_FOOTER_PHP__', true);
                             </button>
                         </form>
                     </li>
-
+                    <div class="col-md-3 col-sm-12">
                     <?php
                     $collections = Tabletop\Entities\Collection::getUserCollections();
                     foreach ($collections as $collection) {
@@ -170,11 +171,29 @@ define('__HEADER_FOOTER_PHP__', true);
                         <?php
                     }
                     ?>
+                    </div>
                 </ul>
 
             </div>
         <?php endif; ?>
+        </div>
     </div>
+        <?php if ($game->getAverageRating() > 0):
+            echo "<div style='padding-left: 140px; vertical-align: top;'>";
+            $gameRating = round($game->getAverageRating());
+            for ($i = 0; $i < $gameRating; $i++) {
+                echo "<span class='heart active selected' style='pointer-events: none;'>&#x2764;</span>";
+            }
+            for ($i = $gameRating; $i < 5; $i++) {
+                echo "<span class='heart' style='pointer-events: none; font-size: 26px;'>&#x2661;</span>";
+            }
+            echo '</div>';
+            ?>
+        <?php endif; ?>
+
+    <?php if ($game->getAverageRating() == 0): ?>
+    <span style="padding-left: 150px; font-size: 20px; color: #1C5E33;">No ratings yet</span>
+    <?php endif; ?>
     <?php include 'add_game_modal.php'?>
 
     <hr>
@@ -229,16 +248,15 @@ define('__HEADER_FOOTER_PHP__', true);
 </div>
 
 <div style = "padding-left: 140px; padding-right: 140px;">
-    <h2>Ratings</h2>
+    <div class=""
+    <h2>Ratings (<?= $game->getRatingCount() ?>)</h2>
     <div id="rating">
-        <span><?= $game->getAverageRating() > 0 ? $game->getAverageRating(). " hearts out of 5" : "No ratings yet" ?></span>
         <?php if (isset($_SESSION['user'])): ?>
-            <span class="heart" data-value="1">&#x2661;</span>
-            <span class="heart" data-value="2">&#x2661;</span>
-            <span class="heart" data-value="3">&#x2661;</span>
-            <span class="heart" data-value="4">&#x2661;</span>
-            <span class="heart" data-value="5">&#x2661;</span>
-            <span>(<?= $game->getRatingCount() ?>)</span>
+            <span class="heart rate" data-value="1">&#x2661;</span>
+            <span class="heart rate" data-value="2">&#x2661;</span>
+            <span class="heart rate" data-value="3">&#x2661;</span>
+            <span class="heart rate" data-value="4">&#x2661;</span>
+            <span class="heart rate" data-value="5">&#x2661;</span>
             <form action="submit_rating.php?game_id=<?= $game_id ?>" method="post" style="margin-bottom: 20px;">
                 <input type="hidden" id="rating_value" name="rating_value" value="">
                 <button class="btn mt-1" type="submit">Submit Rating</button>
