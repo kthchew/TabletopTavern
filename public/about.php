@@ -28,14 +28,14 @@ define('__HEADER_FOOTER_PHP__', true);
     <div flex-container>
         <div class="row align-items-center">
             <div class="col text-end" >
-                <img src="images/tempLogo.png" alt="Left Logo" style="max-width: 70px; height: auto;">
+                <img src="images/tempLogo.png" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
             </div>
             <div class="col text-center">
-                <h1 style="white-space: nowrap;">Start your journey with</h1>
-                <h1 style="margin-bottom: 0;">Tabletop Tavern!</h1>
+                <h1>Start your journey with</h1>
+                <h1>Tabletop Tavern!</h1>
             </div>
             <div class="col text-start">
-                <img src="images/tempLogo.png" alt="Right Logo" style="max-width: 70px; height: auto;">
+                <img src="images/tempLogo.png" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
             </div>
         </div>
     </div>
