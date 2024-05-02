@@ -14,29 +14,21 @@ define('__HEADER_FOOTER_PHP__', true);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-        .flex-container{
-            display: flex;
-        }
-    </style>
 </head>
 
 <body>
 <?php include 'header.php';?>
 <div class="container">
-    <div flex-container>
-        <div class="row align-items-center">
-            <div class="col text-end" >
-                <img src="images/tempLogo.png" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
-            </div>
-            <div class="col text-center">
-                <h1>Start your journey with</h1>
-                <h1>Tabletop Tavern!</h1>
-            </div>
-            <div class="col text-start">
-                <img src="images/tempLogo.png" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
-            </div>
+    <div class="row align-items-center">
+        <div class="col text-end" >
+            <img src="images/tempLogo.png" class="d-none d-sm-inline" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
+        </div>
+        <div class="col text-center">
+            <h1>Start your journey with</h1>
+            <h1>Tabletop Tavern!</h1>
+        </div>
+        <div class="col text-start">
+            <img src="images/tempLogo.png" class="d-none d-sm-inline" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
         </div>
     </div>
 
