@@ -69,9 +69,6 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
             background: #629716;
         }
 
-        .row {
-            flex-wrap: nowrap;
-        }
         .col {
             flex: 1 0 auto;
         }
@@ -90,12 +87,12 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <div class="row justify-content-center" style="padding-left: 40px; padding-right: 40px;">
     <form class="row justify-content-center filter-form" action = search.php>
 
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-2 col-sm-6 col-12">
             <label for="searchTerm" class="form-label">Search by Name</label>
             <input type="text" class="form-control filter-term" name="searchTerm" placeholder="Search by Name..."
                    value="<?php echo $searchTerm ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-2 col-sm-6 col-12">
             <label for="searchGenre" class="form-label">Search by Genre</label>
             <select name="searchGenre" id="searchGenre" class="form-select filter-genre">
                 <option value="">Search by Genre...</option>
@@ -104,23 +101,23 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-2 col-sm-6 col-12">
             <label for="playerCount" class="form-label">Number of Players</label>
             <input type="number" class="form-control filter-player" name="playerCount" placeholder="Number of Players..."
                    value="<?php echo $playerCount ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-2 col-sm-6 col-12">
             <label for="playTime" class="form-label">Max Play Time (Minutes)</label>
             <input type="number" class="form-control filter-time" name="playTime" placeholder="Max Play Time (Minutes)..."
                    value="<?php echo $playTime ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-2 col-sm-6 col-12">
             <label for="minAge" class="form-label">Minimum Age</label>
             <input type="number" class="form-control filter-age" name="minAge" placeholder="Minimum Age..."
                    value="<?php echo $minAge ?? '' ?>">
         </div>
 
-        <div class="col-md-1 col-sm-6">
+        <div class="col-md-1 col-sm-6 col-12">
             <label for="minAge" class="form-label invisible"> Search</label>
             <input class="btn" type="submit" value="Search">
         </div>
@@ -132,7 +129,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
 
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0" >
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap" >
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Strategy Games", 10, $page);
@@ -150,7 +147,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     <h2><b><?php echo "Party Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Party Games", 10, $page);
@@ -167,7 +164,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Family Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Family Games", 10, $page);
@@ -184,7 +181,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Customizable Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Customizable Games", 10, $page);
@@ -201,7 +198,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Thematic Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Thematic Games", 10, $page);
@@ -218,7 +215,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Abstract Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Abstract Games", 10, $page);
@@ -235,7 +232,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Wargames:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Wargames", 10, $page);
@@ -252,7 +249,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
     <br>
     <h2><b><?php echo "Children's Games:"; ?></b></h2>
     <div class="scroll-container">
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             // get the games that match the search term
             $games = Game::searchGamesByGenre("Children's Games", 10, $page);
