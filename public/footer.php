@@ -7,7 +7,7 @@ if (!defined('__HEADER_FOOTER_PHP__')) {
 }
 ?>
 <br>
-<footer class="text-center">
+<footer class="text-center w-100">
     <div style="background-color: #cee4ac; color: #063918" >
         <br>
         <p>&copy; 2024 Tabletop Tavern</p>

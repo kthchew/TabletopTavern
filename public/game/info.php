@@ -48,9 +48,6 @@ define('__HEADER_FOOTER_PHP__', true);
             display: block;
         }
 
-        .flex-container{
-            display: flex;
-        }
 
         p, ul{
             color: #033a16;
@@ -245,7 +242,6 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <hr>
-</div>
 
 <div style = "padding-left: 140px; padding-right: 140px;">
     <div class=""
@@ -361,8 +357,8 @@ define('__HEADER_FOOTER_PHP__', true);
         $("#duplicate-alert").delay(3000).fadeOut();
     });
 </script>
+</div>
 <br>
 <?php include '../footer.php';?>
 </body>
-
 </html>
