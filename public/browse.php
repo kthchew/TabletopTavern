@@ -5,6 +5,33 @@ session_start();
 $page = $_GET['page'] ?? 1;
 use Tabletop\Entities\Game;
 define('__HEADER_FOOTER_PHP__', true);
+
+
+$gameCards = '';
+
+//Receive the form data and call the searchGamesByMultipleParameters function from the Game class
+if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST['minPlayers']) || isset($_POST['maxPlayers']) || isset($_POST['playTime']) || isset($_POST['minAge'])) {
+    $searchName = $_POST['searchName'];
+    $searchGenre = $_POST['searchGenre'];
+    $playerCount = $_POST['playerCount'];
+    $playTime = $_POST['playTime'];
+    $minAge = $_POST['minAge'];
+    $pageSize = 10;
+    $currentPage = 1;
+
+//var_dump($searchName, $searchGenre, $minPlayers, $maxPlayers, $playTime, $minAge, $pageSize, $currentPage);
+
+    $games = Game::searchGameByMultipleParameters($searchName, $searchGenre, $playerCount, $playTime, $minAge, $pageSize, $currentPage);
+
+// If there are no games found, display a message
+    if (empty($games)) {
+        $gameCards = "<div class=\"d-flex justify-content-center align-items-center\">No games found that meet these specifications. Please try to change or broaden your specifications.</div>";
+    }
+
+    foreach ($games as $game) {
+        $gameCards .= $game->cardView();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +81,44 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
+
+<br>
+<h1 class="text-center">Browse By Genre</h1>
+<br>
+
+<?php $genres = Game::getAllGenres()?>
+<div class="row justify-content-center">
+    <form action="filter.php" method="post" class="col-md-9">
+        <input type="text" name="searchName" placeholder="Search by Name..." value="<?php echo isset($searchName) ? $searchName : ''?>">
+        <input list="genre" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
+        <datalist id="genre">
+            <?php foreach ($genres as $genre): ?>
+            <option value="<?php echo $genre; ?>">
+                <?php endforeach; ?>
+        </datalist>
+        <!--<div>
+        <select name="searchGenre" id="searchGenre" class="form-select">
+            <option value="">Search by Genre...</option>
+            <?php foreach ($genres as $genre): ?>
+                <option value="<?php echo $genre; ?>" <?php if (isset($searchGenre) && $searchGenre == $genre) echo 'selected'; ?>><?php echo $genre; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>-->
+
+        <!--<input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
+    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">-->
+        <input type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
+        <input type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
+        <input type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<div class="row row-cols-4 mb-4">
+    <?php echo $gameCards; ?>
+</div>
+
 <main class="container" style = "padding-left: 80px; padding-right: 80px; ">
-    <h1 class="text-center">Browse By Genre</h1>
     <br>
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
     <div class="scroll-container">
@@ -73,7 +136,6 @@ define('__HEADER_FOOTER_PHP__', true);
         </div>
     </div>
 
-    <br>
     <h2><b><?php echo "Party Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0">
