@@ -29,7 +29,10 @@ class Game
         $db = Database::getInstance();
         $game = new Game();
         $game->id = $row['id'];
-        $game->name = $row['name'];
+        // [] are encoded differently in the CSV
+        $name = str_replace('\\91\\', "[", $row['name']);
+        $name = str_replace('\\93\\', "]", $name);
+        $game->name = $name;
         $game->minPlayers = $row['min_players'];
         $game->maxPlayers = $row['max_players'];
         $game->playTime = $row['play_time'];
