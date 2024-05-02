@@ -37,6 +37,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <h1 class="text-center py-4">Search Results</h1>
     <p class="text-center"><b>Results for: </b><span class="search-term-info"><?php echo $searchTerm; ?></span></p>
     <p class="text-center"><b>Page: </b><span class="page-num-info"><?php echo $page; ?></span></p>
+    <br>
 
     <form class="row row-cols-1 row-cols-md-5 justify-content-center filter-form">
         <div class="col">
@@ -70,6 +71,7 @@ define('__HEADER_FOOTER_PHP__', true);
         </div>
     </form>
     <br>
+    <hr class="w-75 mx-auto">
     <br>
 
     <div style="text-align: center">

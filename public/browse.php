@@ -128,6 +128,8 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
         </div>
     </form>
 </div>
+<br>
+<hr class="w-75 mx-auto">
 
 <main class="container" style = "padding-left: 80px; padding-right: 80px; ">
 
