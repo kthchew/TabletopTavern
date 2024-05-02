@@ -279,6 +279,7 @@ define('__HEADER_FOOTER_PHP__', true);
                 <button class="btn mt-1" type="submit">Submit Comment</button>
             </div>
         </form>
+    <br>
     <?php endif; ?>
 
     <?php
