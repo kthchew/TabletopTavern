@@ -70,9 +70,12 @@ define('__HEADER_FOOTER_PHP__', true);
         <div id="success-dashboard-alert" class="alert alert-success"><?= $_SESSION['success'] ?></div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
+    <br>
     <h1 class = "text-center"><?php echo $_SESSION['username'] ?>'s Dashboard</h1>
+    <br>
     <hr>
     <h2>Favorites</h2>
+    <br>
     <div class="scroll-container">
         <div class="row col-lg-3 col-md-4 col-sm-12 g-0 flex-nowrap">
             <?php

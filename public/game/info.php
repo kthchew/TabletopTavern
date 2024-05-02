@@ -48,9 +48,6 @@ define('__HEADER_FOOTER_PHP__', true);
             display: block;
         }
 
-        .flex-container{
-            display: flex;
-        }
 
         p, ul{
             color: #033a16;
@@ -245,7 +242,6 @@ define('__HEADER_FOOTER_PHP__', true);
     </div>
 
     <hr>
-</div>
 
 <div style = "padding-left: 140px; padding-right: 140px;">
     <div class=""
@@ -291,7 +287,7 @@ define('__HEADER_FOOTER_PHP__', true);
             '<a href="$1">$1</a>',
             $comment->comment_text
         );
-        echo "<p><strong>{$comment->username}</strong>:<br> {$comment_text}<br><span class='timestamp'>{$comment->created_at}</span></p>";
+        echo "<p><strong>{$comment->username}</strong>:<br> {$comment_text}<br><span class='timestamp' style='color: #2f884e'>{$comment->created_at}</span></p>";
         if (isset($_SESSION['user']) && $_SESSION['user'] == $comment->userId) {
             echo "<p class='comment-actions'>";
             echo "<a href='#' class='edit-comment' data-comment-id='{$comment->id}' style='margin-right: 10px;'>Edit</a>";
@@ -361,8 +357,8 @@ define('__HEADER_FOOTER_PHP__', true);
         $("#duplicate-alert").delay(3000).fadeOut();
     });
 </script>
+</div>
 <br>
 <?php include '../footer.php';?>
 </body>
-
 </html>

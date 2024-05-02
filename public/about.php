@@ -23,7 +23,7 @@ define('__HEADER_FOOTER_PHP__', true);
         <div class="col text-end" >
             <img src="images/tempLogo.png" class="d-none d-sm-inline" alt="A drawing of a d-20 dice with 'TT' inscribed on it" style="max-width: 70px; height: auto;">
         </div>
-        <div class="col text-center">
+        <div class="col-8 col-sm-6 text-center">
             <h1>Start your journey with</h1>
             <h1>Tabletop Tavern!</h1>
         </div>

@@ -113,3 +113,19 @@ a:hover, .dropdown-item:hover, .nav-link:hover{
 hr{
     border: #033a16 1px dashed;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #cee1b1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a2d15c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #629716;
+}
