@@ -73,7 +73,12 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
             flex: 1 0 auto;
         }
 
+        #scrollCont{
+            overflow-x: scroll;
+        }
+
     </style>
+
 </head>
 
 <body>
@@ -128,7 +133,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
 
-    <div class="scroll-container">
+    <div class="scroll-container" id="scrollCont">
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap" >
             <?php
             // get the games that match the search term
