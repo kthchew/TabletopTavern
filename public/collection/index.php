@@ -37,7 +37,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <body>
 <?php include '../header.php';?>
 
-<main class="container">
+<main style="padding-left: 40px; padding-right: 40px;">
     <?php if (!isset($collection) || !$collection): ?>
         <div class="alert alert-danger"><?= $error ?></div>
     <?php else: ?>
@@ -49,8 +49,8 @@ define('__HEADER_FOOTER_PHP__', true);
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
 
-        <a style="font-size: 14pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-1 rounded" href="../dashboard.php" role="button"><- To Dashboard</a>
-
+        <a style="font-size: 10pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-1 rounded" href="../dashboard.php" role="button"><<</a>
+        <br>
         <div style="display: flex; justify-content: center;">
         <input type="hidden" name="original-name" value="<?= htmlspecialchars($collection->getName()) ?>">
         <h1 style="margin-right: 10px;"><?= $collection->getName() ?></h1>
@@ -66,7 +66,7 @@ define('__HEADER_FOOTER_PHP__', true);
             <p align="center" style="font-size: 20px">Add a game to your collection by browsing or searching!</p>
         <?php else: ?>
         <br>
-        <div class="row row-cols-4 mb-4">
+        <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 mb-4 game-card-container">
 
                 <?php
                 // get the games for collection

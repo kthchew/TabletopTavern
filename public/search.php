@@ -33,7 +33,7 @@ define('__HEADER_FOOTER_PHP__', true);
 <body>
 <?php include 'header.php'; ?>
 
-<main style="padding-left: 40px; padding-right: 40px; padding-bottom: 40px;">
+<main style="padding-left: 40px; padding-right: 40px;">
     <h1 class="text-center py-4">Search Results</h1>
     <p class="text-center"><b>Results for: </b><span class="search-term-info"><?php echo $searchTerm; ?></span></p>
     <p class="text-center"><b>Page: </b><span class="page-num-info"><?php echo $page; ?></span></p>

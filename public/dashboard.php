@@ -65,7 +65,7 @@ define('__HEADER_FOOTER_PHP__', true);
 
 <body>
 <?php include 'header.php';?>
-<main class="container">
+<main style="padding-left: 80px; padding-right: 80px;">
     <?php if (isset($_SESSION['success'])): ?>
         <div id="success-dashboard-alert" class="alert alert-success"><?= $_SESSION['success'] ?></div>
         <?php unset($_SESSION['success']); ?>
@@ -74,7 +74,7 @@ define('__HEADER_FOOTER_PHP__', true);
     <hr>
     <h2>Favorites</h2>
     <div class="scroll-container">
-        <div class="row row-cols-4 g-0" style="flex-wrap: nowrap;">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0 flex-nowrap">
             <?php
             $favGames = Collection::getFavoritesGames();
             foreach ($favGames as $game) {
@@ -90,9 +90,9 @@ define('__HEADER_FOOTER_PHP__', true);
         <h2 style="margin-right: 10px;">Collections</h2>
         <button class="btn btn-square" type="button" data-bs-toggle="modal" data-bs-target="#collection-modal">&plus;</button>
     </div>
-    <div class="row row-cols-4 mb-4">
+    <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 mb-4 game-card-container">
 
-        <?php
+    <?php
         $collections = Collection::getUserCollections();
         foreach ($collections as $collection) {
             echo "<div class='col'>";
