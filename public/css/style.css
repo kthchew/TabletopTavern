@@ -109,3 +109,7 @@ a:hover, .dropdown-item:hover, .nav-link:hover{
 #collection-options::after {
     display: none;
 }
+
+hr{
+    border: #033a16 1px dashed;
+}

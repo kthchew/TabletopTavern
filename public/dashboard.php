@@ -71,6 +71,7 @@ define('__HEADER_FOOTER_PHP__', true);
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
     <h1 class = "text-center"><?php echo $_SESSION['username'] ?>'s Dashboard</h1>
+    <hr>
     <h2>Favorites</h2>
     <div class="scroll-container">
         <div class="row row-cols-4 g-0" style="flex-wrap: nowrap;">

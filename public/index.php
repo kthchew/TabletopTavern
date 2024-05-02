@@ -25,8 +25,8 @@ define('__HEADER_FOOTER_PHP__', true);
 <p class="text-center" style="font-size: 16pt">Find one here at the <b>Tabletop Tavern!</b></p>
 <a style="font-size: 14pt; background-color: #b4cd8c; color:#1C5E33;" class="btn py-3 mx-2 rounded" href="about.php" role="button">What's the Tabletop Tavern?</a>
 <br><br>
-    <div class="border-black w-75 mx-auto" style="background-color: #1C5E33"><hr class="border-3 "></div>
-<br>
+<hr class="w-75 mx-auto">
+    <br>
 </div>
 
 <p class="text-center" style="font-size: 14pt"><b>Roll the dice</b> to get a random game or use our <b>filtered search</b> option to find exactly what you’re looking for.</p>

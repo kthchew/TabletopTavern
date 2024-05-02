@@ -55,6 +55,6 @@ $rootPath = Tabletop\Config::getRootPath();
         </div>
     </form>
 
-    <div class="border-black w-75 mx-auto" style="background-color: #1C5E33"><hr class="border-3"></div>
+    <div class=" w-75 mx-auto" style="background-color: #1C5E33"><hr></div>
 
 </div>
