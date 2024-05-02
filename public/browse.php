@@ -87,30 +87,43 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <br>
 
 <?php $genres = Game::getAllGenres()?>
-<div class="row justify-content-center">
-    <form action="filter.php" method="post" class="col-md-9">
-        <input type="text" name="searchName" placeholder="Search by Name..." value="<?php echo isset($searchName) ? $searchName : ''?>">
-        <input list="genre" name="searchGenre" placeholder="Search by Genre..." value="<?php echo isset($searchGenre) ? $searchGenre : ''?>">
-        <datalist id="genre">
-            <?php foreach ($genres as $genre): ?>
-            <option value="<?php echo $genre; ?>">
-                <?php endforeach; ?>
-        </datalist>
-        <!--<div>
-        <select name="searchGenre" id="searchGenre" class="form-select">
-            <option value="">Search by Genre...</option>
-            <?php foreach ($genres as $genre): ?>
-                <option value="<?php echo $genre; ?>" <?php if (isset($searchGenre) && $searchGenre == $genre) echo 'selected'; ?>><?php echo $genre; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>-->
+<div class="row justify-content-center" style="padding-left: 40px; padding-right: 40px; padding-bottom: 40px;">
+    <form class="row row-cols-1 row-cols-md-5 justify-content-center filter-form" action = search.php>
 
-        <!--<input type="number" name="minPlayers" placeholder="Minimum Players..." value="<?php echo isset($minPlayers) ? $minPlayers : ''?>">
-    <input type="number" name="maxPlayers" placeholder="Maximum Players..." value="<?php echo isset($maxPlayers) ? $maxPlayers : ''?>">-->
-        <input type="number" name="playerCount" placeholder="Number of Players..." value="<?php echo isset($playerCount) ? $playerCount : ''?>">
-        <input type="number" name="playTime" placeholder="Max Play Time (Minutes)..." value="<?php echo isset($playTime) ? $playTime : ''?>">
-        <input type="number" name="minAge" placeholder="Minimum Age..." value="<?php echo isset($minAge) ? $minAge : ''?>">
-        <input type="submit" value="Search">
+        <div class="col">
+            <label for="searchTerm" class="form-label">Search by Name</label>
+            <input type="text" class="form-control filter-term" name="searchTerm" placeholder="Search by Name..."
+                   value="<?php echo $searchTerm ?? '' ?>">
+        </div>
+        <div class="col">
+            <label for="searchGenre" class="form-label">Search by Genre</label>
+            <select name="searchGenre" id="searchGenre" class="form-select filter-genre">
+                <option value="">Search by Genre...</option>
+                <?php foreach ($genres as $genre): ?>
+                    <option value="<?php echo $genre; ?>" <?php if (isset($searchGenre) && $searchGenre == $genre) echo 'selected'; ?>><?php echo $genre; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col">
+            <label for="playerCount" class="form-label">Number of Players</label>
+            <input type="number" class="form-control filter-player" name="playerCount" placeholder="Number of Players..."
+                   value="<?php echo $playerCount ?? '' ?>">
+        </div>
+        <div class="col">
+            <label for="playTime" class="form-label">Max Play Time (Minutes)</label>
+            <input type="number" class="form-control filter-time" name="playTime" placeholder="Max Play Time (Minutes)..."
+                   value="<?php echo $playTime ?? '' ?>">
+        </div>
+        <div class="col">
+            <label for="minAge" class="form-label">Minimum Age</label>
+            <input type="number" class="form-control filter-age" name="minAge" placeholder="Minimum Age..."
+                   value="<?php echo $minAge ?? '' ?>">
+        </div>
+
+        <div class="col">
+            <input type="submit" value="Search">
+        </div>
+
     </form>
 </div>
 
@@ -119,6 +132,8 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 </div>
 
 <main class="container" style = "padding-left: 80px; padding-right: 80px; ">
+    <h1 class="text-center">Browse By Genre</h1>
+    <br>
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0" >
