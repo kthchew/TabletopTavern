@@ -433,9 +433,9 @@ class Game
             <div class='card my-2' style='$cardStyle'>
                 <div class='card-body'>
                     <h5 class='card-title mb-1' style='font-size: 18px;'>{$this->name} ({$this->yearPublished})</h5>
-                    <p class='card-text' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <p class='card-text mb-1' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
                     <small class='card-text fst-italic one-line' style='font-size: 14px;;'>{$mechanics}</small>
-                    <small class='card-text fst-italic one-line' style='font-size: 14px;'>{$subgenres}</small>
+                    <small class='card-text fst-italic one-line mb-1' style='font-size: 14px;'>{$subgenres}</small>
                     <p class='card-text' style='font-size: 15px;'>{$this->description}</p>
                 </div>
             </div>
@@ -487,9 +487,9 @@ class Game
                             <button type='submit' class='btn btn-light' style='font-size: 10px;'>&mdash;</button>
                         </form>
                     </div>
-                    <p class='card-text' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
+                    <p class='card-text mb-1' style='font-size: 16px;'>{$this->minPlayers} - {$this->maxPlayers} players, {$this->playTime} minutes, {$this->minAge}+</p>
                     <small class='card-text fst-italic one-line' style='font-size: 14px;;'>{$mechanics}</small>
-                    <small class='card-text fst-italic one-line' style='font-size: 14px;'>{$subgenres}</small>
+                    <small class='card-text fst-italic one-line mb-1' style='font-size: 14px;'>{$subgenres}</small>
                     <p class='card-text' style='font-size: 15px;'>{$truncatedDescription}</p>
                 </div>
             </div>
