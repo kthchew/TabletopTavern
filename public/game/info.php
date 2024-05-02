@@ -178,43 +178,42 @@ define('__HEADER_FOOTER_PHP__', true);
     <?php include 'add_game_modal.php'?>
 
     <hr>
-    <div class="flex-container" style = "padding-left: 100px; padding-right: 100px;">
+    <div class="row justify-content-evenly">
 
-        <div style="width: 350px" >
+        <div class="col col-12 col-lg-3 mr-6">
             <img src="<?= $game->getImageURL() ?>" alt="<?= $game->getName() ?>" class="img-thumbnail m-3">
         </div>
 
-        <div class = "w-25" style = "padding-left: 100px">
-            <br>
-            <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
-                <h5>Players: <?= $game->getMinPlayers() ?></h5>
-            <?php else: ?>
-                <h5>Players:</h5>
-                <p><?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
-            <?php endif; ?>
-            <h5>Play Time:</h5>
-            <p><?= $game->getPlayTime() ?> min</p>
-            <h5>Minimum Age:</h5>
-            <p><?= $game->getMinAge() ?></p>
-            <h5>Year Published: </h5>
-            <p><?= $game->getYearPublished() ?></p>
-        </div>
+        <div class="col col-12 col-lg-6 row justify-content-center">
+            <div class="col col-12 col-lg-5">
+                <?php if ($game->getMinPlayers() === $game->getMaxPlayers()): ?>
+                    <h5>Players: <?= $game->getMinPlayers() ?></h5>
+                <?php else: ?>
+                    <h5>Players:</h5>
+                    <p><?= $game->getMinPlayers() ?> - <?= $game->getMaxPlayers() ?></p>
+                <?php endif; ?>
+                <h5>Play Time:</h5>
+                <p><?= $game->getPlayTime() ?> min</p>
+                <h5>Minimum Age:</h5>
+                <p><?= $game->getMinAge() ?></p>
+                <h5>Year Published: </h5>
+                <p><?= $game->getYearPublished() ?></p>
+            </div>
 
-        <div class = "w-25" style = "margin-left: 85px">
-            <br>
-
-            <h5>Subgenres:</h5>
-            <ul>
-                <?php foreach ($game->getSubgenres() as $subgenre): ?>
-                    <li><?= $subgenre ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <h5>Mechanics:</h5>
-            <ul>
-                <?php foreach ($game->getMechanics() as $mechanic): ?>
-                    <li><?= $mechanic ?></li>
-                <?php endforeach; ?>
-            </ul>
+            <div class="col col-12 col-lg-5">
+                <h5>Subgenres:</h5>
+                <ul>
+                    <?php foreach ($game->getSubgenres() as $subgenre): ?>
+                        <li><?= $subgenre ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <h5>Mechanics:</h5>
+                <ul>
+                    <?php foreach ($game->getMechanics() as $mechanic): ?>
+                        <li><?= $mechanic ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
 
     </div>
