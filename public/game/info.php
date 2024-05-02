@@ -244,7 +244,6 @@ define('__HEADER_FOOTER_PHP__', true);
     <hr>
 
 <div style = "padding-left: 140px; padding-right: 140px;">
-    <div class=""
     <h2>Ratings (<?= $game->getRatingCount() ?>)</h2>
     <div id="rating">
         <?php if (isset($_SESSION['user'])): ?>
@@ -358,7 +357,6 @@ define('__HEADER_FOOTER_PHP__', true);
         $("#duplicate-alert").delay(3000).fadeOut();
     });
 </script>
-</div>
 <br>
 <?php include '../footer.php';?>
 </body>
