@@ -83,7 +83,7 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 <?php include 'header.php';?>
 
 <br>
-<h1 class="text-center">Browse By Genre</h1>
+<h1 class="text-center">Browse</h1>
 <br>
 
 <?php $genres = Game::getAllGenres()?>
@@ -119,7 +119,6 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 </div>
 
 <main class="container" style = "padding-left: 80px; padding-right: 80px; ">
-    <br>
     <h2><b><?php echo "Strategy Games:"; ?></b></h2>
     <div class="scroll-container">
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 g-0" >
