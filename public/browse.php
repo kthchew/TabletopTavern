@@ -85,14 +85,14 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
 
 <?php $genres = Game::getAllGenres()?>
 <div class="row justify-content-center" style="padding-left: 40px; padding-right: 40px;">
-    <form class="row justify-content-center filter-form" action = search.php>
+    <form class="row justify-content-center align-content-flex-end filter-form" action = search.php>
 
-        <div class="col-md-2 col-sm-6 col-12">
+        <div class="col-lg-2 col-md-6 col-12 mb-1">
             <label for="searchTerm" class="form-label">Search by Name</label>
             <input type="text" class="form-control filter-term" id="searchTerm" name="searchTerm" placeholder="Search by Name..."
                    value="<?php echo $searchTerm ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6 col-12">
+        <div class="col-lg-2 col-md-6 col-12 mb-1">
             <label for="searchGenre" class="form-label">Search by Genre</label>
             <select name="searchGenre" id="searchGenre" class="form-select filter-genre">
                 <option value="">Search by Genre...</option>
@@ -101,25 +101,25 @@ if (isset($_POST['searchName']) || isset($_POST['searchGenre']) || isset($_POST[
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="col-md-2 col-sm-6 col-12">
+        <div class="col-lg-2 col-md-6 col-12 mb-1">
             <label for="playerCount" class="form-label">Number of Players</label>
             <input type="number" class="form-control filter-player" id="playerCount" name="playerCount" placeholder="Number of Players..."
                    value="<?php echo $playerCount ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6 col-12">
-            <label for="playTime" class="form-label">Max Play Time (Minutes)</label>
+        <div class="col-lg-2 col-md-6 col-12 mb-1">
+            <label for="playTime" class="form-label">Max Time (Mins)</label>
             <input type="number" class="form-control filter-time" id="playTime" name="playTime" placeholder="Max Play Time (Minutes)..."
                    value="<?php echo $playTime ?? '' ?>">
         </div>
-        <div class="col-md-2 col-sm-6 col-12">
+        <div class="col-lg-2 col-md-6 col-12 mb-1">
             <label for="minAge" class="form-label">Minimum Age</label>
             <input type="number" class="form-control filter-age" id="minAge" name="minAge" placeholder="Minimum Age..."
                    value="<?php echo $minAge ?? '' ?>">
         </div>
 
-        <div class="col-md-1 col-sm-6 col-12">
-            <label for="minAge" class="form-label invisible"> Search</label>
-            <input class="btn" type="submit" value="Search">
+        <div class="col-lg-1 col-md-6 col-12 mb-1 d-flex">
+            <label for="minAge" class="form-label visually-hidden"> Search</label>
+            <input class="btn align-self-end" type="submit" value="Search">
         </div>
     </form>
 </div>
